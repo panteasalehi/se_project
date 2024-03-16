@@ -13,5 +13,4 @@ type AuthRepositoryContract interface {
 type SessionContract interface {
 	ValidateSession(token string) (bool, error)
 	StoreSession(token string, userID int) error
-	ExpireSession(token string) error
 }
