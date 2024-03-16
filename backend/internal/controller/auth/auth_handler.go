@@ -17,7 +17,7 @@ func NewLoginHandler() *LoginHandler {
 	}
 }
 
-func (lh *LoginHandler) LoginHandle(c echo.Context) error {
+func (lh *LoginHandler) Login(c echo.Context) error {
 	lreq, lres := &controller.LoginRequest{}, &controller.LoginResponse{}
 	if err := c.Bind(lreq); err != nil {
 		lres.Message = "Invalid request"

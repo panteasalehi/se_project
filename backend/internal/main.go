@@ -9,7 +9,7 @@ import (
 
 func main() {
 	e := echo.New()
-	e.POST("/signup", signup.SignupHandler)
-	e.POST("/login", auth.LoginHandler)
+	e.POST("/signup", signup.NewSignupHandler().Signup)
+	e.POST("/login", auth.NewLoginHandler().Login)
 	e.Logger.Fatal(e.Start(":8086"))
 }
