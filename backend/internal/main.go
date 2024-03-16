@@ -11,5 +11,5 @@ func main() {
 	e := echo.New()
 	e.POST("/signup", signup.SignupHandler)
 	e.POST("/login", auth.LoginHandler)
-	e.Logger.Fatal(e.Start(":443"))
+	e.Logger.Fatal(e.Start(":8086"))
 }
