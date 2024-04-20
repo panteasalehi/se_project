@@ -1,9 +1,8 @@
 import React, {useState} from "react"
-import logo from './logo.svg';
 import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
-import Home from "./Home";
+import Home from "./Home"
 import { BrowserRouter,Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -15,15 +14,11 @@ const toggleForm = (formName) => {
 }
 return (
   <div className="App">
-    <ToastContainer></ToastContainer>
-    <BrowserRouter>
-    <Routes>
     
-    </Routes>
-    </BrowserRouter>
     {
-      
-     currentForm === "login"? <Login onFormSwitch= {toggleForm}/> : <Register  onFormSwitch= {toggleForm}/>
+ 
+     currentForm === "login"? <Login onFormSwitch= {toggleForm}/> :currentForm === "register"? <Register  onFormSwitch= {toggleForm}/>:  <Login onFormSwitch= {toggleForm}/> 
+    
     }
   </div>
 ); 

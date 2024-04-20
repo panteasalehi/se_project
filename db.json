@@ -1,8 +1,16 @@
 {
   "user": [
     {
-      "id": "a3@gmail.com",
-      "pass": "qweasd"
+      "id": "g1@gmail.com",
+      "pass": "12345678"
+    },
+    {
+      "id": "adfa@gmail.com",
+      "pass": "123456789"
+    },
+    {
+      "id": "oldkaf@gmail.com",
+      "pass": "123qweasdzxc"
     }
   ]
 }
