@@ -8,6 +8,7 @@ import { Mainpage } from "./Mainpage";
 import Home from "./Home";
 import { BrowserRouter,Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import InventoryList from "./components/InventoryList"
 
 function App() {
 

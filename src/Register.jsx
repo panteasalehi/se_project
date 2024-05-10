@@ -39,10 +39,11 @@ export const Register = (probs) => {
             <input value={id} onChange={(e)=>setid(e.target.value) } type = "id" placeholder="youremail@gmail.com" id = "id" name = "id" />
             <label htmlFor="password">password </label>
             <input value = {pass}  onChange={(e)=>setPass(e.target.value)} type = "password" placeholder="*******" id = "password" name = "password" />
-            <button type = "submit">Sign up</button>
+            <br></br>
+            <button style = {{backgroundColor : "#776854"}} type = "submit">Sign up</button>
         </form>
-
-        <button className="link-button" onClick={() => probs.onFormSwitch("login")}>alreade have account? log in! </button>
+        <br></br>
+        <text onClick={() => probs.onFormSwitch("login")}>alreade have account? log in! </text>
         </div>
     )
   }

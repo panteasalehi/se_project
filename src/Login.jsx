@@ -48,10 +48,11 @@ export const Login = (props) => { //parent componenet send some thing to childre
             <label htmlFor="password">password </label>
             <input value = {pass}  onChange={(e)=>setPass(e.target.value)} type = "password" placeholder="*******" id = "password" name = "password" />
             <p></p>
-            <button type = "submit">Log In</button>
+            <button style = {{backgroundColor  :"#776854"}} type = "submit">Log In</button>
         </form>
+        <br></br>
+        <text  onClick={ () => props.onFormSwitch("register")}>dont have account? click here to sign up</text>
 
-        <button className="link-button" onClick={ () => props.onFormSwitch("register")}>dont have account? click here to sign up</button>
         </div>
     )
   }
