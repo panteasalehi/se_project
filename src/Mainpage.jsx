@@ -45,7 +45,7 @@ export const Mainpage = (props) => {
                     <h2 className="text-3xl my-4">Item List</h2>
                     {
                     items.map((item) => (
-                        <li style={{backgroundColor:"#E8DFCA" }}
+                        <li style={{backgroundColor:"#E8DFCA"  , margin : "70px"}}
                          
                         key={item.id}>
                         <p className='my-2 text-xl'>
@@ -63,7 +63,7 @@ export const Mainpage = (props) => {
                 </ul>
                 
             </div>
-            <div className = "split right">
+            <div className = "split right" style = {{ padding : "4%" }} >
             <text>انتخاب دسته بندی اگهی</text>
         <hr className="hr"></hr>
         <br></br>

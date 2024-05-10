@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '50vw',
+  margin : "5%",
+  width: '90%',
   height: '50vh',
 };
 const center = {
@@ -70,33 +71,25 @@ export const Makepost = (props) => {
     }
       
     return (
-        <div class="wrapper">
-        <div class="header">logo will be here</div>
-        <div class="two">
-        <text>انتخاب دسته بندی اگهی</text>
-        <hr className="hr"></hr>
-        <br></br>
-        <br></br>
-        <br></br>
-
-            <input onChange={(e)=>setcategory(e.target.value) } type="radio" value="فروش مسکونی"  />فروش مسکونی
-            <br></br>
-            <br></br>
-            <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="اجاره مسکونی"  />اجاره مسکونی
-            <br></br>
-            <br></br>
-
-             <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="اجاره تجاری و اداری"  />اجاره تجاری و اداری
-             <br></br>
-            <br></br>
-            <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="فروش تجاری و اداری"   />فروش تجاری و اداری
-            <br></br>
-            <br></br>
-            <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="پروژه های ساخت و ساز"    />پروژه های ساخت و ساز
+          <div class="container">
+         <div class="toppane">logo will be here</div>
+         <div class="d-flex">
+         <div class="leftpane">
+         <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={10}
+            center={center}
+            onClick={handleMapClick}
+          >
+            {markerPosition && <Marker position={markerPosition} />}
+          </GoogleMap>
+              <br></br>
+              <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >make post</button>
+              <button onClick = {() => props.onFormSwitch("mainpage")} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>Cansale</button>
+              
         </div>
-        <div class="three">
-
-        <div className="conditions">
+        <div class="middlepane">
+          <br/>
         <input  onChange={(e)=>settitle(e.target.value)} name="myInput" placeholder="عنوان"/>
         <br></br>
         <br></br>
@@ -120,24 +113,31 @@ export const Makepost = (props) => {
         <br></br>
         <br></br>
         </div>
+        <div class="rightpane">
+        <text>انتخاب دسته بندی اگهی</text>
+        <hr className="hr"></hr>
+        <br></br>
+        <br></br>
+        <br></br>
 
-        </div>
-        <div className="four">
-            
-        <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={10}
-        center={center}
-        onClick={handleMapClick}
-      >
-        {markerPosition && <Marker position={markerPosition} />}
-      </GoogleMap>
-      <br></br>
-      <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >make post</button>
-      <button onClick = {() => props.onFormSwitch("mainpage")} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>Cansale</button>
-        </div>
-        </div>
+            <input onChange={(e)=>setcategory(e.target.value) } type="radio" value="فروش مسکونی"  />فروش مسکونی
+            <br></br>
+            <br></br>
+            <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="اجاره مسکونی"  />اجاره مسکونی
+            <br></br>
+            <br></br>
 
+             <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="اجاره تجاری و اداری"  />اجاره تجاری و اداری
+             <br></br>
+            <br></br>
+            <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="فروش تجاری و اداری"   />فروش تجاری و اداری
+            <br></br>
+            <br></br>
+            <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="پروژه های ساخت و ساز"    />پروژه های ساخت و ساز
+    
+        </div>
+      </div>
+    </div>
         
     )
   }
