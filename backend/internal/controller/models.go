@@ -19,3 +19,24 @@ type LoginResponse struct {
 	Message string `json:"message"`
 	Token   string `json:"token"`
 }
+
+type ADregisterRequest struct {
+	Title              string  `json:"title"`
+	Category           string  `json:"category"`
+	Price              int     `json:"price"`
+	Area               float32 `json:"area"`
+	NumberOfRooms      int     `json:"numberOfRooms"`
+	YearOfConstruction int     `json:"yearOfConstruction"`
+	Floor              string  `json:"floor"`
+	Description        string  `json:"description"`
+	Elevator           bool    `json:"elevator"`
+	Store              bool    `json:"store"`
+	Parking            bool    `json:"parking"`
+	OwnerID            int     `json:"ownerid"`
+	// Location
+}
+
+type ADregisterResponse struct {
+	Message string `json:"message"`
+	//?
+}

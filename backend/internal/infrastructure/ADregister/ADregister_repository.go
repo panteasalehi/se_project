@@ -1,0 +1,46 @@
+package ADregister
+
+import (
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+
+	model "MelkOnline/internal/core"
+)
+
+type ADregisterRepository struct {
+	DBconn *gorm.DB
+}
+
+func NewADregisterRepository() *ADregisterRepository {
+	db, err := gorm.Open(
+		mysql.Open("user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"),
+		&gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+	return &ADregisterRepository{DBconn: db}
+}
+
+func (sr *ADregisterRepository) StoreAD(title string, category string, price int, area float32, numberOfRooms int,
+	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) error {
+	Ad := model.AD{
+		Title:              title,
+		Category:           category,
+		Price:              price,
+		Area:               area,
+		NumberOfRooms:      numberOfRooms,
+		YearOfConstruction: yearOfConstruction,
+		Floor:              floor,
+		Description:        description,
+		Elevator:           elevator,
+		Store:              store,
+		Parking:            parking,
+		OwnerID:            OwnerID,
+		//location
+	}
+	err := sr.DBconn.Create(&Ad).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
