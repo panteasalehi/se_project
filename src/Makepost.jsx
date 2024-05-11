@@ -15,6 +15,7 @@ const center = {
 
 
 export const Makepost = (props) => {
+  const email = props.data;
   const[category , setcategory] = useState('')
   const[title , settitle] = useState('')
   const[meterage , setmeterage] = useState('')
@@ -54,7 +55,7 @@ export const Makepost = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-        let regobj = { category, title ,meterage  , price,room ,year ,floor ,details , lt , long };
+        let regobj = { category, title ,meterage  , price,room ,year ,floor ,details , lt , long ,email};
             
             //console.log(regobj);
             fetch("http://localhost:8000/posts", {
@@ -63,7 +64,7 @@ export const Makepost = (props) => {
                 body: JSON.stringify(regobj)
             }).then((res) => {
                 toast.success('posted successfully.')
-                props.onFormSwitch("mainpage")
+                props.onFormSwitch("mainpage",email)
             }).catch((err) => {
                 toast.error('Failed :' + err.message);
             });
@@ -84,8 +85,8 @@ export const Makepost = (props) => {
             {markerPosition && <Marker position={markerPosition} />}
           </GoogleMap>
               <br></br>
-              <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >make post</button>
-              <button onClick = {() => props.onFormSwitch("mainpage")} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>Cansale</button>
+              <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >ثبت اگهی</button>
+              <button onClick = {() => props.onFormSwitch("mainpage",email)} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>بازگشت</button>
               
         </div>
         <div class="middlepane">

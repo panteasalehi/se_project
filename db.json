@@ -1,29 +1,30 @@
 {
   "user": [
     {
-      "id": "a3@gmail.com",
-      "pass": "qweasd"
+      "id": "p@gmail.com",
+      "pass": "qweasd",
+      "name": "pantea"
     }
   ],
   "posts": [
     {
-      "id": "0f22",
+      "id": "8d5f",
       "category": "اجاره مسکونی",
-      "title": "1",
-      "meterage": "23",
-      "price": "3",
-      "room": "4",
-      "year": "54",
-      "floor": "6",
-      "details": "7",
-      "lt": 35.73572382637866,
-      "long": 51.294599901296024
+      "title": "اجاره خانه 50 متری",
+      "meterage": "50",
+      "price": "5000000000",
+      "room": "1",
+      "year": "1390",
+      "floor": "2",
+      "details": "ملکی 50 متری واقع در تهران",
+      "lt": 35.73090666520053,
+      "long": 51.40296936035156,
+      "email": "p@gmail.com"
     }
-  ]
-,
+  ],
   "edibles": [
     {
-      "id": 1,
+      "id": "1",
       "picture": "🍌",
       "name": "Banana",
       "price": 32,
@@ -31,7 +32,7 @@
       "type": "fruits"
     },
     {
-      "id": 2,
+      "id": "2",
       "picture": "🍓",
       "name": "Strawberry",
       "price": 52,
@@ -39,7 +40,7 @@
       "type": "fruits"
     },
     {
-      "id": 3,
+      "id": "3",
       "picture": "🍗",
       "name": "Checken",
       "price": 110,
@@ -48,7 +49,7 @@
       "sub-type": "Non-Veg"
     },
     {
-      "id": 4,
+      "id": "4",
       "picture": "🥬",
       "name": "Lettuce",
       "price": 12,
@@ -56,7 +57,7 @@
       "type": "Vegetables"
     },
     {
-      "id": 5,
+      "id": "5",
       "picture": "🍅",
       "name": "Tomato",
       "price": 31,
@@ -64,7 +65,7 @@
       "type": "Vegetables"
     },
     {
-      "id": 6,
+      "id": "6",
       "picture": "🥩",
       "name": "Mutton",
       "price": 325,
@@ -72,7 +73,7 @@
       "type": "Non-Veg"
     },
     {
-      "id": 7,
+      "id": "7",
       "picture": "🥕",
       "name": "Carrot",
       "price": 42,

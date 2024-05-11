@@ -5,31 +5,33 @@ import { Login } from "./Login";
 import { Makepost } from "./Makepost";
 import { Register } from "./Register";
 import { Mainpage } from "./Mainpage";
-import Home from "./Home";
+import {Myprofilepage} from "./Myprofilepage";
 import { BrowserRouter,Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import InventoryList from "./components/InventoryList"
 
 function App() {
 
 const [currentForm, setCurrentForm] = useState('login');
-const toggleForm = (formName) => {
+const[email , setEmail] = useState('')
+const toggleForm = (formName , email) => {
   setCurrentForm(formName);
+  setEmail(email);
 }
 return (
   <div className="App">
     <ToastContainer></ToastContainer>
     <BrowserRouter>
     <Routes>
-    
+        <Route path="/mainpage" element={<Mainpage />} /> 
     </Routes>
     </BrowserRouter>
     {
       
-     currentForm === "login"? <Login onFormSwitch= {toggleForm}/> :
-     currentForm === "register"? <Register  onFormSwitch= {toggleForm}/> :
-     currentForm === "mainpage"? <Mainpage  onFormSwitch= {toggleForm}/> :
-     <Makepost onFormSwitch = {toggleForm} />
+     currentForm === "login"? <Login onFormSwitch= {toggleForm} data = {email}/> :
+     currentForm === "register"? <Register  onFormSwitch= {toggleForm} data = {email}/> :
+     currentForm === "mainpage"? <Mainpage  onFormSwitch= {toggleForm} data = {email}/> :
+     currentForm === "myprofilepage" ? <Myprofilepage onFormSwitch = {toggleForm} data = {email}/> : 
+     <Makepost onFormSwitch = {toggleForm} data = {email} />
     }
   </div>
 ); 

@@ -5,12 +5,11 @@ import { useReducer, useEffect } from "react";
 import { inventoryReducer, initialState } from "./reducers/inventoryReducer";
 import { FETCH_ACTIONS } from "./actions";
 import axios from "axios";
-
+import { useLocation } from "react-router-dom";
 
 export const Mainpage = (props) => {
-
     const [state, dispatch] = useReducer(inventoryReducer, initialState);
-
+    const email = props.data;
     const { items, loading, error} = state;
   
     console.log(items, loading, error);
@@ -20,7 +19,7 @@ export const Mainpage = (props) => {
   
       const getItems = async () => {
         try{
-          let response = await axios.get("http://localhost:8000/edibles");
+          let response = await axios.get("http://localhost:8000/posts");
           if (response.status === 200) {
             dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
           }
@@ -33,27 +32,28 @@ export const Mainpage = (props) => {
       getItems();
   
     }, []);
-// 
+
+
 
     return (
+      
         <div >  
-           <button className = "newpost-button">پروفایل من</button>
-            <button className = "myprofile-button" onClick={() => props.onFormSwitch("makepost")}>ثبت اگهی</button>
+           <button className = "newpost-button"  onClick={() => props.onFormSwitch("myprofilepage",email)} >پروفایل من</button>
+            <button className = "myprofile-button" onClick={() => props.onFormSwitch("makepost",email) }>ثبت اگهی</button>
             <div className = "split left">
         
                 <ul className="flex flex-col">
-                    <h2 className="text-3xl my-4">Item List</h2>
+                    <h2 className="text-3xl my-4">لیست اگهی ها </h2>
                     {
                     items.map((item) => (
                         <li style={{backgroundColor:"#E8DFCA"  , margin : "70px"}}
                          
                         key={item.id}>
                         <p className='my-2 text-xl'>
-                            <strong>{item.name}</strong> {' '} {item.picture} of type <strong>{item.type}</strong>
-                            {' '} costs <strong>{item.price}</strong> INR/KG.
+                            <strong>{item.title}</strong> 
                         </p>
                         <p className='mb-2 text-lg'>
-                            Available in Stock: <strong>{item.quantity}</strong>
+                            توضیحات: <strong>{item.details}</strong>
                         </p>
 
                         </li>
@@ -67,23 +67,23 @@ export const Mainpage = (props) => {
             <text>انتخاب دسته بندی اگهی</text>
         <hr className="hr"></hr>
         <br></br>
-        <br></br>
-        <br></br>
 
-            <input  type="radio" value="فروش مسکونی"  />فروش مسکونی
-            <br></br>
-            <br></br>
-            <input type="radio" value="اجاره مسکونی"  />اجاره مسکونی
-            <br></br>
-            <br></br>
-
-             <input  type="radio" value="اجاره تجاری و اداری"  />اجاره تجاری و اداری
-             <br></br>
-            <br></br>
-            <input  type="radio" value="فروش تجاری و اداری"   />فروش تجاری و اداری
-            <br></br>
-            <br></br>
-            <input type="radio" value="پروژه های ساخت و ساز"    />پروژه های ساخت و ساز
+            <button style= {{width : "80%"}} >فروش مسکونی </button> 
+                <br></br>
+                <br></br>
+            <button style= {{width : "80%"}} >اجاره مسکونی </button> 
+                <br></br>
+                <br></br>
+            <button style= {{width : "80%"}} >اجاره تجاری و اداری </button> 
+                <br></br>
+                <br></br>
+            <button style= {{width : "80%"}} >فروش تجاری و اداری </button> 
+                <br></br>
+                <br></br>
+            <button style= {{width : "80%"}} >پروژه های ساخت و ساز </button> 
+                <br></br>
+                <br></br>
+            
         
             </div>
         </div> 
