@@ -1,5 +1,7 @@
 package core
 
+import "time"
+
 type User struct {
 	ID       int     `json:"id"`
 	Email    string  `json:"email"`
@@ -12,4 +14,30 @@ type User struct {
 
 type Session struct {
 	Token string `json:"token"`
+}
+
+type AD struct {
+	ID                 int     `json:"id"`
+	Title              string  `json:"title"`
+	Category           string  `json:"category"`
+	Price              int     `json:"price"`
+	Area               float32 `json:"area"`
+	NumberOfRooms      int     `json:"numberOfRooms"`
+	YearOfConstruction int     `json:"YearOfConstruction"`
+	Floor              string  `json:"floor"`
+	Description        string  `json:"description"`
+	Elevator           bool    `json:"elevator"`
+	Store              bool    `json:"store"`
+	Parking            bool    `json:"parking"`
+	OwnerID            int     `json:"ownerid"`
+	// Location
+}
+
+type Message struct {
+	ID         int       `json:"id"`
+	Content    string    `json:"content"`
+	SenderID   int       `json:"senderid"`
+	ReceiverID int       `json:"receiverid"`
+	ChatID     int       `json:"chatid"`
+	DateTime   time.Time `json:"datetime"`
 }
