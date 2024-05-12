@@ -40,3 +40,18 @@ type ADregisterResponse struct {
 	Message string `json:"message"`
 	//?
 }
+
+type ChatSendMessageRequest struct {
+	Content    string `json:"content"`
+	SenderID   int    `json:"senderid"`
+	ReceiverID int    `json:"receiverid"`
+	ChatID     int    `json:"chatid"`
+}
+
+type ChatSendMessageResponse struct {
+	Message string `json:"message"`
+}
+
+type ChatGetMessagesRequest struct {
+	ChatID int `json:"chatid"`
+}
