@@ -1,5 +1,7 @@
 package core
 
+import "time"
+
 type User struct {
 	ID       int     `json:"id"`
 	Email    string  `json:"email"`
@@ -29,4 +31,13 @@ type AD struct {
 	Parking            bool    `json:"parking"`
 	OwnerID            int     `json:"ownerid"`
 	// Location
+}
+
+type Message struct {
+	ID         int       `json:"id"`
+	Content    string    `json:"content"`
+	SenderID   int       `json:"senderid"`
+	ReceiverID int       `json:"receiverid"`
+	ChatID     int       `json:"chatid"`
+	DateTime   time.Time `json:"datetime"`
 }
