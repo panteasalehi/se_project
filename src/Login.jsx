@@ -1,11 +1,16 @@
 import axios from "axios"
 import React, {useState} from "react"
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { Mainpage } from "./Mainpage";
 
 
-export const Login = (props) => { //parent componenet send some thing to children
+export const Login  = (props) => { //parent componenet send some thing to children
     const[email , setEmail] = useState('')
     const[pass , setPass] = useState('')
+    const mainPage = (email) => {
+        props.onFormSwitch("mainpage" , email)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
@@ -22,6 +27,8 @@ export const Login = (props) => { //parent componenet send some thing to childre
                         sessionStorage.setItem('email',email);
                         sessionStorage.setItem('userrole',resp.role);
                         console.log("success!")
+                        mainPage(email)
+                        //history.push("/mainpage", { email: email })
                         //usenavigate('/')
                     }else{
                         toast.error('Please Enter valid credentials');
@@ -43,11 +50,15 @@ export const Login = (props) => { //parent componenet send some thing to childre
             <input value={email} onChange={(e)=>setEmail(e.target.value)} type = "email" placeholder="youremail@gmail.com" id = "email" name = "email" />
             <label htmlFor="password">password </label>
             <input value = {pass}  onChange={(e)=>setPass(e.target.value)} type = "password" placeholder="*******" id = "password" name = "password" />
-            <button type = "submit">Log In</button>
+            <p></p>
+            <button style = {{backgroundColor  :"#776854"}} type = "submit">Log In</button>
+            
         </form>
+        <br></br>
+        <text  onClick={ () => props.onFormSwitch("register")}>dont have account? click here to sign up</text>
 
-        <button className="link-button" onClick={ () => props.onFormSwitch("register")}>dont have account? click here to sign up</button>
         </div>
+        
     )
   }
   

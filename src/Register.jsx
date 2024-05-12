@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import React, {useState} from "react"
 
-export const Register = (probs) => {
+export const Register = (props) => {
     const[id , setid] = useState('')
     const[pass , setPass] = useState('')
     const[name , setName] = useState('')
@@ -14,7 +14,7 @@ export const Register = (probs) => {
     
     const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-        let regobj = { id , pass };
+        let regobj = { id , pass ,name};
             
             //console.log(regobj);
             fetch("http://localhost:8000/user", {
@@ -23,7 +23,7 @@ export const Register = (probs) => {
                 body: JSON.stringify(regobj)
             }).then((res) => {
                 toast.success('Registered successfully.')
-                
+                props.onFormSwitch("mainpage" , id)
             }).catch((err) => {
                 toast.error('Failed :' + err.message);
             });
@@ -39,10 +39,11 @@ export const Register = (probs) => {
             <input value={id} onChange={(e)=>setid(e.target.value) } type = "id" placeholder="youremail@gmail.com" id = "id" name = "id" />
             <label htmlFor="password">password </label>
             <input value = {pass}  onChange={(e)=>setPass(e.target.value)} type = "password" placeholder="*******" id = "password" name = "password" />
-            <button type = "submit">Sign up</button>
+            <br></br>
+            <button style = {{backgroundColor : "#776854"}} type = "submit">Sign up</button>
         </form>
-
-        <button className="link-button" onClick={() => probs.onFormSwitch("login")}>alreade have account? log in! </button>
+        <br></br>
+        <text onClick={() => props.onFormSwitch("login")}>alreade have account? log in! </text>
         </div>
     )
   }
