@@ -40,13 +40,13 @@ export const Mainpage = (props) => {
         <div >  
            <button className = "newpost-button"  onClick={() => props.onFormSwitch("myprofilepage",email)} >پروفایل من</button>
             <button className = "myprofile-button" onClick={() => props.onFormSwitch("makepost",email) }>ثبت اگهی</button>
-            <div className = "split left">
+            <div className = "split left" >
         
                 <ul className="flex flex-col">
                     <h2 className="text-3xl my-4">لیست اگهی ها </h2>
                     {
                     items.map((item) => (
-                        <li style={{backgroundColor:"#E8DFCA"  , margin : "70px"}}
+                        <li style={{backgroundColor:"#E8DFCA"  , margin : "70px"}} onClick={() => props.onFormSwitch("postdetail",email,item.id) }
                          
                         key={item.id}>
                         <p className='my-2 text-xl'>
@@ -55,6 +55,7 @@ export const Mainpage = (props) => {
                         <p className='mb-2 text-lg'>
                             توضیحات: <strong>{item.details}</strong>
                         </p>
+                        
 
                         </li>
                     ))

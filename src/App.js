@@ -6,6 +6,7 @@ import { Makepost } from "./Makepost";
 import { Register } from "./Register";
 import { Mainpage } from "./Mainpage";
 import {Myprofilepage} from "./Myprofilepage";
+import {Postdetail} from "./Postdetail";
 import { BrowserRouter,Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -13,9 +14,11 @@ function App() {
 
 const [currentForm, setCurrentForm] = useState('login');
 const[email , setEmail] = useState('')
-const toggleForm = (formName , email) => {
+const[id , setId] = useState('')
+const toggleForm = (formName , email , id) => {
   setCurrentForm(formName);
   setEmail(email);
+  setId(id);
 }
 return (
   <div className="App">
@@ -30,7 +33,8 @@ return (
      currentForm === "login"? <Login onFormSwitch= {toggleForm} data = {email}/> :
      currentForm === "register"? <Register  onFormSwitch= {toggleForm} data = {email}/> :
      currentForm === "mainpage"? <Mainpage  onFormSwitch= {toggleForm} data = {email}/> :
-     currentForm === "myprofilepage" ? <Myprofilepage onFormSwitch = {toggleForm} data = {email}/> : 
+     currentForm === "myprofilepage" ? <Myprofilepage onFormSwitch = {toggleForm} data = {email}/> :
+     currentForm === "postdetail" ? <Postdetail onFormSwitch = {toggleForm} data = {email} data2 = {id}/> : 
      <Makepost onFormSwitch = {toggleForm} data = {email} />
     }
   </div>
