@@ -7,7 +7,7 @@ type AuthContract interface {
 }
 
 type AuthRepositoryContract interface {
-	FindUserByEmail(email string) (model.User, error)
+	FindUserByEmail(email string) (*model.User, error)
 }
 
 type SessionContract interface {

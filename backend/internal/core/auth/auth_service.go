@@ -2,6 +2,7 @@ package auth
 
 import (
 	model "MelkOnline/internal/core"
+	"MelkOnline/internal/infrastructure/auth"
 	"crypto"
 	"errors"
 
@@ -16,6 +17,8 @@ type AuthService struct {
 
 func NewAuthService() *AuthService {
 	return &AuthService{
+		arc: auth.NewAuthRepository(),
+		sc:  auth.NewSessionRepository(),
 		rnd: random.New(),
 	}
 }
