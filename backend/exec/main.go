@@ -7,6 +7,7 @@ import (
 	"MelkOnline/internal/controller/signup"
 
 	echo "github.com/labstack/echo/v4"
+	mi"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -23,6 +24,6 @@ func main() {
 	e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
 	e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
 	e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
-	
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
