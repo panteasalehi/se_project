@@ -2,7 +2,9 @@ package chat
 
 import (
 	model "MelkOnline/internal/core"
+	"os"
 
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -11,7 +13,16 @@ type ChatRepsitory struct {
 }
 
 func NewChatRepository() *ChatRepsitory {
-	return &ChatRepsitory{}
+	dbstr := os.Getenv("DB-CONNECTION")
+	db, err := gorm.Open(
+		mysql.Open(dbstr),
+		&gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+	return &ChatRepsitory{
+		DBConn: db,
+	}
 }
 
 func (cr *ChatRepsitory) StoreMessage(message model.Message) error {
