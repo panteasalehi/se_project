@@ -13,7 +13,7 @@ type AuthRepository struct {
 }
 
 func NewAuthRepository() *AuthRepository {
-	dbstr := os.Getenv("DB-CONNECTION")
+	dbstr := os.Getenv("DB_CONNECTION")
 	db, err := gorm.Open(
 		mysql.Open(dbstr),
 		&gorm.Config{})
