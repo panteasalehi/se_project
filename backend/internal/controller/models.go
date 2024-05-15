@@ -60,7 +60,7 @@ type ChatGetMessagesRequest struct {
 	ChatID int `json:"chatid"`
 }
 
-type chatGetMessagesResponse struct {
+type ChatGetMessagesResponse struct {
 	Message  string          `json:"message"`
 	Messages []model.Message `json:"messages"`
 }

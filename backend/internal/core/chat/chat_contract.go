@@ -5,11 +5,11 @@ import (
 )
 
 type ChatContract interface {
-	SendMessage(model.Message) error
+	SendMessage(model.Message) (int, error)
 	GetMessagesByChatID(chatID int) ([]model.Message, error)
 }
 
 type ChatRepositoryContract interface {
-	StoreMessage(model.Message) error
+	StoreMessage(model.Message) (int, error)
 	GetMessagesByChatID(chatID int) ([]model.Message, error)
 }

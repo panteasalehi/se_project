@@ -25,12 +25,12 @@ func NewChatRepository() *ChatRepsitory {
 	}
 }
 
-func (cr *ChatRepsitory) StoreMessage(message model.Message) error {
+func (cr *ChatRepsitory) StoreMessage(message model.Message) (int, error) {
 	err := cr.DBConn.Create(&message).Error
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return message.ID, nil
 }
 
 func (cr *ChatRepsitory) GetMessagesByChatID(chatID int) ([]model.Message, error) {
