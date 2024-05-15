@@ -38,7 +38,7 @@ func (sr *ADregisterRepository) StoreAD(title string, category string, price int
 		Elevator:           elevator,
 		Store:              store,
 		Parking:            parking,
-		OwnerID:            OwnerID,
+		UserID:             OwnerID,
 		//location
 	}
 	err := sr.DBconn.Create(&Ad).Error
