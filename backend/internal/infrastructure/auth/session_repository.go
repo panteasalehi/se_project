@@ -2,8 +2,10 @@ package auth
 
 import (
 	"context"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -12,8 +14,14 @@ type SessionRepository struct {
 }
 
 func NewSessionRepository() *SessionRepository {
+	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
+	if err != nil {
+		panic(err)
+	}
+	redisPass := os.Getenv("REDIS_PASS")
 	client := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
+		Addr:     "localhost:6379",
+		Password: redisPass,
 	})
 	return &SessionRepository{RedisConn: client}
 }

@@ -1,6 +1,8 @@
 package ADregister
 
 import (
+	"os"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
@@ -12,8 +14,9 @@ type ADregisterRepository struct {
 }
 
 func NewADregisterRepository() *ADregisterRepository {
+	dbstr := os.Getenv("DB_CONNECTION")
 	db, err := gorm.Open(
-		mysql.Open("user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"),
+		mysql.Open(dbstr),
 		&gorm.Config{})
 	if err != nil {
 		panic(err)
@@ -22,7 +25,7 @@ func NewADregisterRepository() *ADregisterRepository {
 }
 
 func (sr *ADregisterRepository) StoreAD(title string, category string, price int, area float32, numberOfRooms int,
-	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) error {
+	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) (int, error) {
 	Ad := model.AD{
 		Title:              title,
 		Category:           category,
@@ -35,12 +38,12 @@ func (sr *ADregisterRepository) StoreAD(title string, category string, price int
 		Elevator:           elevator,
 		Store:              store,
 		Parking:            parking,
-		OwnerID:            OwnerID,
+		UserID:             OwnerID,
 		//location
 	}
 	err := sr.DBconn.Create(&Ad).Error
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return Ad.ID, nil
 }

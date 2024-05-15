@@ -15,10 +15,10 @@ func NewADregisterService() *ADregisterService {
 }
 
 func (ss *ADregisterService) ADregister(title string, category string, price int, area float32, numberOfRooms int,
-	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) error {
-	err := ss.sr.StoreAD(title, category, price, area, numberOfRooms, yearOfConstruction, floor, description, elevator, store, parking, OwnerID)
+	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) (int, error) {
+	ID, err := ss.sr.StoreAD(title, category, price, area, numberOfRooms, yearOfConstruction, floor, description, elevator, store, parking, OwnerID)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return ID, nil
 }

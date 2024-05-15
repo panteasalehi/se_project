@@ -2,7 +2,9 @@ package chat
 
 import (
 	model "MelkOnline/internal/core"
+	"os"
 
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -11,15 +13,24 @@ type ChatRepsitory struct {
 }
 
 func NewChatRepository() *ChatRepsitory {
-	return &ChatRepsitory{}
+	dbstr := os.Getenv("DB_CONNECTION")
+	db, err := gorm.Open(
+		mysql.Open(dbstr),
+		&gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+	return &ChatRepsitory{
+		DBConn: db,
+	}
 }
 
-func (cr *ChatRepsitory) StoreMessage(message model.Message) error {
+func (cr *ChatRepsitory) StoreMessage(message model.Message) (int, error) {
 	err := cr.DBConn.Create(&message).Error
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return message.ID, nil
 }
 
 func (cr *ChatRepsitory) GetMessagesByChatID(chatID int) ([]model.Message, error) {

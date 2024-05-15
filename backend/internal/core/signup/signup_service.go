@@ -16,13 +16,13 @@ func NewSignupService() *SignupService {
 	}
 }
 
-func (ss *SignupService) Signup(email string, password string, name string) error {
+func (ss *SignupService) Signup(email string, password string, name string) (int, error) {
 	salt := random.New().String(10)
 	userType := "user"
 	score := float32(0)
-	err := ss.sr.StoreUser(email, password, name, salt, userType, score)
+	ID, err := ss.sr.StoreUser(email, password, name, salt, userType, score)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return ID, nil
 }
