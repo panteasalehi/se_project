@@ -23,8 +23,8 @@ func NewSignupRepository() *SignupRepository {
 	return &SignupRepository{DBconn: db}
 }
 
-func (sr *SignupRepository) StoreUser(email string, password string, name string, salt string, userType string, score float32) error {
-	user := model.User{
+func (sr *SignupRepository) StoreUser(email string, password string, name string, salt string, userType string, score float32) (int, error) {
+	user := &model.User{
 		Email:    email,
 		Password: password,
 		Salt:     salt,
@@ -32,9 +32,9 @@ func (sr *SignupRepository) StoreUser(email string, password string, name string
 		Type:     userType,
 		Score:    score,
 	}
-	err := sr.DBconn.Create(&user).Error
+	err := sr.DBconn.Create(user).Error
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return user.ID, nil
 }

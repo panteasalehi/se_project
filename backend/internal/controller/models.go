@@ -1,5 +1,7 @@
 package controller
 
+import model "MelkOnline/internal/core"
+
 type SignupRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -8,6 +10,7 @@ type SignupRequest struct {
 
 type SignupResponse struct {
 	Message string `json:"message"`
+	UserID  int    `json:"userid"`
 }
 
 type LoginRequest struct {
@@ -38,7 +41,7 @@ type ADregisterRequest struct {
 
 type ADregisterResponse struct {
 	Message string `json:"message"`
-	//?
+	ADID    int    `json:"adid"`
 }
 
 type ChatSendMessageRequest struct {
@@ -49,9 +52,15 @@ type ChatSendMessageRequest struct {
 }
 
 type ChatSendMessageResponse struct {
-	Message string `json:"message"`
+	Message   string `json:"message"`
+	MessageID int    `json:"messageid"`
 }
 
 type ChatGetMessagesRequest struct {
 	ChatID int `json:"chatid"`
+}
+
+type chatGetMessagesResponse struct {
+	Message  string          `json:"message"`
+	Messages []model.Message `json:"messages"`
 }
