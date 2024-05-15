@@ -25,7 +25,7 @@ func NewADregisterRepository() *ADregisterRepository {
 }
 
 func (sr *ADregisterRepository) StoreAD(title string, category string, price int, area float32, numberOfRooms int,
-	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) error {
+	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int) (int, error) {
 	Ad := model.AD{
 		Title:              title,
 		Category:           category,
@@ -43,7 +43,7 @@ func (sr *ADregisterRepository) StoreAD(title string, category string, price int
 	}
 	err := sr.DBconn.Create(&Ad).Error
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return Ad.ID, nil
 }
