@@ -4,6 +4,7 @@ import (
 	"MelkOnline/internal/controller/ADregister"
 	"MelkOnline/internal/controller/auth"
 	"MelkOnline/internal/controller/chat"
+	"MelkOnline/internal/controller/mainpage"
 	"MelkOnline/internal/controller/signup"
 	"os"
 
@@ -41,6 +42,7 @@ func main() {
 	e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
 	e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
 	e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
+	e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds) //??
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

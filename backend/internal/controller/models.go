@@ -36,7 +36,8 @@ type ADregisterRequest struct {
 	Store              bool    `json:"store"`
 	Parking            bool    `json:"parking"`
 	OwnerID            int     `json:"ownerid"`
-	// Location
+	Lt                 float32 `json:"lt"`
+	Long               float32 `json:"long"`
 }
 
 type ADregisterResponse struct {
@@ -63,4 +64,9 @@ type ChatGetMessagesRequest struct {
 type ChatGetMessagesResponse struct {
 	Message  string          `json:"message"`
 	Messages []model.Message `json:"messages"`
+}
+
+type MainpageResponse struct {
+	Message string     `json:"message"`
+	Ads     []model.AD `json:"ads"`
 }
