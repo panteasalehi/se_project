@@ -26,7 +26,7 @@ func (adh *ADregisterHandler) ADregister(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, adres)
 	}
 	ID, err := adh.ss.ADregister(adreq.Title, adreq.Category, adreq.Price, adreq.Area, adreq.NumberOfRooms, adreq.YearOfConstruction,
-		adreq.Floor, adreq.Description, adreq.Elevator, adreq.Store, adreq.Parking, adreq.OwnerID)
+		adreq.Floor, adreq.Description, adreq.Elevator, adreq.Store, adreq.Parking, adreq.OwnerID, adreq.Lt, adreq.Long)
 	if err != nil {
 		adres.Message = err.Error()
 		return c.JSON(http.StatusInternalServerError, adres)
