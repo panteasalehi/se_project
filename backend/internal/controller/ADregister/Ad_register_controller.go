@@ -25,12 +25,13 @@ func (adh *ADregisterHandler) ADregister(c echo.Context) error {
 		adres.Message = err.Error()
 		return c.JSON(http.StatusBadRequest, adres)
 	}
-	err := adh.ss.ADregister(adreq.Title, adreq.Category, adreq.Price, adreq.Area, adreq.NumberOfRooms, adreq.YearOfConstruction,
+	ID, err := adh.ss.ADregister(adreq.Title, adreq.Category, adreq.Price, adreq.Area, adreq.NumberOfRooms, adreq.YearOfConstruction,
 		adreq.Floor, adreq.Description, adreq.Elevator, adreq.Store, adreq.Parking, adreq.OwnerID)
 	if err != nil {
 		adres.Message = err.Error()
 		return c.JSON(http.StatusInternalServerError, adres)
 	}
 	adres.Message = "Advertisement registration completed"
+	adres.ADID = ID
 	return c.JSON(http.StatusOK, adres)
 }

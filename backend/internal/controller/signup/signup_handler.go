@@ -25,11 +25,12 @@ func (sh *SignupHandler) Signup(c echo.Context) error {
 		sres.Message = err.Error()
 		return c.JSON(http.StatusBadRequest, sres)
 	}
-	err := sh.ss.Signup(sreq.Email, sreq.Password, sreq.Name)
+	ID, err := sh.ss.Signup(sreq.Email, sreq.Password, sreq.Name)
 	if err != nil {
 		sres.Message = err.Error()
 		return c.JSON(http.StatusInternalServerError, sres)
 	}
 	sres.Message = "User created successfully"
+	sres.UserID = ID
 	return c.JSON(http.StatusOK, sres)
 }

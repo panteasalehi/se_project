@@ -29,7 +29,7 @@ type AD struct {
 	Elevator           bool    `json:"elevator"`
 	Store              bool    `json:"store"`
 	Parking            bool    `json:"parking"`
-	OwnerID            int     `json:"ownerid"`
+	UserID             int     `json:"userid"`
 	// Location
 }
 
@@ -40,4 +40,18 @@ type Message struct {
 	ReceiverID int       `json:"receiverid"`
 	ChatID     int       `json:"chatid"`
 	DateTime   time.Time `json:"datetime"`
+}
+
+type Chat struct {
+	ID      int `json:"id"`
+	User1ID int `json:"user1id"`
+	User2ID int `json:"user2id"`
+	AdID    int `json:"adid"`
+}
+
+type UserNote struct {
+	ID     int       `json:"id"`
+	UserID int       `json:"userid"`
+	Note   string    `json:"note"`
+	Time   time.Time `json:"time"`
 }

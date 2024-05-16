@@ -4,6 +4,7 @@ import (
 	model "MelkOnline/internal/controller"
 	"MelkOnline/internal/core"
 	"MelkOnline/internal/core/chat"
+	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
@@ -34,17 +35,18 @@ func (ch *ChatHandler) SendMessage(c echo.Context) error {
 		ReceiverID: csreq.ReceiverID,
 		ChatID:     csreq.ChatID,
 	}
-	err := ch.cs.SendMessage(message)
+	ID, err := ch.cs.SendMessage(message)
 	if err != nil {
 		csres.Message = "Failed to send message"
-		return c.JSON(500, csres)
+		return c.JSON(http.StatusBadRequest, csres)
 	}
 	csres.Message = "Message sent successfully"
+	csres.MessageID = ID
 	return c.JSON(200, csres)
 }
 
 func (ch *ChatHandler) GetMessagesByChatID(c echo.Context) error {
-	cgreq, cgres := &model.ChatGetMessagesRequest{}, &[]core.Message{}
+	cgreq, cgres := &model.ChatGetMessagesRequest{}, &model.ChatGetMessagesResponse{}
 	if err := c.Bind(cgreq); err != nil {
 		return c.JSON(400, cgres)
 	}
@@ -55,5 +57,7 @@ func (ch *ChatHandler) GetMessagesByChatID(c echo.Context) error {
 	if err != nil {
 		return c.JSON(500, cgres)
 	}
+	cgres.Message = "Messages retrieved successfully"
+	cgres.Messages = messages
 	return c.JSON(200, messages)
 }

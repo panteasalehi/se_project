@@ -15,12 +15,12 @@ func NewChatService() *ChatService {
 	}
 }
 
-func (cs *ChatService) SendMessage(message model.Message) error {
-	err := cs.cr.StoreMessage(message)
+func (cs *ChatService) SendMessage(message model.Message) (int, error) {
+	ID, err := cs.cr.StoreMessage(message)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return ID, nil
 }
 
 func (cs *ChatService) GetMessagesByChatID(chatID int) ([]model.Message, error) {
