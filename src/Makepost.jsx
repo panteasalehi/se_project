@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { toast } from "react-toastify";
-
+ 
+import ImageUpload from "./ImageUpload"
 const libraries = ['places'];
 const mapContainerStyle = {
   margin : "5%",
@@ -15,6 +16,7 @@ const center = {
 
 
 export const Makepost = (props) => {
+  const fileUploadRef = useRef();
   const email = props.data;
   const[category , setcategory] = useState('')
   const[title , settitle] = useState('')
@@ -70,7 +72,7 @@ export const Makepost = (props) => {
             });
         
     }
-      
+    
     return (
           <div class="container">
          <div class="toppane">logo will be here</div>
@@ -87,6 +89,10 @@ export const Makepost = (props) => {
               <br></br>
               <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >ثبت اگهی</button>
               <button onClick = {() => props.onFormSwitch("mainpage",email)} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>بازگشت</button>
+              <div className="flex justify-center">
+      <ImageUpload />
+    </div>  
+              
               
         </div>
         <div class="middlepane">
