@@ -1,8 +1,7 @@
 import React, { useState,useRef } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { toast } from "react-toastify";
- 
-import ImageUpload from "./ImageUpload"
+import DefaultImage from "./a.jpg";
 const libraries = ['places'];
 const mapContainerStyle = {
   margin : "5%",
@@ -16,7 +15,6 @@ const center = {
 
 
 export const Makepost = (props) => {
-  const fileUploadRef = useRef();
   const email = props.data;
   const[category , setcategory] = useState('')
   const[title , settitle] = useState('')
@@ -28,7 +26,23 @@ export const Makepost = (props) => {
   const[details , setdetails] = useState('')
   const[long , setlong] = useState('')
   const[lt , setlt] = useState('')
-  
+  const [avatarURL, setAvatarURL] = useState(DefaultImage);
+
+  const fileUploadRef = useRef();
+
+  const handleImageUpload = (event) => {
+    event.preventDefault();
+    fileUploadRef.current.click();
+  }
+
+  const uploadImageDisplay = () => {
+   
+      const uploadedFile = fileUploadRef.current.files[0];
+      const cachedURL = URL.createObjectURL(uploadedFile);
+      setAvatarURL(cachedURL)
+  }
+
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: 'AIzaSyCNVtpIqQ_AMO-Ov07BInNpgkuinI3Zr6Y',
         libraries,
@@ -57,7 +71,7 @@ export const Makepost = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-        let regobj = { category, title ,meterage  , price,room ,year ,floor ,details , lt , long ,email};
+        let regobj = { category, title ,meterage  , price,room ,year ,floor ,details , lt , long ,email , avatarURL};
             
             //console.log(regobj);
             fetch("http://localhost:8000/posts", {
@@ -86,17 +100,39 @@ export const Makepost = (props) => {
           >
             {markerPosition && <Marker position={markerPosition} />}
           </GoogleMap>
-              <br></br>
+              <div className="relative h-96 w-96 m-8">
+      <img 
+      style = {{width : "10%"}}
+        src={avatarURL}
+        alt ="Avatar"
+        className="h-96 w-96 rounded-full" />
+
+      <form id="form" encType='multipart/form-data'>
+        <button 
+          style = {{margin:"1%"}}
+          type='submit'
+          onClick={handleImageUpload}
+        >
+          انتخاب تصویر
+        </button>
+        <input 
+          type="file"
+          id="file"
+          ref={fileUploadRef}
+          onChange={uploadImageDisplay}
+          hidden />
+      </form>  
+    </div> 
+              <br/>
               <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >ثبت اگهی</button>
               <button onClick = {() => props.onFormSwitch("mainpage",email)} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>بازگشت</button>
-              <div className="flex justify-center">
-      <ImageUpload />
-    </div>  
+              
               
               
         </div>
         <div class="middlepane">
           <br/>
+          
         <input  onChange={(e)=>settitle(e.target.value)} name="myInput" placeholder="عنوان"/>
         <br></br>
         <br></br>
