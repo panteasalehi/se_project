@@ -34,8 +34,8 @@ func main() {
 
 	e.Use(middleware.Logger())
 
-	e.Static("/", "public")
-	e.File("/", "public/index.html")
+	e.Static("/", "/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/public")
+	e.File("/", "/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/public/index.html")
 
 	e.POST("/signup", signup.NewSignupHandler().Signup)
 	e.POST("/login", auth.NewLoginHandler().Login)
@@ -64,7 +64,11 @@ func DB_init() error {
 	if err != nil {
 		return err
 	}
-
+	DB, err := db.DB()
+	if err != nil {
+		return err
+	}
+	defer DB.Close()
 	err = db.AutoMigrate(&model.User{})
 	if err != nil {
 		return err
