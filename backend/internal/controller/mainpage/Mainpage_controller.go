@@ -19,7 +19,8 @@ func NewMainpageHandler() *MainpageHandler {
 
 func (m *MainpageHandler) GetAds(c echo.Context) error {
 	mres := &model.MainpageResponse{}
-	Ads, err := m.cs.Mainpage()
+	t, _ := c.Cookie("token")
+	Ads, err := m.cs.Mainpage(t.Value)
 	if err != nil {
 		return c.JSON(500, mres)
 	}

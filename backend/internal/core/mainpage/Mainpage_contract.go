@@ -5,7 +5,7 @@ import (
 )
 
 type MainpageContract interface {
-	Mainpage() ([]model.AD, error)
+	Mainpage(token string) ([]model.AD, error)
 }
 
 type MainpageRepositoryContract interface {
