@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -26,12 +27,13 @@ func NewSessionRepository() *SessionRepository {
 	return &SessionRepository{RedisConn: client}
 }
 
-func (sr *SessionRepository) ValidateSession(token string) (bool, error) {
-	_, err := sr.RedisConn.Get(context.TODO(), token).Result()
+func (sr *SessionRepository) ValidateSession(token string) (int, error) {
+	uid, err := sr.RedisConn.Get(context.TODO(), token).Result()
 	if err != nil {
-		return false, err
+		return 0, err
 	}
-	return true, nil
+	uidInt, err := strconv.Atoi(uid)
+	return uidInt, nil
 }
 
 func (sr *SessionRepository) StoreSession(token string, userID int) error {
