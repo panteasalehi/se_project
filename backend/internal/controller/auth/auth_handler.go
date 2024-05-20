@@ -3,6 +3,7 @@ package auth
 import (
 	"MelkOnline/internal/controller"
 	"MelkOnline/internal/core/auth"
+	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
@@ -33,6 +34,9 @@ func (lh *LoginHandler) Login(c echo.Context) error {
 		return c.JSON(401, lres)
 	}
 	lres.Message = "Login successful"
-	lres.Token = session.Token
+	var cookie http.Cookie
+	cookie.Name = "session"
+	cookie.Value = session.Token
+	c.SetCookie(&cookie)
 	return c.JSON(200, lres)
 }
