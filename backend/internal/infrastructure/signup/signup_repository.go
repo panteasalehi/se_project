@@ -2,6 +2,7 @@ package signup
 
 import (
 	model "MelkOnline/internal/core"
+	"MelkOnline/internal/core/auth"
 	"os"
 
 	"gorm.io/driver/mysql"
@@ -26,7 +27,7 @@ func NewSignupRepository() *SignupRepository {
 func (sr *SignupRepository) StoreUser(email string, password string, name string, salt string, userType string, score float32) (int, error) {
 	user := &model.User{
 		Email:    email,
-		Password: password,
+		Password: auth.HashPassword(password, salt),
 		Salt:     salt,
 		Name:     name,
 		Type:     userType,
