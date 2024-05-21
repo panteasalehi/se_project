@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Print directory structure
+      run: ls -la
 
     - name: Set up Go
       uses: actions/setup-go@v4
