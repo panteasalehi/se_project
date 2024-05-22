@@ -24,6 +24,7 @@ jobs:
 
     steps:
     - name: Print directory structure
+      working-directory: docker
       run: ls -la
 
     - name: Set up Go
