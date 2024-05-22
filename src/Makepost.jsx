@@ -15,19 +15,21 @@ const center = {
 
 
 export const Makepost = (props) => {
-  const email = props.data;
+  const ownerid = props.data;
   const[category , setcategory] = useState('')
   const[title , settitle] = useState('')
-  const[meterage , setmeterage] = useState('')
+  const[area , setarea] = useState('')
   const[price , setprice] = useState('')
-  const[room , setroom] = useState('')
-  const[year , setyear] = useState('')
+  const[numberOfRooms , setnumberOfRooms] = useState('')
+  const[yearOfConstruction , setyearOfConstruction] = useState('')
   const[floor , setfloor] = useState('')
-  const[details , setdetails] = useState('')
+  const[description , setdescription] = useState('')
   const[long , setlong] = useState('')
   const[lt , setlt] = useState('')
   const [avatarURL, setAvatarURL] = useState(DefaultImage);
-
+  const [store,setstore]= useState('')
+  const [elevator,setelevator]= useState('')
+  const [parking,setparking]= useState('')
   const fileUploadRef = useRef();
 
   const handleImageUpload = (event) => {
@@ -71,16 +73,16 @@ export const Makepost = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-        let regobj = { category, title ,meterage  , price,room ,year ,floor ,details , lt , long ,email , avatarURL};
+        let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid};
             
             //console.log(regobj);
-            fetch("http://localhost:8000/posts", {
+            fetch("http://localhost:8080/ADregister", {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(regobj)
             }).then((res) => {
                 toast.success('posted successfully.')
-                props.onFormSwitch("mainpage",email)
+                props.onFormSwitch("mainpage",ownerid)
             }).catch((err) => {
                 toast.error('Failed :' + err.message);
             });
@@ -125,7 +127,7 @@ export const Makepost = (props) => {
     </div> 
               <br/>
               <button onClick = {handleSubmit}   style={{marginRight : '15px' , padding : '8px' , backgroundColor : 'lightskyblue'}} >ثبت اگهی</button>
-              <button onClick = {() => props.onFormSwitch("mainpage",email)} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>بازگشت</button>
+              <button onClick = {() => props.onFormSwitch("mainpage",ownerid)} style={{marginLeft : '15px' , padding : '8px' , backgroundColor : 'lightpink'}}>بازگشت</button>
               
               
               
@@ -137,22 +139,22 @@ export const Makepost = (props) => {
         <br></br>
         <br></br>
 
-        <input  onChange={(e)=>setmeterage(e.target.value)} name="myInput" placeholder="متراژ"/>
+        <input  onChange={(e)=>setarea(e.target.value)} name="myInput" placeholder="متراژ"/>
         <br></br>
         <br></br>
         <input  onChange={(e)=>setprice(e.target.value)} name="myInput" placeholder="قیمت"/>
         <br></br>
         <br></br>
-        <input  onChange={(e)=>setroom(e.target.value)} name="myInput" placeholder="تعداد اتاق"/>
+        <input  onChange={(e)=>setnumberOfRooms(e.target.value)} name="myInput" placeholder="تعداد اتاق"/>
         <br></br>
         <br></br>
-        <input  onChange={(e)=>setyear(e.target.value)} name="myInput" placeholder="سال ساخت"/>
+        <input  onChange={(e)=>setyearOfConstruction(e.target.value)} name="myInput" placeholder="سال ساخت"/>
         <br></br>
         <br></br>
         <input  onChange={(e)=>setfloor(e.target.value)} name="myInput" placeholder="طبقه"/>
         <br></br>
         <br></br>
-        <input  onChange={(e)=>setdetails(e.target.value)} name="myInput" placeholder="سایر توضیحات"/>
+        <input  onChange={(e)=>setdescription(e.target.value)} name="myInput" placeholder="سایر توضیحات"/>
         <br></br>
         <br></br>
         </div>
@@ -177,7 +179,16 @@ export const Makepost = (props) => {
             <br></br>
             <br></br>
             <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="پروژه های ساخت و ساز"    />پروژه های ساخت و ساز
-    
+            <br/>
+            <input onChange={(e)=>setstore(e.target.value) } type="radio" value="store"  />انباری
+            <br></br>
+            <br/>
+            <input onChange={(e)=>setelevator(e.target.value) } type="radio" value="elevator"  />اسانسور
+            <br></br>
+            <br/>
+            <input onChange={(e)=>setparking(e.target.value) } type="radio" value="parking"  />پارکینگ
+            <br></br>
+          
         </div>
       </div>
     </div>

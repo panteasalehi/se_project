@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import { toast } from "react-toastify";
 import { useReducer, useEffect } from "react";
 import { inventoryReducer, initialState } from "./reducers/inventoryReducer";
 import { FETCH_ACTIONS } from "./actions";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 export const Mainpage = (props) => {
     const [state, dispatch] = useReducer(inventoryReducer, initialState);
@@ -19,7 +16,7 @@ export const Mainpage = (props) => {
   
       const getItems = async () => {
         try{
-          let response = await axios.get("http://localhost:8000/posts");
+          let response = await axios.get("http://localhost:8080/mainpage");
           if (response.status === 200) {
             dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
           }
@@ -50,10 +47,10 @@ export const Mainpage = (props) => {
                          
                         key={item.id}>
                         <p className='my-2 text-xl'>
-                            <strong>{item.title}</strong> 
+                            <strong>{item.ads}</strong> 
                         </p>
                         <p className='mb-2 text-lg'>
-                            توضیحات: <strong>{item.details}</strong>
+                            توضیحات: <strong>{item.message}</strong>
                         </p>
                         
 
