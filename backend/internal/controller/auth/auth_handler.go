@@ -24,13 +24,9 @@ func (lh *LoginHandler) Login(c echo.Context) error {
 		lres.Message = "Invalid request"
 		return c.JSON(400, lres)
 	}
-	if err := c.Validate(lreq); err != nil {
-		lres.Message = "Invalid request"
-		return c.JSON(400, lres)
-	}
 	session, err := lh.as.Login(lreq.Email, lreq.Password)
 	if err != nil {
-		lres.Message = "Invalid credentials"
+		lres.Message = err.Error()
 		return c.JSON(401, lres)
 	}
 	lres.Message = "Login successful"
