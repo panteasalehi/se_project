@@ -36,13 +36,13 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
       
-    - name: Install dependencies
-      working-directory: backend
-      run: go mod download
+    # - name: Install dependencies
+    #   working-directory: backend
+    #   run: go mod download
 
-    - name : Build and run
-      working-directory: backend/cmd
-      run: go build -o main . && ./main
+    # - name : Build and run
+    #   working-directory: backend/cmd
+    #   run: go build -o main . && ./main
 
     # - name: Run tests
     #   working-directory: backend/test

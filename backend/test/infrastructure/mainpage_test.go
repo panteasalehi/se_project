@@ -9,7 +9,7 @@ import (
 )
 
 func Test_mainpage_inf(t *testing.T) {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}

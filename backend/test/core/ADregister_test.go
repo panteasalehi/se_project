@@ -12,7 +12,7 @@ import (
 )
 
 func Test_ADregister_core(t *testing.T) {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}

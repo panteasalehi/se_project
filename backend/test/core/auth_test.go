@@ -26,7 +26,7 @@ func Test_auth_valid_core(t *testing.T) {
 }
 
 func Test_auth_invalid_core(t *testing.T) {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}

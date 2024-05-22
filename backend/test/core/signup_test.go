@@ -10,7 +10,7 @@ import (
 )
 
 func Test_signup_service(t *testing.T) {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}
