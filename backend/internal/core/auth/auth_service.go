@@ -4,6 +4,7 @@ import (
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure/auth"
 	"crypto"
+	"encoding/base64"
 	"errors"
 
 	"github.com/labstack/gommon/random"
@@ -47,11 +48,12 @@ func (as *AuthService) generateToken() string {
 }
 
 func checkPassword(password string, salt string, passwordHash string) bool {
-	return passwordHash == hashPassword(password, salt)
+	return passwordHash == HashPassword(password, salt)
 }
 
-func hashPassword(password string, salt string) string {
+func HashPassword(password string, salt string) string {
 	hash := crypto.SHA256.New()
 	hash.Write([]byte(password + salt))
-	return string(hash.Sum(nil))
+	b64hash := base64.URLEncoding.EncodeToString(hash.Sum(nil))
+	return b64hash
 }

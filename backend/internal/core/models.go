@@ -30,7 +30,8 @@ type AD struct {
 	Store              bool    `json:"store"`
 	Parking            bool    `json:"parking"`
 	UserID             int     `json:"userid"`
-	// Location
+	Lt                 float32 `json:"lt"`
+	Long               float32 `json:"long"`
 }
 
 type Message struct {

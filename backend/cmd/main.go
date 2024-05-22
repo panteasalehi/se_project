@@ -4,7 +4,9 @@ import (
 	"MelkOnline/internal/controller/ADregister"
 	"MelkOnline/internal/controller/auth"
 	"MelkOnline/internal/controller/chat"
+	"MelkOnline/internal/controller/mainpage"
 	"MelkOnline/internal/controller/signup"
+	"net/http"
 	"os"
 
 	model "MelkOnline/internal/core"
@@ -32,17 +34,19 @@ func main() {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
-
-	e.Static("/", "public")
-	e.File("/", "public/index.html")
-
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"},
+		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+	}))
 	e.POST("/signup", signup.NewSignupHandler().Signup)
 	e.POST("/login", auth.NewLoginHandler().Login)
 	e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
 	e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
 	e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
+	e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds) //??
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Start(":8080")
 }
 
 func DB_init() error {
@@ -62,7 +66,11 @@ func DB_init() error {
 	if err != nil {
 		return err
 	}
-
+	DB, err := db.DB()
+	if err != nil {
+		return err
+	}
+	defer DB.Close()
 	err = db.AutoMigrate(&model.User{})
 	if err != nil {
 		return err
