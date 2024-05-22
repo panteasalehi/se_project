@@ -12,7 +12,7 @@ func Test_session_token_not_valid(t *testing.T) {
 	token := "invalid"
 	valid, err := sr.ValidateSession(token)
 	assert.NotNil(t, err, "Error should not be nil")
-	assert.False(t, valid, "Session should not be valid")
+	assert.Equal(t, 0, valid, "Session should not be valid")
 }
 
 func Test_session_set_token(t *testing.T) {
@@ -28,5 +28,5 @@ func Test_session_token_valid(t *testing.T) {
 	token := "valid"
 	valid, err := sr.ValidateSession(token)
 	assert.Nil(t, err, "Error should be nil")
-	assert.True(t, valid, "Session should be valid")
+	assert.NotZero(t, valid, "Session should be valid")
 }
