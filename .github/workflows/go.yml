@@ -36,8 +36,8 @@ jobs:
       run: go mod download
 
     - name : Build and run
-      working-directory: backend
-      run: go build -o main . && ./cmd/main
+      working-directory: backend/cmd
+      run: go build -o main . && ./main
 
     # - name: Run tests
     #   working-directory: backend/test
