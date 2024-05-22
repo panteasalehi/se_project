@@ -15,7 +15,7 @@ func Test_signup_service(t *testing.T) {
 		panic(err)
 	}
 	user := &model.User{
-		Email:    "abcd",
+		Email:    "galskjd",
 		Password: "abcd",
 		Name:     "abcd",
 	}
