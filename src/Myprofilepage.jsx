@@ -22,7 +22,7 @@ export const Myprofilepage = (props) => {
         const getItems = async () => {
           try{
             
-            let response = await axios.get("http://localhost:8000/posts?email=" + email);
+            let response = await axios.get("http://localhost:8080/posts?email=" + email);
             if (response.status === 200) {
               dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
             }
@@ -52,7 +52,7 @@ export const Myprofilepage = (props) => {
           <button className = "myprofile-button" onClick={() => props.onFormSwitch("mainpage",email)}>بازگشت</button>
           {show === "post"? 
           <ul className="flex flex-col">
-          <h2 className="text-3xl my-4">لیست اگهی ها </h2>
+          <h2 className="text-3xl my-4">لیست اگهی های من </h2>
           {
           items.map((item) => (
               <li style={{backgroundColor:"#E8DFCA"  , margin : "70px"}}
@@ -70,7 +70,10 @@ export const Myprofilepage = (props) => {
           }
           </ul>
           :
-          null}
+          show==="Favs"?
+        <h1>hi</h1>
+        :
+        null}
           
                 
           </div>
@@ -85,9 +88,9 @@ export const Myprofilepage = (props) => {
 
             <button style= {{width : "60%", marginBottom:"5%"}} onClick={() => setShow("post")}  >اگهی ها </button> 
             
-            <button style= {{width : "60%", marginBottom:"5%"}} >پرداخت ها </button> 
+            <button style= {{width : "60%", marginBottom:"5%"}}>پرداخت ها </button> 
             
-            <button  style= {{width : "60%", marginBottom:"5%"}}>علاقه مندی ها </button> 
+            <button  style= {{width : "60%", marginBottom:"5%"}} onClick={() => setShow("favs")}>علاقه مندی ها </button> 
              
             <button  style= {{width : "60%", marginBottom:"5%"}}>یادداشت ها </button> 
             
