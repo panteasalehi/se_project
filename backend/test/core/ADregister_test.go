@@ -31,6 +31,7 @@ func Test_ADregister_core(t *testing.T) {
 		UserID:             1,
 		Lt:                 1,
 		Long:               1,
+		AvatarURL:          "test",
 	}
 	as := ADregister.NewADregisterService()
 	sr := auth.NewSessionRepository()
@@ -38,7 +39,7 @@ func Test_ADregister_core(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	ID, err := as.ADregister("1", AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.UserID, AD.Lt, AD.Long)
+	ID, err := as.ADregister("1", AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.UserID, AD.Lt, AD.Long, AD.AvatarURL)
 	assert.Nil(t, err)
 	assert.NotEqual(t, 0, ID)
 }
