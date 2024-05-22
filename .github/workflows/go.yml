@@ -24,9 +24,13 @@ jobs:
 
     steps:
     - name: Print directory structure
-      working-directory: docker
       run: ls -la
 
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+    
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
