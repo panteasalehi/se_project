@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Print directory structure
-      run: ls -la
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
