@@ -35,10 +35,17 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: ${{ env.GO_VERSION }}
+      
+    - name: Install dependencies
+      working-directory: backend
+      run: go mod download
 
+    - name : Build and run
+      working-directory: backend
+      run: go build -o main . && ./cmd/main
 
     - name: Run tests
-      working-directory: backend
+      working-directory: backend/test
       run: go test ./... -v
 
     - name: Set up Docker Buildx
