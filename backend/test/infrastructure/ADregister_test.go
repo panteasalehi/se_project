@@ -10,7 +10,7 @@ import (
 )
 
 func Test_ADreg_inf(t *testing.T) {
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}
@@ -29,9 +29,10 @@ func Test_ADreg_inf(t *testing.T) {
 		UserID:             1,
 		Lt:                 1.0,
 		Long:               1.0,
+		AvatarURL:          "test",
 	}
 	ADreg := ADregister.NewADregisterRepository()
-	ID, err := ADreg.StoreAD(AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.UserID, AD.Lt, AD.Long)
+	ID, err := ADreg.StoreAD(AD)
 	assert.Nil(t, err, "Error should be nil")
 	assert.NotEqual(t, 0, ID, "ID should not be 0")
 }

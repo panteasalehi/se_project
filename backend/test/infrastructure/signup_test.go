@@ -12,7 +12,7 @@ import (
 )
 
 func Test_signup_inf(t *testing.T) {
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}

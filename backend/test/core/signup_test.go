@@ -10,12 +10,12 @@ import (
 )
 
 func Test_signup_service(t *testing.T) {
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		panic(err)
 	}
 	user := &model.User{
-		Email:    "abcd",
+		Email:    "galskjd",
 		Password: "abcd",
 		Name:     "abcd",
 	}
