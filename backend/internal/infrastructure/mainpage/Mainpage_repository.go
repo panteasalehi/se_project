@@ -24,8 +24,8 @@ func NewMainpageRepository() *MainpageRepository {
 }
 
 func (ar *MainpageRepository) FindADs() ([]model.AD, error) {
-	var ads []model.AD
-	err := ar.DBConn.Find(&ads).Error
+	ads := []model.AD{}
+	err := ar.DBConn.Model(&model.AD{}).Find(&ads).Error
 	if err != nil {
 		return nil, err
 	}
