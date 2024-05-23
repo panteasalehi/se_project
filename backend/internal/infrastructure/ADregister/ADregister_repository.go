@@ -24,9 +24,9 @@ func NewADregisterRepository() *ADregisterRepository {
 	return &ADregisterRepository{DBconn: db}
 }
 
-func (sr *ADregisterRepository) StoreAD(title string, category string, price int, area float32, numberOfRooms int,
-	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int, Lt float32,
-	Long float32, AvatarURL string) (int, error) {
+func (sr *ADregisterRepository) StoreAD(title string, category string, price int, area float64, numberOfRooms int,
+	yearOfConstruction int, floor string, description string, elevator bool, store bool, parking bool, OwnerID int, Lt float64,
+	Long float64, AvatarURL string) (int, error) {
 	Ad := model.AD{
 		Title:              title,
 		Category:           category,
