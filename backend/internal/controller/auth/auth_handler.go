@@ -31,7 +31,7 @@ func (lh *LoginHandler) Login(c echo.Context) error {
 	}
 	lres.Message = "Login successful"
 	cookie := new(http.Cookie)
-	cookie.Name = "session_token"
+	cookie.Name = "session"
 	cookie.Value = session.Token
 	cookie.Path = "/"
 	cookie.HttpOnly = true
