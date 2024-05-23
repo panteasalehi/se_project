@@ -73,13 +73,11 @@ export const Makepost = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // if we dont call page will be reloded and data will be lost
-    let regobj = { category, title, area, price, numberOfRooms, yearOfConstruction, floor, description, store, parking, elevator, lt, long, ownerid };
-
-    //console.log(regobj);
+    let adregobj = { category, title, area, price, numberOfRooms, yearOfConstruction, floor, description, store, parking, elevator, lt, long, ownerid };
     fetch("http://localhost:8080/ADregister", {
       method: "POST",
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(regobj)
+      body: JSON.stringify(adregobj)
     }).then((res) => {
       if (res.status === 200) {
         toast.success('posted successfully.')
