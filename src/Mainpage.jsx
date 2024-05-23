@@ -13,20 +13,19 @@ export const Mainpage = (props) => {
   
     useEffect(() => {
       dispatch({type: FETCH_ACTIONS.PROGRESS});
-  
-      const getItems = async () => {
-        try{
-          let response = await axios.get("http://localhost:8080/mainpage");
-          if (response.status === 200) {
-            dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
-          }
-        } catch(err){
-          console.error(err);
-          dispatch({type: FETCH_ACTIONS.ERROR, error: err.message})
+      fetch("http://localhost:8080/mainpage", {
+        method: "GET",
+        credentials: 'include'
+      }).then((res) => {
+        if (res.status === 200) {
+          dispatch({type: FETCH_ACTIONS.SUCCESS, data: res.data});
         }
-      }
-  
-      getItems();
+        else {
+          throw new Error('Failed to post');
+        }
+      }).catch((err) => {
+        dispatch({type: FETCH_ACTIONS.FAILURE});
+      });
   
     }, []);
 
