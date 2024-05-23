@@ -77,7 +77,8 @@ export const Makepost = (props) => {
     fetch("http://localhost:8080/ADregister", {
       method: "POST",
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(adregobj)
+      body: JSON.stringify(adregobj),
+      credentials: 'include'
     }).then((res) => {
       if (res.status === 200) {
         toast.success('posted successfully.')

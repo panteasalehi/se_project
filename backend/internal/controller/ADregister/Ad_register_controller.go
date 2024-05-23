@@ -25,7 +25,11 @@ func (adh *ADregisterHandler) ADregister(c echo.Context) error {
 		adres.Message = err.Error()
 		return c.JSON(http.StatusBadRequest, adres)
 	}
-	cookie, _ := c.Cookie("session")
+	cookie, err := c.Request().Cookie("session")
+	if err != nil {
+		adres.Message = err.Error()
+		return c.JSON(http.StatusBadRequest, adres)
+	}
 	token := cookie.Value
 	ID, err := adh.ss.ADregister(token, adreq.Title, adreq.Category, adreq.Price, adreq.Area, adreq.NumberOfRooms, adreq.YearOfConstruction, adreq.Floor, adreq.Description, adreq.Elevator, adreq.Store, adreq.Parking, adreq.OwnerID, adreq.Lt, adreq.Long, adreq.AvatarURL)
 	if err != nil {
