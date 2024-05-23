@@ -23,21 +23,21 @@ type LoginResponse struct {
 }
 
 type ADregisterRequest struct {
-	Title              string `json:"title"`
-	Category           string `json:"category"`
-	Price              string `json:"price"`
-	Area               string `json:"area"`
-	NumberOfRooms      string `json:"numberOfRooms"`
-	YearOfConstruction string `json:"yearOfConstruction"`
-	Floor              string `json:"floor"`
-	Description        string `json:"description"`
-	Elevator           string `json:"elevator"`
-	Store              string `json:"store"`
-	Parking            string `json:"parking"`
-	OwnerID            string `json:"ownerid"`
-	Lt                 string `json:"lt"`
-	Long               string `json:"long"`
-	AvatarURL          string `json:"avatarURL"`
+	Title              string  `json:"title"`
+	Category           string  `json:"category"`
+	Price              string  `json:"price"`
+	Area               string  `json:"area"`
+	NumberOfRooms      string  `json:"numberOfRooms"`
+	YearOfConstruction string  `json:"yearOfConstruction"`
+	Floor              string  `json:"floor"`
+	Description        string  `json:"description"`
+	Elevator           string  `json:"elevator"`
+	Store              string  `json:"store"`
+	Parking            string  `json:"parking"`
+	OwnerID            string  `json:"ownerid"`
+	Lt                 float64 `json:"lt"`
+	Long               float64 `json:"long"`
+	AvatarURL          string  `json:"avatarURL"`
 }
 
 type ADregisterResponse struct {

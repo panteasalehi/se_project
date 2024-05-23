@@ -29,8 +29,8 @@ func Test_ADregister_core(t *testing.T) {
 		Store:              "true",
 		Parking:            "true",
 		OwnerID:            "1",
-		Lt:                 "1",
-		Long:               "1",
+		Lt:                 1.0,
+		Long:               1.0,
 		AvatarURL:          "test",
 	}
 	as := ADregister.NewADregisterService()

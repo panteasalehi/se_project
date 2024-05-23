@@ -23,7 +23,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	isDBinitiated := os.Getenv("DB_INITIATED")
+	isDBinitiated := os.Getenv("DB_INIT")
 	if isDBinitiated == "false" {
 		err = DB_init()
 		if err != nil {
@@ -87,6 +87,6 @@ func DB_init() error {
 	if err != nil {
 		return err
 	}
-	os.Setenv("DB_INITIATED", "true")
+	os.Setenv("DB_INIT", "true")
 	return nil
 }
