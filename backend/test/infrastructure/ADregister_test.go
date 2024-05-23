@@ -32,7 +32,7 @@ func Test_ADreg_inf(t *testing.T) {
 		AvatarURL:          "test",
 	}
 	ADreg := ADregister.NewADregisterRepository()
-	ID, err := ADreg.StoreAD(AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.UserID, AD.Lt, AD.Long, AD.AvatarURL)
+	ID, err := ADreg.StoreAD(AD)
 	assert.Nil(t, err, "Error should be nil")
 	assert.NotEqual(t, 0, ID, "ID should not be 0")
 }

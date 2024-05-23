@@ -31,9 +31,9 @@ type ADregisterRequest struct {
 	YearOfConstruction string `json:"yearOfConstruction"`
 	Floor              string `json:"floor"`
 	Description        string `json:"description"`
-	Elevator           bool   `json:"elevator"`
-	Store              bool   `json:"store"`
-	Parking            bool   `json:"parking"`
+	Elevator           string `json:"elevator"`
+	Store              string `json:"store"`
+	Parking            string `json:"parking"`
 	OwnerID            string `json:"ownerid"`
 	Lt                 string `json:"lt"`
 	Long               string `json:"long"`
