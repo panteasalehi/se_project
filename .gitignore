@@ -23,6 +23,6 @@ frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
 frontend/db.json 
-
+.env
 /backend/.env
 /backend/go-api.tar
