@@ -4,7 +4,7 @@ import (
 	"MelkOnline/internal/controller"
 	"MelkOnline/internal/core/signup"
 	"net/http"
-	"MelkOnline/internal/core/auth"
+
 	echo "github.com/labstack/echo/v4"
 )
 
@@ -25,7 +25,7 @@ func (sh *SignupHandler) Signup(c echo.Context) error {
 		sres.Message = err.Error()
 		return c.JSON(http.StatusBadRequest, sres)
 	}
-	ID, err := sh.ss.Signup(sreq.Email, sreq.Password, sreq.Name)
+	ID, token, err := sh.ss.Signup(sreq.Email, sreq.Password, sreq.Name)
 	if err != nil {
 		sres.Message = err.Error()
 		return c.JSON(http.StatusInternalServerError, sres)
@@ -34,7 +34,7 @@ func (sh *SignupHandler) Signup(c echo.Context) error {
 	sres.UserID = ID
 	cookie := new(http.Cookie)
 	cookie.Name = "session"
-	cookie.Value = auth.NewAuthService().GenerateToken()
+	cookie.Value = token
 	cookie.Path = "/"
 	cookie.HttpOnly = true
 	cookie.Secure = false
