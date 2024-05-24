@@ -21,7 +21,8 @@ export const Login = (props) => { //parent componenet send some thing to childre
         fetch("http://localhost:8080/login", {
             method: "POST",
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(regobj)
+            body: JSON.stringify(regobj),
+            credentials : 'include'
         }).then((res) => {
             if (res.status === 200) {
                 toast.success('Login Success');
