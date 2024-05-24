@@ -69,3 +69,25 @@ type MainpageResponse struct {
 	Message string     `json:"message"`
 	Ads     []model.AD `json:"ads"`
 }
+
+type SearchFilteringResponse struct {
+	Message string     `json:"message"`
+	Ads     []model.AD `json:"ads"`
+}
+
+type SearchFilteringRequest struct {
+	Category      string `json:"Category"`
+	MaxPrice      int    `json:"MaxPrice"`
+	MinPrice      int    `json:"MinPrice"`
+	MaxFloor      int    `json:"MaxFLoor"`
+	MinFloor      int    `json:"MinFLoor"`
+	MaxArea       int    `json:"MaxArea"`
+	MinArea       int    `json:"MinArea"`
+	NumberOfRooms int    `json:"NumberOfRooms"`
+	Parking       bool   `json:"Parking"`
+	Store         bool   `json:"Store"`
+	Elevator      bool   `json:"Elevator"`
+	MaxAge        int    `json:"MaxAge"`
+	//the ones that he didn't choose will be nil
+	//find the matches using the functions and put them all in a list without repetitions
+}
