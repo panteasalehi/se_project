@@ -1,7 +1,7 @@
 package signup
 
 type SignupContract interface {
-	Signup(email string, password string, name string) (int, error)
+	Signup(email string, password string, name string) (int, string, error)
 }
 
 type SignupRepositoryContract interface {

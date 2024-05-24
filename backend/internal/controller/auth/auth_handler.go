@@ -24,19 +24,19 @@ func (lh *LoginHandler) Login(c echo.Context) error {
 		lres.Message = "Invalid request"
 		return c.JSON(400, lres)
 	}
-	if err := c.Validate(lreq); err != nil {
-		lres.Message = "Invalid request"
-		return c.JSON(400, lres)
-	}
 	session, err := lh.as.Login(lreq.Email, lreq.Password)
 	if err != nil {
-		lres.Message = "Invalid credentials"
+		lres.Message = err.Error()
 		return c.JSON(401, lres)
 	}
 	lres.Message = "Login successful"
-	var cookie http.Cookie
+	cookie := new(http.Cookie)
 	cookie.Name = "session"
 	cookie.Value = session.Token
-	c.SetCookie(&cookie)
+	cookie.Path = "/"
+	cookie.HttpOnly = true
+	cookie.Secure = false
+	cookie.SameSite = http.SameSiteNoneMode
+	c.SetCookie(cookie)
 	return c.JSON(200, lres)
 }

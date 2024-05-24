@@ -21,7 +21,7 @@ type AD struct {
 	Title              string  `json:"title"`
 	Category           string  `json:"category"`
 	Price              int     `json:"price"`
-	Area               float32 `json:"area"`
+	Area               float64 `json:"area"`
 	NumberOfRooms      int     `json:"numberOfRooms"`
 	YearOfConstruction int     `json:"YearOfConstruction"`
 	Floor              string  `json:"floor"`
@@ -30,8 +30,9 @@ type AD struct {
 	Store              bool    `json:"store"`
 	Parking            bool    `json:"parking"`
 	UserID             int     `json:"userid"`
-	Lt                 float32 `json:"lt"`
-	Long               float32 `json:"long"`
+	Lt                 float64 `json:"lt"`
+	Long               float64 `json:"long"`
+	AvatarURL          string  `json:"avatarurl"`
 }
 
 type Message struct {

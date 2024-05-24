@@ -25,12 +25,20 @@ func (sh *SignupHandler) Signup(c echo.Context) error {
 		sres.Message = err.Error()
 		return c.JSON(http.StatusBadRequest, sres)
 	}
-	ID, err := sh.ss.Signup(sreq.Email, sreq.Password, sreq.Name)
+	ID, token, err := sh.ss.Signup(sreq.Email, sreq.Password, sreq.Name)
 	if err != nil {
 		sres.Message = err.Error()
 		return c.JSON(http.StatusInternalServerError, sres)
 	}
 	sres.Message = "User created successfully"
 	sres.UserID = ID
+	cookie := new(http.Cookie)
+	cookie.Name = "session"
+	cookie.Value = token
+	cookie.Path = "/"
+	cookie.HttpOnly = true
+	cookie.Secure = false
+	cookie.SameSite = http.SameSiteNoneMode
+	c.SetCookie(cookie)
 	return c.JSON(http.StatusOK, sres)
 }

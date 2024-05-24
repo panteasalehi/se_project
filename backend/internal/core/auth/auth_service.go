@@ -34,7 +34,7 @@ func (as *AuthService) Login(email string, password string) (model.Session, erro
 		return model.Session{}, errors.New("invalid password")
 	}
 
-	token := as.generateToken()
+	token := as.GenerateToken()
 	err = as.sc.StoreSession(token, user.ID)
 	if err != nil {
 		return model.Session{}, err
@@ -43,7 +43,7 @@ func (as *AuthService) Login(email string, password string) (model.Session, erro
 	return model.Session{Token: token}, nil
 }
 
-func (as *AuthService) generateToken() string {
+func (as *AuthService) GenerateToken() string {
 	return as.rnd.String(64)
 }
 

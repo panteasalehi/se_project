@@ -7,8 +7,10 @@ import (
 	"MelkOnline/internal/controller/mainpage"
 	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
+	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	model "MelkOnline/internal/core"
 
@@ -20,11 +22,13 @@ import (
 )
 
 func main() {
+	fmt.Println("Starting the server...")
+	time.Sleep(20 * time.Second)
 	err := godotenv.Load()
 	if err != nil {
 		panic(err)
 	}
-	isDBinitiated := os.Getenv("DB_INITIATED")
+	isDBinitiated := os.Getenv("DB_INIT")
 	if isDBinitiated == "false" {
 		err = DB_init()
 		if err != nil {
@@ -36,9 +40,10 @@ func main() {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:3000"},
-		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+		AllowCredentials: true,
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
 	}))
 	e.POST("/signup", signup.NewSignupHandler().Signup)
 	e.POST("/login", auth.NewLoginHandler().Login)
@@ -89,6 +94,6 @@ func DB_init() error {
 	if err != nil {
 		return err
 	}
-	os.Setenv("DB_INITIATED", "true")
+	os.Setenv("DB_INIT", "true")
 	return nil
 }
