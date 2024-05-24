@@ -6,8 +6,10 @@ import (
 	"MelkOnline/internal/controller/chat"
 	"MelkOnline/internal/controller/mainpage"
 	"MelkOnline/internal/controller/signup"
+	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	model "MelkOnline/internal/core"
 
@@ -19,6 +21,8 @@ import (
 )
 
 func main() {
+	fmt.Println("Starting the server...")
+	time.Sleep(20 * time.Second)
 	err := godotenv.Load()
 	if err != nil {
 		panic(err)

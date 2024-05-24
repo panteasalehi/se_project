@@ -4,7 +4,7 @@ import (
 	"MelkOnline/internal/controller"
 	"MelkOnline/internal/core/signup"
 	"net/http"
-
+	"MelkOnline/internal/core/auth"
 	echo "github.com/labstack/echo/v4"
 )
 
@@ -32,5 +32,13 @@ func (sh *SignupHandler) Signup(c echo.Context) error {
 	}
 	sres.Message = "User created successfully"
 	sres.UserID = ID
+	cookie := new(http.Cookie)
+	cookie.Name = "session"
+	cookie.Value = auth.NewAuthService().GenerateToken()
+	cookie.Path = "/"
+	cookie.HttpOnly = true
+	cookie.Secure = false
+	cookie.SameSite = http.SameSiteNoneMode
+	c.SetCookie(cookie)
 	return c.JSON(http.StatusOK, sres)
 }
