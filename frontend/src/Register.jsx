@@ -20,7 +20,8 @@ export const Register = (props) => {
         fetch("http://localhost:8080/signup", {
             method: "POST",
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(regobj)
+            body: JSON.stringify(regobj),
+            credentials: 'include'
         }).then((res) => {
             if (res.ok) {
                 toast.success('Registered successfully.');
