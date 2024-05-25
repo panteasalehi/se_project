@@ -90,7 +90,7 @@ jobs:
       run: |
         echo "DB_CONNECTION=root:963233@tcp(localhost:3306)/MelkOnline?charset=utf8mb4&parseTime=True&loc=Local
         DB_INIT=false
-        REDIS_PASS=redispass" > .env
+        REDIS_PASS=redispass" > backend/.env
         cat .env
 
     - name: Run inf tests
