@@ -16,6 +16,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -27,7 +28,7 @@ type EchoServer struct {
 func NewEchoServer() *EchoServer {
 	echo := echo.New()
 	es := &EchoServer{e: echo}
-	err := godotenv.Load("/home/runner/work/se_project/se_project/backend/.env")
+	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
 	if err != nil {
 		panic(err)
 	}
@@ -41,7 +42,8 @@ func (es *EchoServer) Route() {
 		AllowCredentials: true,
 		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
-		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
+			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
 	es.e.POST("/signup", signup.NewSignupHandler().Signup)
 	es.e.POST("/login", auth.NewLoginHandler().Login)

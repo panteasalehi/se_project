@@ -19,7 +19,7 @@ func NewMainpageHandler() *MainpageHandler {
 
 func (m *MainpageHandler) GetAds(c echo.Context) error {
 	mres := &model.MainpageResponse{}
-	session, err := c.Cookie("session")
+	session, err := c.Request().Cookie("session")
 	if err != nil {
 		mres.Message = "Session not found"
 		return c.JSON(400, mres)
