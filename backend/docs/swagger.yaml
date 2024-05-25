@@ -1,0 +1,331 @@
+basePath: /
+definitions:
+  controller.ADregisterRequest:
+    properties:
+      area:
+        type: string
+      avatarURL:
+        type: string
+      category:
+        type: string
+      description:
+        type: string
+      elevator:
+        type: string
+      floor:
+        type: string
+      long:
+        type: number
+      lt:
+        type: number
+      numberOfRooms:
+        type: string
+      ownerid:
+        type: string
+      parking:
+        type: string
+      price:
+        type: string
+      store:
+        type: string
+      title:
+        type: string
+      yearOfConstruction:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: SE Project MelkOnline backend API
+  title: MelkOnline API
+  version: "1.0"
+paths:
+  /ADregister:
+    post:
+      consumes:
+      - application/json
+      description: registration of ADs and giving each an ID
+      parameters:
+      - description: Advertisement data
+        in: body
+        name: ad
+        required: true
+        schema:
+          $ref: '#/definitions/controller.ADregisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: registration of ADs
+      tags:
+      - ADregister
+  /Chat/page:
+    get:
+      consumes:
+      - application/json
+      description: gets chat's ID and gets the messages in the chat
+      parameters:
+      - description: Chat's ID
+        in: body
+        name: chatid
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get messages in chat
+      tags:
+      - Chat
+  /Chat/send/:
+    post:
+      consumes:
+      - application/json
+      description: gets content of message and reciever and sender and chat's ID and
+        sending the message to reciever
+      parameters:
+      - description: Chat's ID
+        in: body
+        name: chatid
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: send messages in chat
+      tags:
+      - Chat
+  /login/:
+    post:
+      consumes:
+      - application/json
+      description: get user's email and password and Login
+      parameters:
+      - description: user's Email
+        in: body
+        name: Email
+        required: true
+        schema:
+          type: string
+      - description: user's password
+        in: body
+        name: Password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: user Login
+      tags:
+      - login
+  /mainpage/:
+    get:
+      consumes:
+      - application/json
+      description: get ads from database to view in mainpage
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get ads to view in mainpage
+      tags:
+      - mainpage
+  /searchfiltering/:
+    get:
+      consumes:
+      - application/json
+      description: filter ads and get the desired ads from database
+      parameters:
+      - description: Category to filter
+        in: body
+        name: Category
+        required: true
+        schema:
+          type: string
+      - description: Max Price to filter
+        in: body
+        name: MaxPrice
+        required: true
+        schema:
+          type: integer
+      - description: Min Price to  filter
+        in: body
+        name: MinPrice
+        required: true
+        schema:
+          type: integer
+      - description: Max Area to filter
+        in: body
+        name: MaxArea
+        required: true
+        schema:
+          type: integer
+      - description: Min Area to filter
+        in: body
+        name: MinArea
+        required: true
+        schema:
+          type: integer
+      - description: Number of Rooms to filter
+        in: body
+        name: NumberOfRooms
+        required: true
+        schema:
+          type: integer
+      - description: Max age to filter
+        in: body
+        name: MaxAge
+        required: true
+        schema:
+          type: integer
+      - description: Max Floor to filter
+        in: body
+        name: MaxFloor
+        required: true
+        schema:
+          type: integer
+      - description: Min Floor to filter
+        in: body
+        name: MinFloor
+        required: true
+        schema:
+          type: integer
+      - description: availability of Elevator
+        in: body
+        name: Elevator
+        required: true
+        schema:
+          type: boolean
+      - description: availability of Store
+        in: body
+        name: Store
+        required: true
+        schema:
+          type: boolean
+      - description: availability of Parking
+        in: body
+        name: Parking
+        required: true
+        schema:
+          type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Searchfiltering
+      tags:
+      - searchfiltering
+  /signup/:
+    post:
+      consumes:
+      - application/json
+      description: get user's email and password and name and signup
+      parameters:
+      - description: user's Email
+        in: body
+        name: Email
+        required: true
+        schema:
+          type: string
+      - description: user's password
+        in: body
+        name: Password
+        required: true
+        schema:
+          type: string
+      - description: user's password
+        in: body
+        name: Name
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: user signup
+      tags:
+      - signup
+swagger: "2.0"

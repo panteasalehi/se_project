@@ -20,32 +20,16 @@ func NewADregisterHandler() *ADregisterHandler {
 
 // ADregister	 registration of ADs
 //
-//		@Summary		registration of ADs
-//		@Description	registration of ADs and giving each an ID
-//		@Tags			ADregister
-//		@Accept			json
-//		@Produce		json
-//		@Param			Title				body		string		true	"Tilte of Ad"
-//		@Param			Category			body		string		true	"Category of Ad"
-//		@Param			Price				body		int			true	"Price of Ad"
-//		@Param			Area				body		int			true	"Area of Ad"
-//		@Param			NumberOfRooms		body		int			true	"Number of Rooms of Ad"
-//		@Param			YearOfConstruction	body		int			true	"Year Of Construction of Ad"
-//		@Param			Floor				body		int			true	"Floor of Ad"
-//		@Param			Description			body		string		true	"Description of Ad"
-//		@Param			Elevator			body		bool		true	"availability of Elevator of Ad"
-//		@Param			Store				body		bool		true	"availability of Store of Ad"
-//		@Param			Parking				body		bool		true	"availability of Parking of Ad"
-//		@Param			OwnerID				body		string		true	"ID of the owner of Ad"
-//		@Param			Lt					body		float64		true	"Location of Ad"
-//		@Param			Long				body		float64		true	"Location of Ad"
-//		@Param			AvatarURL			body		string		true	"picture of Ad"
-//	 @Param			Cookie				cookie		http.Cookie	true	"Cookie"
-//		@Success		200					{string}	string
-//		@Failure		400					{string}	string
-//		@Failure		400					{string}	string
-//		@Failure		500					{string}	string
-//		@Router			/ADregister/{Title,Category,Price,Area,NumberOfRooms,YearOfConstruction,Floor,Description,Elevator,Store,Parking,OwnerID,Lt,Long,AvatarURL,Cookie} [post]
+//	@Summary		registration of ADs
+//	@Description	registration of ADs and giving each an ID
+//	@Tags			ADregister
+//	@Accept			json
+//	@Produce		json
+//	@Param			ad	body		controller.ADregisterRequest	true	"Advertisement data"
+//	@Success		200	{string}	string
+//	@Failure		400	{string}	string
+//	@Failure		500	{string}	string
+//	@Router			/ADregister [post]
 func (adh *ADregisterHandler) ADregister(c echo.Context) error {
 	adreq := &controller.ADregisterRequest{}
 	adres := &controller.ADregisterResponse{}

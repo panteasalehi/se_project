@@ -19,16 +19,15 @@ func NewMainpageHandler() *MainpageHandler {
 
 // GetAds	 	 get Ads
 //
-//		@Summary		get ads to view in mainpage
-//		@Description	get ads from database to view in mainpage
-//		@Tags			mainpage
-//		@Accept			json
-//		@Produce		json
-//	 @Param			Cookie		cookie		http.Cookie	true	"Cookie"
-//		@Success		200			{string}	string
-//		@Failure		400			{string}	string
-//		@Failure		500			{string}	string
-//		@Router			/mainpage/{Cookie} [get]
+//	@Summary		get ads to view in mainpage
+//	@Description	get ads from database to view in mainpage
+//	@Tags			mainpage
+//	@Accept			json
+//	@Produce		json
+//	@Success		200		{string}	string
+//	@Failure		400		{string}	string
+//	@Failure		500		{string}	string
+//	@Router			/mainpage/ [get]
 func (m *MainpageHandler) GetAds(c echo.Context) error {
 	mres := &model.MainpageResponse{}
 	session, err := c.Request().Cookie("session")

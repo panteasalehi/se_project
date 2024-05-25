@@ -26,15 +26,12 @@ func NewChatHandler() *ChatHandler {
 //	@Tags			Chat
 //	@Accept			json
 //	@Produce		json
-//	@Param			Content		body		string	true	"Contet of message"
-//	@Param			SenderID	body		int		true	"Sender's ID "
-//	@Param			RecieverID	body		int		true	"Reciever's ID"
-//	@Param			ChatID		body		int		true	"Chat's ID"
-//	@Success		200			{string}	string
-//	@Failure		400			{string}	string
-//	@Failure		400			{string}	string
-//	@Failure		400			{string}	string
-//	@Router		    /Chat/send/?chatid=/{Content,SenderID,RecieverID,ChatID} [post]
+//	@Param			chatid	body		int	true	"Chat's ID"
+//	@Success		200		{string}	string
+//	@Failure		400		{string}	string
+//	@Failure		400		{string}	string
+//	@Failure		400		{string}	string
+//	@Router			/Chat/send/ [post]
 func (ch *ChatHandler) SendMessage(c echo.Context) error {
 	csreq, csres := &model.ChatSendMessageRequest{}, &model.ChatSendMessageResponse{}
 	if err := c.Bind(csreq); err != nil {
@@ -61,18 +58,19 @@ func (ch *ChatHandler) SendMessage(c echo.Context) error {
 	return c.JSON(200, csres)
 }
 
-//	 GetMessagesByChatID	 	get messages in chat
-//		@Summary				get messages in chat
-//		@Description			gets chat's ID and gets the messages in the chat
-//		@Tags			Chat
-//		@Accept			json
-//		@Produce		json
-//		@Param			ChatID		body		int		true	"Chat's ID"
-//		@Success		200			{string}	string
-//		@Failure		400			{string}	string
-//		@Failure		400			{string}	string
-//		@Failure		500			{string}	string
-//		@Router		    /Chat/page/?chatid=/{ChatID} [get]
+//	GetMessagesByChatID	 	get messages in chat
+//
+// @Summary		get messages in chat
+// @Description	gets chat's ID and gets the messages in the chat
+// @Tags			Chat
+// @Accept			json
+// @Produce		json
+// @Param			chatid	body		int	true	"Chat's ID"
+// @Success		200		{string}	string
+// @Failure		400		{string}	string
+// @Failure		400		{string}	string
+// @Failure		500		{string}	string
+// @Router			/Chat/page [get]
 func (ch *ChatHandler) GetMessagesByChatID(c echo.Context) error {
 	cgreq, cgres := &model.ChatGetMessagesRequest{}, &model.ChatGetMessagesResponse{}
 	if err := c.Bind(cgreq); err != nil {

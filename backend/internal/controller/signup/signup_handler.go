@@ -31,7 +31,7 @@ func NewSignupHandler() *SignupHandler {
 //	@Success		200			{string}	string
 //	@Failure		400			{string}	string
 //	@Failure		500			{string}	string
-//	@Router			/signup/{Email,Password,Name} [post]
+//	@Router			/signup/ [post]
 func (sh *SignupHandler) Signup(c echo.Context) error {
 	sreq := &controller.SignupRequest{}
 	sres := &controller.SignupResponse{}

@@ -13,6 +13,8 @@ import (
 	"net/http"
 	"os"
 
+	_ "MelkOnline/docs"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
@@ -26,7 +28,7 @@ type EchoServer struct {
 func NewEchoServer() *EchoServer {
 	echo := echo.New()
 	es := &EchoServer{e: echo}
-	err := godotenv.Load("/home/runner/work/se_project/se_project/backend/.env")
+	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
 	if err != nil {
 		panic(err)
 	}
