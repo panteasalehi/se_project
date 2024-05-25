@@ -86,9 +86,6 @@ jobs:
       run: go mod tidy
       working-directory: ./backend/cmd
 
-    - name: Run main.go
-      run: go run main.go
-      working-directory: ./backend/cmd
 
     - name: Run unit tests
       run: go test ./... -v
