@@ -28,7 +28,7 @@ type EchoServer struct {
 func NewEchoServer() *EchoServer {
 	echo := echo.New()
 	es := &EchoServer{e: echo}
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
+	err := godotenv.Load("/home/runner/work/se_project/se_project/backend/.env")
 	if err != nil {
 		panic(err)
 	}
