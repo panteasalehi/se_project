@@ -1,19 +1,19 @@
 package infrastructure
 
 import (
+	"MelkOnline/internal"
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure/ADregister"
 	"testing"
+	"time"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_ADreg_inf(t *testing.T) {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		panic(err)
-	}
+	es := internal.NewEchoServer()
+	go es.Start()
+	time.Sleep(1 * time.Second)
 	AD := &model.AD{
 		Title:              "test",
 		Category:           "test",

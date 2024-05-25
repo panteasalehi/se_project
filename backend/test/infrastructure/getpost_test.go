@@ -6,15 +6,10 @@ import (
 	"MelkOnline/internal/infrastructure/getpost"
 	"testing"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_Getpost_inf(t *testing.T) {
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
-	if err != nil {
-		panic(err)
-	}
 	AD := &model.AD{
 		Title:              "test",
 		Category:           "test",

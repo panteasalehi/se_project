@@ -6,16 +6,11 @@ import (
 	"MelkOnline/internal/infrastructure/signup"
 	"testing"
 
-	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/random"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_auth_inf(t *testing.T) {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		panic(err)
-	}
 	u := &model.User{
 		Email:    "example@test.com",
 		Password: "test",
@@ -25,7 +20,7 @@ func Test_auth_inf(t *testing.T) {
 		Score:    0,
 	}
 	sr := signup.NewSignupRepository()
-	_, err = sr.StoreUser(u.Email, u.Password, u.Name, u.Salt, u.Type, u.Score)
+	_, err := sr.StoreUser(u.Email, u.Password, u.Name, u.Salt, u.Type, u.Score)
 	assert.Nil(t, err, "Error should be nil")
 	ar := auth.NewAuthRepository()
 	user, err := ar.FindUserByEmail(u.Email)

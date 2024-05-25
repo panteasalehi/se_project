@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -69,8 +68,6 @@ func (es *EchoServer) Start() {
 }
 
 func (es *EchoServer) Stop() {
-	fmt.Println("Server is stopping")
-	time.Sleep(5 * time.Second)
 	es.e.Close()
 }
 
