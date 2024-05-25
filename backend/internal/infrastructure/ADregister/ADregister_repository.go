@@ -1,12 +1,10 @@
 package ADregister
 
 import (
-	"os"
-
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
 	model "MelkOnline/internal/core"
+	"MelkOnline/internal/infrastructure"
 )
 
 type ADregisterRepository struct {
@@ -14,14 +12,7 @@ type ADregisterRepository struct {
 }
 
 func NewADregisterRepository() *ADregisterRepository {
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-	return &ADregisterRepository{DBconn: db}
+	return &ADregisterRepository{DBconn: infrastructure.GetDB()}
 }
 
 func (sr *ADregisterRepository) StoreAD(Ad *model.AD) (int, error) {

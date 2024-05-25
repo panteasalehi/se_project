@@ -2,9 +2,8 @@ package auth
 
 import (
 	model "MelkOnline/internal/core"
-	"os"
+	"MelkOnline/internal/infrastructure"
 
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -13,14 +12,7 @@ type AuthRepository struct {
 }
 
 func NewAuthRepository() *AuthRepository {
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-	return &AuthRepository{DBConn: db}
+	return &AuthRepository{DBConn: infrastructure.GetDB()}
 }
 
 func (ar *AuthRepository) FindUserByEmail(email string) (*model.User, error) {

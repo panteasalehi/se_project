@@ -10,7 +10,7 @@ import (
 
 func Test_signup_service(t *testing.T) {
 	user := &model.User{
-		Email:    "galssakjd",
+		Email:    "test1@example.com",
 		Password: "abcd",
 		Name:     "abcd",
 	}
