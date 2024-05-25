@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build, Push Docker Images, and Run Go Unit Tests
 
 on:
   push:
@@ -34,13 +34,13 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push frontend image
-      uses: docker/build-push-action@v2
-      with:
-        context: ./frontend
-        push: true
-        tags: |
-          ${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:latest
+#    - name: Build and push frontend image
+#      uses: docker/build-push-action@v2
+#      with:
+#        context: ./frontend
+#        push: true
+#        tags: |
+#          ${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:latest
 
     - name: Build and push backend image
       uses: docker/build-push-action@v2
@@ -49,3 +49,51 @@ jobs:
         push: true
         tags: |
           ${{ env.REGISTRY }}/${{ env.IMAGE_BACKEND }}:latest
+
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: 963233
+          MYSQL_DATABASE: MelkOnline
+        ports:
+          - 3306:3306
+
+      redis:
+        image: redis:alpine
+        env:
+          REDIS_PASSWORD: redispass
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22'
+
+
+    - name: Install dependencies
+      run: go mod tidy
+      working-directory: ./backend/cmd
+
+    - name: Create and write to file
+      run: |
+        echo "DB_CONNECTION=root:963233@tcp(localhost:3306)/MelkOnline?charset=utf8mb4&parseTime=True&loc=Local
+        DB_INIT=false
+        REDIS_PASS=redispass" > backend/.env
+        cat backend/.env
+
+    - name: Run inf tests
+      run: go test . -v
+      working-directory: ./backend/test/infrastructure
+
+    - name: Run core tests
+      run: go test . -v
+      working-directory: ./backend/test/core

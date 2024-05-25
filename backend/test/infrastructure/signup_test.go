@@ -6,16 +6,11 @@ import (
 
 	signup "MelkOnline/internal/infrastructure/signup"
 
-	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/random"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_signup_inf(t *testing.T) {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		panic(err)
-	}
 	u := &model.User{
 		Email:    "test",
 		Password: "test",

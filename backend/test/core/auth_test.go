@@ -3,22 +3,20 @@ package core
 import (
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/core/auth"
+	"MelkOnline/internal/infrastructure/signup"
 	"testing"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_auth_valid_core(t *testing.T) {
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
-	if err != nil {
-		panic(err)
-	}
 	user := &model.User{
-		Email:    "galskjd",
+		Email:    "test@example.com",
 		Password: "abcd",
 		Name:     "abcd",
 	}
+	sr := signup.NewSignupRepository()
+	sr.StoreUser(user.Email, user.Password, user.Name, auth.NewAuthService().GenerateToken(), "user", 0)
 	as := auth.NewAuthService()
 	session, err := as.Login(user.Email, user.Password)
 	assert.Nil(t, err, "Error should be nil")
@@ -26,12 +24,8 @@ func Test_auth_valid_core(t *testing.T) {
 }
 
 func Test_auth_invalid_core(t *testing.T) {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		panic(err)
-	}
 	user := &model.User{
-		Email:    "galskjd",
+		Email:    "test@example.com",
 		Password: "wrong",
 		Name:     "abcd",
 	}

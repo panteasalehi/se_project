@@ -5,15 +5,10 @@ import (
 	"MelkOnline/internal/infrastructure/ADregister"
 	"testing"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_ADreg_inf(t *testing.T) {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		panic(err)
-	}
 	AD := &model.AD{
 		Title:              "test",
 		Category:           "test",
