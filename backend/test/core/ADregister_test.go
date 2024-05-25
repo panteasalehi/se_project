@@ -7,15 +7,10 @@ import (
 	"MelkOnline/internal/core/ADregister"
 	"MelkOnline/internal/infrastructure/auth"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_ADregister_core(t *testing.T) {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		panic(err)
-	}
 	AD := &model.ADregisterRequest{
 		Title:              "test",
 		Category:           "test",
@@ -35,7 +30,7 @@ func Test_ADregister_core(t *testing.T) {
 	}
 	as := ADregister.NewADregisterService()
 	sr := auth.NewSessionRepository()
-	err = sr.StoreSession("1", 1)
+	err := sr.StoreSession("1", 1)
 	if err != nil {
 		panic(err)
 	}

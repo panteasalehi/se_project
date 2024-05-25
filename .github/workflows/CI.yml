@@ -86,7 +86,17 @@ jobs:
       run: go mod tidy
       working-directory: ./backend/cmd
 
+    - name: Create and write to file
+      run: |
+        echo "DB_CONNECTION=root:963233@tcp(localhost:3306)/MelkOnline?charset=utf8mb4&parseTime=True&loc=Local
+        DB_INIT=false
+        REDIS_PASS=redispass" > .env
+        cat .env
 
-    - name: Run unit tests
-      run: go test ./... -v
+    - name: Run inf tests
+      run: go test . -v
       working-directory: ./backend/test/infrastructure
+
+    - name: Run core tests
+      run: go test . -v
+      working-directory: ./backend/test/core
