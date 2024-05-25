@@ -73,9 +73,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up TMATE
-      uses: mxschmitt/action-tmate@v3
-
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
@@ -91,7 +88,7 @@ jobs:
         echo "DB_CONNECTION=root:963233@tcp(localhost:3306)/MelkOnline?charset=utf8mb4&parseTime=True&loc=Local
         DB_INIT=false
         REDIS_PASS=redispass" > backend/.env
-        cat .env
+        cat backend/.env
 
     - name: Run inf tests
       run: go test . -v
