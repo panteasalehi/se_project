@@ -4,7 +4,9 @@ import (
 	"MelkOnline/internal/controller/ADregister"
 	"MelkOnline/internal/controller/auth"
 	"MelkOnline/internal/controller/chat"
+	"MelkOnline/internal/controller/getpost"
 	"MelkOnline/internal/controller/mainpage"
+	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
 	"fmt"
 	"net/http"
@@ -61,7 +63,9 @@ func main() {
 	e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
 	e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
 	e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
-	e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds) //??
+	e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds)
+	e.GET("/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
+	e.GET("/getpost/:id", getpost.NewGetPostHandler().GetPost)
 
 	e.Start(":8080")
 }

@@ -36,7 +36,7 @@ export const Postdetail = (props) => {
         const getItems = async () => {
           try{
             
-            let response = await axios.get("http://localhost:8000/posts?id=" + id);
+            let response = await axios.get("http://localhost:8080/getpost/" + id, {withCredentials: true});
             if (response.status === 200) {
               dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
             }

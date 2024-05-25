@@ -20,7 +20,8 @@ func Test_signup_service(t *testing.T) {
 		Name:     "abcd",
 	}
 	sr := signup.NewSignupService()
-	ID, err := sr.Signup(user.Email, user.Password, user.Name)
+	ID,token, err := sr.Signup(user.Email, user.Password, user.Name)
 	assert.Nil(t, err, "Error should be nil")
+	assert.NotEqual(t, "", token, "Token should not be empty")
 	assert.NotEqual(t, 0, ID, "ID should not be 0")
 }
