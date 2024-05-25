@@ -1,8 +1,8 @@
 package auth
 
 import (
+	"MelkOnline/internal/infrastructure"
 	"context"
-	"os"
 	"strconv"
 	"time"
 
@@ -14,12 +14,7 @@ type SessionRepository struct {
 }
 
 func NewSessionRepository() *SessionRepository {
-	redisPass := os.Getenv("REDIS_PASS")
-	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: redisPass,
-	})
-	return &SessionRepository{RedisConn: client}
+	return &SessionRepository{RedisConn: infrastructure.GetRedis()}
 }
 
 func (sr *SessionRepository) ValidateSession(token string) (int, error) {
@@ -27,7 +22,7 @@ func (sr *SessionRepository) ValidateSession(token string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	uidInt, err := strconv.Atoi(uid)
+	uidInt, _ := strconv.Atoi(uid)
 	return uidInt, nil
 }
 

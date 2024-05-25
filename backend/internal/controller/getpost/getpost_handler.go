@@ -1,6 +1,7 @@
 package getpost
 
 import (
+	"MelkOnline/internal/core"
 	"MelkOnline/internal/core/getpost"
 	"strconv"
 
@@ -19,9 +20,9 @@ func NewGetPostHandler() *GetPostHandler {
 
 func (gph *GetPostHandler) GetPost(c echo.Context) error {
 	id := c.Param("id")
-	token, err := c.Cookie("token")
+	token, err := c.Cookie("session")
 	if err != nil {
-		return c.JSON(400, "Token not found")
+		return c.JSON(400, "session not found")
 	}
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
@@ -31,5 +32,7 @@ func (gph *GetPostHandler) GetPost(c echo.Context) error {
 	if err != nil {
 		return c.JSON(400, err.Error())
 	}
+	adArr := make([]core.AD, 1)
+	adArr[0] = *ad
 	return c.JSON(200, ad)
 }

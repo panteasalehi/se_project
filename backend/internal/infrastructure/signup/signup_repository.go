@@ -3,9 +3,8 @@ package signup
 import (
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/core/auth"
-	"os"
+	"MelkOnline/internal/infrastructure"
 
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -14,14 +13,7 @@ type SignupRepository struct {
 }
 
 func NewSignupRepository() *SignupRepository {
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-	return &SignupRepository{DBconn: db}
+	return &SignupRepository{DBconn: infrastructure.GetDB()}
 }
 
 func (sr *SignupRepository) StoreUser(email string, password string, name string, salt string, userType string, score float32) (int, error) {

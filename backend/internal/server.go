@@ -9,15 +9,14 @@ import (
 	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
 	model "MelkOnline/internal/core"
-	"fmt"
+	"MelkOnline/internal/infrastructure"
 	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 type EchoServer struct {
@@ -41,7 +40,8 @@ func (es *EchoServer) Route() {
 		AllowCredentials: true,
 		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
-		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
+			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
 	es.e.POST("/signup", signup.NewSignupHandler().Signup)
 	es.e.POST("/login", auth.NewLoginHandler().Login)
@@ -54,9 +54,8 @@ func (es *EchoServer) Route() {
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
 }
 
-func (es *EchoServer) Start() {
+func (es *EchoServer) Start(port string) {
 	isDBinitiated := os.Getenv("DB_INIT")
-	fmt.Println(isDBinitiated)
 	if isDBinitiated == "" {
 		panic("DB_INIT is not set")
 	} else if isDBinitiated == "false" {
@@ -65,7 +64,7 @@ func (es *EchoServer) Start() {
 			panic(err)
 		}
 	}
-	es.e.Logger.Fatal(es.e.Start(":8080"))
+	es.e.Logger.Fatal(es.e.Start(":" + port))
 }
 
 func (es *EchoServer) Stop() {
@@ -73,19 +72,8 @@ func (es *EchoServer) Stop() {
 }
 
 func DB_init() error {
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		return err
-	}
-	DB, err := db.DB()
-	if err != nil {
-		return err
-	}
-	defer DB.Close()
-	err = db.AutoMigrate(&model.User{})
+	db := infrastructure.GetDB()
+	err := db.AutoMigrate(&model.User{})
 	if err != nil {
 		return err
 	}

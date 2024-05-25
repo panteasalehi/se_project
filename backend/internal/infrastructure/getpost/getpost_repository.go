@@ -2,9 +2,8 @@ package getpost
 
 import (
 	"MelkOnline/internal/core"
-	"os"
+	"MelkOnline/internal/infrastructure"
 
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -13,14 +12,7 @@ type GetPostRepository struct {
 }
 
 func NewGetPostRepository() *GetPostRepository {
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-	return &GetPostRepository{DBconn: db}
+	return &GetPostRepository{DBconn: infrastructure.GetDB()}
 }
 
 func (gpr *GetPostRepository) GetPost(id int) (*core.AD, error) {

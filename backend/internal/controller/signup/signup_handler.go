@@ -38,7 +38,7 @@ func (sh *SignupHandler) Signup(c echo.Context) error {
 	cookie.Path = "/"
 	cookie.HttpOnly = true
 	cookie.Secure = false
-	cookie.SameSite = http.SameSiteNoneMode
+	cookie.SameSite = http.SameSiteLaxMode
 	c.SetCookie(cookie)
 	return c.JSON(http.StatusOK, sres)
 }

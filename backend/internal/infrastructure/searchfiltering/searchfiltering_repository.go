@@ -2,10 +2,9 @@ package searchfiltering
 
 import (
 	model "MelkOnline/internal/core"
-	"os"
+	"MelkOnline/internal/infrastructure"
 	"time"
 
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -14,14 +13,7 @@ type SearchFilteringRepository struct {
 }
 
 func NewSearchFilteringRepository() *SearchFilteringRepository {
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-	return &SearchFilteringRepository{DBConn: db}
+	return &SearchFilteringRepository{DBConn: infrastructure.GetDB()}
 }
 
 func (ar *SearchFilteringRepository) FindCategoryFilteredADs(Category string) ([]model.AD, error) {
