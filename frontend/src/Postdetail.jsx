@@ -36,7 +36,7 @@ export const Postdetail = (props) => {
         const getItems = async () => {
           try{
             
-            let response = await axios.get("http://localhost:8080/getpost/" + id, {withCredentials: true});
+            let response = await axios.get("http://45.147.97.39:8080/getpost/" + id,{ withCredentials: true });
             if (response.status === 200) {
               dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
             }
@@ -66,7 +66,7 @@ export const Postdetail = (props) => {
                 
                 <img 
                 style = {{width : "35%"}}
-                src={item.avatarURL}
+                src={item.avatarurl}
                 alt ="Avatar"
                 className="h-96 w-96 rounded-full" />
                 <br/>
@@ -77,7 +77,7 @@ export const Postdetail = (props) => {
                 <strong > {item.title}:عنوان اگهی</strong>
                 <br/>
                 <br/>
-                <strong>{item.meterage} :متراژ</strong>
+                <strong>{item.area} :متراژ</strong>
                 <br/>
                 <br/>
                 <strong> {item.price}:قیمت </strong>
@@ -86,7 +86,7 @@ export const Postdetail = (props) => {
                 <strong> {item.floor}:طبقه</strong>
                 <br/>
                 <br/>
-                <strong> {item.room}:تعداد اتاق</strong>
+                <strong> {item.numberOfRooms}:تعداد اتاق</strong>
                 <br/>
                 <br/>
                 <strong>اسانسور:بعدا</strong>
@@ -98,7 +98,7 @@ export const Postdetail = (props) => {
                 <strong>انباری:بعدا</strong>
                 <br/>
                 <br/>
-                <strong> توضیحات:{item.details} </strong>
+                <strong>{item.description}:توضیحات </strong>
                         </div>
         
                </div>
