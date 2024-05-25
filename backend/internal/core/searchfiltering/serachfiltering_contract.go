@@ -4,7 +4,7 @@ import (
 	model "MelkOnline/internal/core"
 )
 
-type SearchFilteringContract interface {
+type SearchFilteringContract interface { ///change
 	FindCategoryFilteredADs(Category string) ([]model.AD, error)
 	FindPriceFilteredADs(Minprice int, Maxprice int) ([]model.AD, error)
 	FindAreaFilteredADs(Minarea int, Maxarea int) ([]model.AD, error)
