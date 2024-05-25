@@ -73,6 +73,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up TMATE
+      uses: mxschmitt/action-tmate@v3
+
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
