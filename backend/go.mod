@@ -16,6 +16,10 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+<<<<<<< HEAD
+	github.com/ghodss/yaml v1.0.0 // indirect
+=======
+>>>>>>> aa5956782e46c2ed31b6d3b139293531fe1889a3
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
@@ -25,10 +29,18 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
+<<<<<<< HEAD
+	github.com/labstack/echo v3.3.10+incompatible // indirect
+	github.com/mailru/easyjson v0.7.7 // indirect
+=======
 	github.com/mailru/easyjson v0.7.6 // indirect
+>>>>>>> aa5956782e46c2ed31b6d3b139293531fe1889a3
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/swaggo/echo-swagger v1.4.1 // indirect
+	github.com/swaggo/files/v2 v2.0.0 // indirect
+	github.com/swaggo/swag v1.16.3 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/crypto v0.22.0 // indirect

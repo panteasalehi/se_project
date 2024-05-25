@@ -14,17 +14,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
-
 	//echo "github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	//_ "MelkOnline/cmd/docs"
-
-	"github.com/labstack/echo/v4"
-	"github.com/swaggo/echo-swagger"
 )
 
 func main() {
@@ -33,6 +27,7 @@ func main() {
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.Logger.Fatal(e.Start(":1323"))
+
 
 	fmt.Println("Starting the server...")
 	time.Sleep(20 * time.Second)
