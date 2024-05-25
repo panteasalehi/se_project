@@ -18,6 +18,20 @@ func NewSignupHandler() *SignupHandler {
 	}
 }
 
+// Signup	 	 user signup
+//
+//	@Summary		user signup
+//	@Description	get user's email and password and name and signup
+//	@Tags			signup
+//	@Accept			json
+//	@Produce		json
+//	@Param			Email		body		string	true	"user's Email"
+//	@Param			Password	body		string	true	"user's password"
+//	@Param			Name		body		string	true	"user's password"
+//	@Success		200			{string}	string
+//	@Failure		400			{string}	string
+//	@Failure		500			{string}	string
+//	@Router			/signup/{Email,Password,Name} [post]
 func (sh *SignupHandler) Signup(c echo.Context) error {
 	sreq := &controller.SignupRequest{}
 	sres := &controller.SignupResponse{}

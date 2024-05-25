@@ -18,6 +18,20 @@ func NewLoginHandler() *LoginHandler {
 	}
 }
 
+// Login	 	 user Login
+//
+//	@Summary		user Login
+//	@Description	get user's email and password and Login
+//	@Tags			login
+//	@Accept			json
+//	@Produce		json
+//	@Param			Email		body		string	true	"user's Email"
+//	@Param			Password	body		string	true	"user's password"
+//	@Success		200			{string}	string
+//	@Failure		400			{string}	string
+//	@Failure		401			{string}	string
+//	@Failure		500			{string}	string
+//	@Router			/login/{Email,Password} [post]
 func (lh *LoginHandler) Login(c echo.Context) error {
 	lreq, lres := &controller.LoginRequest{}, &controller.LoginResponse{}
 	if err := c.Bind(lreq); err != nil {
