@@ -10,17 +10,29 @@ import (
 	"net/http"
 	"os"
 	"time"
-
 	model "MelkOnline/internal/core"
-
 	"github.com/joho/godotenv"
-	echo "github.com/labstack/echo/v4"
+	//echo "github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	//_ "MelkOnline/cmd/docs"
+	
+	"github.com/labstack/echo/v4"
+	"github.com/swaggo/echo-swagger"
+
+	
 )
 
 func main() {
+
+	e := echo.New()
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+
+	e.Logger.Fatal(e.Start(":1323"))
+	
+
+
 	fmt.Println("Starting the server...")
 	time.Sleep(20 * time.Second)
 	err := godotenv.Load()
@@ -35,7 +47,7 @@ func main() {
 		}
 	}
 
-	e := echo.New()
+	
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
