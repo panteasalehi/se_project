@@ -51,6 +51,7 @@ func (es *EchoServer) Route() {
 	es.e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds)
 	es.e.GET("/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
 	es.e.GET("/getpost/:id", getpost.NewGetPostHandler().GetPost)
+	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
 }
 
 func (es *EchoServer) Start() {
