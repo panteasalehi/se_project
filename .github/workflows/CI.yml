@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build, Push Docker Images, and Run Go Unit Tests
 
 on:
   push:
@@ -34,13 +34,13 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-#    - name: Build and push frontend image
-#      uses: docker/build-push-action@v2
-#      with:
-#        context: ./frontend
-#        push: true
-#        tags: |
-#          ${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:latest
+    - name: Build and push frontend image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./frontend
+        push: true
+        tags: |
+          ${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:latest
 
     - name: Build and push backend image
       uses: docker/build-push-action@v2
@@ -49,3 +49,64 @@ jobs:
         push: true
         tags: |
           ${{ env.REGISTRY }}/${{ env.IMAGE_BACKEND }}:latest
+
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: 963233
+          MYSQL_DATABASE: MelkOnline
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      redis:
+        image: redis:alpine
+        env:
+          REDIS_PASSWORD: redispass
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli -a password ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+
+    - name: Wait for MySQL and Redis to be ready
+      run: |
+        while ! mysqladmin ping -h"127.0.0.1" --silent; do
+          echo "Waiting for MySQL..."
+          sleep 5
+        done
+        while ! redis-cli -a password ping; do
+          echo "Waiting for Redis..."
+          sleep 5
+        done
+
+    - name: Install dependencies
+      run: go mod tidy
+      working-directory: ./backend/cmd
+
+    - name: Run main.go
+      run: go run main.go
+      working-directory: ./backend/cmd
+
+    - name: Run unit tests
+      run: go test ./... -v
+      working-directory: ./backend/test/infrastructure

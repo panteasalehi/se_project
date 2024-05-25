@@ -44,7 +44,7 @@ func Test_Getpost_inf(t *testing.T) {
 	assert.Equal(t, "test", ad.Title)
 	assert.Equal(t, "test", ad.Category)
 	assert.Equal(t, 100, ad.Price)
-	assert.Equal(t, 100, ad.Area)
+	assert.Equal(t, 100.0, ad.Area)
 	assert.Equal(t, 1, ad.NumberOfRooms)
 	assert.Equal(t, 1399, ad.YearOfConstruction)
 	assert.Equal(t, "test", ad.Floor)
