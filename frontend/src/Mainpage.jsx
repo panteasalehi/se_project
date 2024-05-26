@@ -15,7 +15,7 @@ export const Mainpage = (props) => {
     dispatch({ type: FETCH_ACTIONS.PROGRESS });
     const getItems = async () => {
       try {
-        let response = await axios.get("http://localhost:8080/mainpage", { withCredentials: true });
+        let response = await axios.get("http://45.147.97.39:8080/mainpage", { withCredentials: true });
         if (response.status === 200) {
           dispatch({ type: FETCH_ACTIONS.SUCCESS, data: response.data });
         }
@@ -46,10 +46,10 @@ export const Mainpage = (props) => {
 
                 key={item.id}>
                 <p className='my-2 text-xl'>
-                  <strong>{item.ads}</strong>
+                  <strong>{item.title}</strong>
                 </p>
                 <p className='mb-2 text-lg'>
-                  توضیحات: <strong>{item.message}</strong>
+                  توضیحات: <strong>{item.description}</strong>
                 </p>
 
 

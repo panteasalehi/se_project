@@ -22,7 +22,7 @@ export const Myprofilepage = (props) => {
         const getItems = async () => {
           try{
             
-            let response = await axios.get("http://localhost:8080/posts?email=" + email);
+            let response = await axios.get("http://45.147.97.39:8080/posts?email=" + email);
             if (response.status === 200) {
               dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
             }

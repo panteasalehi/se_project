@@ -5,8 +5,9 @@ WORKDIR /app
 COPY . .
 
 
-RUN go mod download
-
+RUN go mod tidy && go mod download
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+RUN swag init -g ./cmd/main.go -d . && swag fmt
 RUN cd ./cmd && go build -o main .
 
 EXPOSE 8080

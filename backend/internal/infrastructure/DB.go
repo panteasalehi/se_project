@@ -33,7 +33,7 @@ func GetRedis() *redis.Client {
 	redisonce.Do(func() {
 		redisPass := os.Getenv("REDIS_PASS")
 		rs = redis.NewClient(&redis.Options{
-			Addr:     "localhost:6379",
+			Addr:     "45.147.97.39:6379",
 			Password: redisPass,
 		})
 	})

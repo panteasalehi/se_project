@@ -73,10 +73,10 @@ export const Makepost = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-        let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid,avatarUrl};
+        let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid, avatarURL};
             
             //console.log(regobj);
-            fetch("http://localhost:8080/ADregister", {
+            fetch("http://45.147.97.39:8080/ADregister", {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(regobj)
