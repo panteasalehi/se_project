@@ -91,6 +91,10 @@ func DB_init() error {
 	if err != nil {
 		return err
 	}
+	err = db.Exec("CREATE TABLE IF NOT EXISTS images (ID INT AUTO_INCREMENT PRIMARY KEY, AD_ID INT, path VARCHAR(255))").Error
+	if err != nil {
+		return err
+	}
 	os.Setenv("DB_INIT", "true")
 	return nil
 }
