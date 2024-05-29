@@ -1,6 +1,7 @@
 package core
 
 import (
+	"mime/multipart"
 	"testing"
 
 	model "MelkOnline/internal/controller"
@@ -26,7 +27,7 @@ func Test_ADregister_core(t *testing.T) {
 		OwnerID:            "1",
 		Lt:                 1.0,
 		Long:               1.0,
-		AvatarURL:          "test",
+		Image:              "test.jpg",
 	}
 	as := ADregister.NewADregisterService()
 	sr := auth.NewSessionRepository()
@@ -34,7 +35,8 @@ func Test_ADregister_core(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	ID, err := as.ADregister("1", AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.OwnerID, AD.Lt, AD.Long, AD.AvatarURL)
+	image := &multipart.FileHeader{}
+	ID, err := as.ADregister("1", AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.OwnerID, AD.Lt, AD.Long, image)
 	assert.Nil(t, err)
 	assert.NotEqual(t, 0, ID)
 }
