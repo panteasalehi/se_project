@@ -37,7 +37,7 @@ type ADregisterRequest struct {
 	OwnerID            string  `json:"ownerid"`
 	Lt                 float64 `json:"lt"`
 	Long               float64 `json:"long"`
-	AvatarURL          string  `json:"avatarURL"`
+	Image              string  `json:"image"`
 }
 
 type ADregisterResponse struct {

@@ -32,7 +32,6 @@ type AD struct {
 	UserID             int     `json:"userid"`
 	Lt                 float64 `json:"lt"`
 	Long               float64 `json:"long"`
-	AvatarURL          string  `json:"avatarurl"`
 }
 
 type Message struct {
