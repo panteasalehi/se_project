@@ -82,14 +82,22 @@ jobs:
     - name: Install dependencies
       run: go mod tidy
       working-directory: ./backend/cmd
+    
+    - name: upload .env file
+      uses: actions/upload-artifact@v2
+      with:
+        name: .env
+        path: backend/.env
 
-    - name: Create and write to file
-      run: |
-        echo "DB_CONNECTION=root:963233@tcp(localhost:3306)/MelkOnline?charset=utf8mb4&parseTime=True&loc=Local
-        DB_INIT=false
-        REDIS_PASS=redispass" > backend/.env
-        cat backend/.env
+    - name: upload test image file
+      uses: actions/upload-artifact@v2
+      with:
+        name: test_image
+        path: backend/test/infrastructure/test.jpg
 
+    - name: create images directory
+      run: mkdir -p ./backend/test/infrastructure/images
+      
     - name: Run inf tests
       run: go test . -v
       working-directory: ./backend/test/infrastructure

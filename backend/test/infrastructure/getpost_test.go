@@ -4,7 +4,6 @@ import (
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure/ADregister"
 	"MelkOnline/internal/infrastructure/getpost"
-	"mime/multipart"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -28,7 +27,7 @@ func Test_Getpost_inf(t *testing.T) {
 		Long:               1.0,
 	}
 	adr := ADregister.NewADregisterRepository()
-	image := &multipart.FileHeader{}
+	image := createMultipartFileHeader("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/test/infrastructure/test.jpg")
 	ID, err := adr.StoreAD(AD, image)
 	if err != nil {
 		panic(err)
