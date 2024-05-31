@@ -88,11 +88,14 @@ jobs:
         DB_INIT=false
         REDIS_PASS=redispass" > .env
       working-directory: ./backend
-      
+    
+    - name: Create images directory
+      run: mkdir -p ./backend/test/infrastructure/images 
+
     - name: Run inf tests
       run: go test . -v
       working-directory: ./backend/test/infrastructure
-
+    
     - name: Run core tests
       run: go test . -v
       working-directory: ./backend/test/core

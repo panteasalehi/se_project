@@ -3,7 +3,6 @@ package infrastructure
 import (
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure/ADregister"
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -27,10 +26,6 @@ func Test_ADreg_inf(t *testing.T) {
 		Long:               1.0,
 	}
 	ADreg := ADregister.NewADregisterRepository()
-	err := os.Mkdir("images", 0755)
-	if err != nil {
-		panic(err)
-	}
 	image := CreateMultipartFileHeader("/home/runner/work/se_project/se_project/backend/test/infrastructure/test.jpg")
 	ID, err := ADreg.StoreAD(AD, image)
 	assert.Nil(t, err, "Error should be nil")
