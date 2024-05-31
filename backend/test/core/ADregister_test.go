@@ -1,12 +1,12 @@
 package core
 
 import (
-	"mime/multipart"
 	"testing"
 
 	model "MelkOnline/internal/controller"
 	"MelkOnline/internal/core/ADregister"
 	"MelkOnline/internal/infrastructure/auth"
+	testinf "MelkOnline/test/infrastructure"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -35,7 +35,7 @@ func Test_ADregister_core(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	image := &multipart.FileHeader{}
+	image := testinf.CreateMultipartFileHeader("/home/runner/work/se_project/se_project/backend/test/infrastructure/test.jpg")
 	ID, err := as.ADregister("1", AD.Title, AD.Category, AD.Price, AD.Area, AD.NumberOfRooms, AD.YearOfConstruction, AD.Floor, AD.Description, AD.Elevator, AD.Store, AD.Parking, AD.OwnerID, AD.Lt, AD.Long, image)
 	assert.Nil(t, err)
 	assert.NotEqual(t, 0, ID)

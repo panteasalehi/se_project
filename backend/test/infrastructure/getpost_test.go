@@ -27,7 +27,7 @@ func Test_Getpost_inf(t *testing.T) {
 		Long:               1.0,
 	}
 	adr := ADregister.NewADregisterRepository()
-	image := createMultipartFileHeader("/home/runner/work/se_project/se_project/backend/test/infrastructure/test.jpg")
+	image := CreateMultipartFileHeader("/home/runner/work/se_project/se_project/backend/test/infrastructure/test.jpg")
 	ID, err := adr.StoreAD(AD, image)
 	if err != nil {
 		panic(err)
