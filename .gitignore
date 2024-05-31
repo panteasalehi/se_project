@@ -26,4 +26,3 @@ frontend/db.json
 .env
 /backend/.env
 /backend/go-api.tar
-/backend/test/infrastructure/test.jpg
