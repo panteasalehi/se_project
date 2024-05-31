@@ -87,7 +87,8 @@ jobs:
         echo "DB_CONNECTION=root:963233@tcp(localhost:3306)/MelkOnline?charset=utf8mb4&parseTime=True&loc=Local
         DB_INIT=false
         REDIS_PASS=redispass" > backend/.env
-        
+      working-directory: ./backend
+      
     - name: Run inf tests
       run: go test . -v
       working-directory: ./backend/test/infrastructure
