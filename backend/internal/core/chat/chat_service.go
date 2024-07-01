@@ -15,6 +15,19 @@ func NewChatService() *ChatService {
 	}
 }
 
+func (cs *ChatService) CreateChat(user1, user2, ad int) (int, error) {
+	chat := model.Chat{
+		User1ID: user1,
+		User2ID: user2,
+		AdID:    ad,
+	}
+	ID, err := cs.cr.StoreChat(chat)
+	if err != nil {
+		return 0, err
+	}
+	return ID, nil
+}
+
 func (cs *ChatService) SendMessage(message model.Message) (int, error) {
 	ID, err := cs.cr.StoreMessage(message)
 	if err != nil {
@@ -29,4 +42,8 @@ func (cs *ChatService) GetMessagesByChatID(chatID int) ([]model.Message, error) 
 		return nil, err
 	}
 	return messages, nil
+}
+
+func (cs *ChatService) ChatExists(adID, userID int) (bool, error) {
+	return cs.cr.ChatExists(adID, userID)
 }

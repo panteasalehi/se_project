@@ -1,21 +1,31 @@
 package chat
 
 import (
-	model "MelkOnline/internal/controller"
 	"MelkOnline/internal/core"
 	"MelkOnline/internal/core/chat"
+	"MelkOnline/internal/core/getpost"
+	"MelkOnline/internal/infrastructure/auth"
 	"net/http"
+	"strconv"
 
+	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 )
 
+var upgrader = websocket.Upgrader{}
+var connections = make(map[int]map[int]*websocket.Conn)
+
 type ChatHandler struct {
 	cs chat.ChatContract
+	gc getpost.GetPostContract
+	sr *auth.SessionRepository
 }
 
 func NewChatHandler() *ChatHandler {
 	return &ChatHandler{
 		cs: chat.NewChatService(),
+		gc: getpost.NewGetPostService(),
+		sr: auth.NewSessionRepository(),
 	}
 }
 
@@ -33,57 +43,75 @@ func NewChatHandler() *ChatHandler {
 //	@Failure		400		{string}	string
 //	@Router			/Chat/send/ [post]
 func (ch *ChatHandler) SendMessage(c echo.Context) error {
-	csreq, csres := &model.ChatSendMessageRequest{}, &model.ChatSendMessageResponse{}
-	if err := c.Bind(csreq); err != nil {
-		csres.Message = "Invalid request"
-		return c.JSON(400, csres)
-	}
-	if err := c.Validate(csreq); err != nil {
-		csres.Message = "Invalid request"
-		return c.JSON(400, csres)
-	}
-	message := core.Message{
-		Content:    csreq.Content,
-		SenderID:   csreq.SenderID,
-		ReceiverID: csreq.ReceiverID,
-		ChatID:     csreq.ChatID,
-	}
-	ID, err := ch.cs.SendMessage(message)
+	token, err := c.Request().Cookie("session")
 	if err != nil {
-		csres.Message = "Failed to send message"
-		return c.JSON(http.StatusBadRequest, csres)
+		return c.JSON(400, "session not found")
 	}
-	csres.Message = "Message sent successfully"
-	csres.MessageID = ID
-	return c.JSON(200, csres)
+	message := core.Message{}
+	if err := c.Bind(&message); err != nil {
+		return c.JSON(400, "error in binding message")
+	}
+	_, err = ch.sr.ValidateSession(token.Value)
+	if err != nil {
+		return c.JSON(400, "error in validating session")
+	}
+	conn := connections[message.ReceiverID][message.SenderID]
+	err = conn.WriteJSON(message)
+	if err != nil {
+		return c.JSON(400, "error in sending message")
+	}
+	return c.JSON(200, "message sent")
 }
 
-//	GetMessagesByChatID	 	get messages in chat
+// GetMessagesByChatID	 get messages by chat's ID
 //
-// @Summary		get messages in chat
-// @Description	gets chat's ID and gets the messages in the chat
-// @Tags			Chat
-// @Accept			json
-// @Produce		json
-// @Param			chatid	body		int	true	"Chat's ID"
-// @Success		200		{string}	string
-// @Failure		400		{string}	string
-// @Failure		400		{string}	string
-// @Failure		500		{string}	string
-// @Router			/Chat/page [get]
-func (ch *ChatHandler) GetMessagesByChatID(c echo.Context) error {
-	cgreq, cgres := &model.ChatGetMessagesRequest{}, &model.ChatGetMessagesResponse{}
-	if err := c.Bind(cgreq); err != nil {
-		return c.JSON(400, cgres)
-	}
-	if err := c.Validate(cgreq); err != nil {
-		return c.JSON(400, cgres)
-	}
-	messages, err := ch.cs.GetMessagesByChatID(cgreq.ChatID)
+//	@Summary		get messages by chat's ID
+//	@Description	gets chat's ID and returns all messages in that chat
+//	@Tags			Chat
+//	@Accept			json
+//	@Produce		json
+//	@Param			chatid	path		int	true	"Chat's ID"
+//	@Success		200		{string}	string
+//	@Failure		400		{string}	string
+//	@Failure		400		{string}	string
+//	@Failure		400		{string}	string
+//	@Router			/Chat/{chatid} [get]
+
+func (ch *ChatHandler) GetMessage(c echo.Context) error {
+	token, err := c.Request().Cookie("session")
 	if err != nil {
-		return c.JSON(500, cgres)
+		return c.JSON(400, "session not found")
 	}
-	cgres.Message = "Messages retrieved successfully"
-	cgres.Messages = messages
-	return c.JSON(200, messages)
+	adID := c.Param("ad_id")
+	userID := c.Param("user_id")
+	adIDint, _ := strconv.Atoi(adID)
+	userIDint, _ := strconv.Atoi(userID)
+	ad, err := ch.gc.GetPost(adIDint, token.Value)
+	if err != nil {
+		return c.JSON(400, "ad not found")
+	}
+	if exists, _ := ch.cs.ChatExists(adIDint, userIDint); !exists {
+		ch.cs.CreateChat(ad.UserID, userIDint, ad.ID)
+	}
+	conn, err := upgrader.Upgrade(c.Response(), c.Request(), http.Header{
+		"Access-Control-Allow-Origin": []string{"*"},
+	})
+	connections[ad.UserID][userIDint] = conn
+	if err != nil {
+		return c.JSON(400, "error in websocket connection")
+	}
+	for {
+		message := core.Message{}
+		err := conn.ReadJSON(&message)
+		if err != nil {
+			c.JSON(400, "error in reading message")
+		}
+		message.SenderID = userIDint
+		message.ChatID = adIDint
+		_, err = ch.cs.SendMessage(message)
+		c.JSON(200, message)
+		if err != nil {
+			c.JSON(400, "error in sending message")
+		}
+	}
 }
