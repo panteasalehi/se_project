@@ -28,7 +28,7 @@ type EchoServer struct {
 func NewEchoServer() *EchoServer {
 	echo := echo.New()
 	es := &EchoServer{e: echo}
-	err := godotenv.Load("/home/runner/work/se_project/se_project/backend/.env")
+	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
 	if err != nil {
 		panic(err)
 	}
@@ -40,19 +40,19 @@ func (es *EchoServer) Route() {
 	es.e.Use(middleware.Logger())
 	es.e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowCredentials: true,
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
 			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
-	es.e.POST("/signup", signup.NewSignupHandler().Signup)
-	es.e.POST("/login", auth.NewLoginHandler().Login)
-	es.e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
-	es.e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
-	es.e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
-	es.e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds)
-	es.e.GET("/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
-	es.e.GET("/getpost/:id", getpost.NewGetPostHandler().GetPost)
+	es.e.POST("api/v1/signup", signup.NewSignupHandler().Signup)
+	es.e.POST("api/v1/login", auth.NewLoginHandler().Login)
+	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
+	es.e.GET("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().GetMessage)
+	es.e.POST("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().SendMessage)
+	es.e.GET("api/v1/ads/mainpage/:user_id", mainpage.NewMainpageHandler().GetAds)
+	es.e.GET("api/v1/ads/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
+	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
 }
 
