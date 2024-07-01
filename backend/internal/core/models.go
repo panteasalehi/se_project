@@ -56,3 +56,11 @@ type UserNote struct {
 	Note   string    `json:"note"`
 	Time   time.Time `json:"time"`
 }
+
+type Payment struct {
+	ID       int       `json:"id"`
+	UserID   int       `json:"userid"`
+	Amount   int       `json:"amount"`
+	Status   string    `json:"status"`
+	DateTime time.Time `json:"datetime"`
+}
