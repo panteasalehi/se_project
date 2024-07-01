@@ -8,6 +8,7 @@ import (
 	"MelkOnline/internal/controller/mainpage"
 	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
+	"MelkOnline/internal/controller/signup/payment"
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure"
 	"net/http"
@@ -46,6 +47,7 @@ func (es *EchoServer) Route() {
 			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
 	es.e.POST("api/v1/signup", signup.NewSignupHandler().Signup)
+	es.e.POST("api/v1/signup/payment", payment.NewPaymentHandler().Pay)
 	es.e.POST("api/v1/login", auth.NewLoginHandler().Login)
 	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
 	es.e.GET("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().GetMessage)
@@ -88,6 +90,10 @@ func DB_init() error {
 		return err
 	}
 	err = db.AutoMigrate(&model.Message{})
+	if err != nil {
+		return err
+	}
+	err = db.AutoMigrate(&model.Payment{})
 	if err != nil {
 		return err
 	}
