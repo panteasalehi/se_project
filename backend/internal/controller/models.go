@@ -1,6 +1,8 @@
 package controller
 
-import model "MelkOnline/internal/core"
+import (
+	model "MelkOnline/internal/core"
+)
 
 type SignupRequest struct {
 	Email    string `json:"email"`
@@ -91,4 +93,9 @@ type SearchFilteringRequest struct {
 	MaxAge        int    `json:"MaxAge"`
 	//the ones that he didn't choose will be nil
 	//find the matches using the functions and put them all in a list without repetitions
+}
+
+type PaymentRequest struct {
+	UserID int `json:"userid"`
+	Amount int `json:"amount"`
 }
