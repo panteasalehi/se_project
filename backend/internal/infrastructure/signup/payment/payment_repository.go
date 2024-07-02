@@ -22,6 +22,9 @@ func (pr *PaymentRepository) StorePayment(userID int, amount int, status string)
 		Status: status,
 	}
 	pr.db.Create(payment)
+	if status == "0" {
+		pr.db.Model(&core.User{}).Where("id = ?", userID).Update("type", "owner")
+	}
 	return payment.ID, nil
 }
 

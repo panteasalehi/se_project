@@ -3,6 +3,7 @@ package ADregister
 import (
 	"MelkOnline/internal/controller"
 	"MelkOnline/internal/core/ADregister"
+	"MelkOnline/internal/core/user"
 	"net/http"
 
 	echo "github.com/labstack/echo/v4"
@@ -10,11 +11,13 @@ import (
 
 type ADregisterHandler struct {
 	ss ADregister.ADregisterContract
+	ur user.UserServiceContract
 }
 
 func NewADregisterHandler() *ADregisterHandler {
 	return &ADregisterHandler{
 		ss: ADregister.NewADregisterService(),
+		ur: user.NewUserService(),
 	}
 }
 
@@ -40,6 +43,13 @@ func (adh *ADregisterHandler) ADregister(c echo.Context) error {
 	cookie, err := c.Request().Cookie("session")
 	if err != nil {
 		adres.Message = err.Error()
+		return c.JSON(http.StatusBadRequest, adres)
+	}
+	if user, err := adh.ur.GetUserBySession(cookie.Value); err != nil {
+		adres.Message = err.Error()
+		return c.JSON(http.StatusBadRequest, adres)
+	} else if user.Type != "owner" {
+		adres.Message = "You are not allowed to register an advertisement"
 		return c.JSON(http.StatusBadRequest, adres)
 	}
 	token := cookie.Value

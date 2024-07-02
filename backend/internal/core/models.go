@@ -8,7 +8,7 @@ type User struct {
 	Password string  `json:"password"`
 	Salt     string  `json:"salt"`
 	Name     string  `json:"name"`
-	Type     string  `json:"type"`
+	Type     string  `json:"type" gorm:"default:'buyer'"` // buyer, owner
 	Score    float32 `json:"score"`
 }
 
