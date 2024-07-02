@@ -47,7 +47,7 @@ func (es *EchoServer) Route() {
 			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
 	es.e.POST("api/v1/signup", signup.NewSignupHandler().Signup)
-	es.e.POST("api/v1/signup/payment", payment.NewPaymentHandler().Pay)
+	es.e.GET("api/v1/signup/payment/:user_id", payment.NewPaymentHandler().Pay)
 	es.e.POST("api/v1/login", auth.NewLoginHandler().Login)
 	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
 	es.e.GET("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().GetMessage)

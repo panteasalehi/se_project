@@ -1,7 +1,6 @@
 package payment
 
 import (
-	"MelkOnline/internal/controller"
 	"MelkOnline/internal/core/signup/payment"
 	"os"
 	"strconv"
@@ -10,6 +9,8 @@ import (
 	"github.com/hooklift/gowsdl/soap"
 	"github.com/labstack/echo/v4"
 )
+
+const PAYMENT_AMOUNT = int64(200000)
 
 type PaymentHandler struct {
 	ps payment.PaymentServiceContract
@@ -26,11 +27,7 @@ func (ph *PaymentHandler) Pay(c echo.Context) error {
 		TerminalID = os.Getenv("BANK_TERMINAL_ID")
 		UserName   = os.Getenv("BANK_USERNAME")
 		Password   = os.Getenv("BANK_PASSWORD")
-		pReq       = &controller.PaymentRequest{}
 	)
-	if err := c.Bind(pReq); err != nil {
-		return c.JSON(400, err)
-	}
 	TerminalIDint, err := strconv.Atoi(TerminalID)
 	if err != nil {
 		return c.JSON(400, err)
@@ -41,7 +38,12 @@ func (ph *PaymentHandler) Pay(c echo.Context) error {
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	oid64, amount, pid := int64(oid), int64(pReq.Amount), int64(pReq.UserID)
+	UserID := c.Param("user_id")
+	UserIDint, err := strconv.Atoi(UserID)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	oid64, pid := int64(oid), int64(UserIDint)
 	oid64++
 	gw := payment.NewIPaymentGateway(client)
 	req := payment.BpPayRequest{
@@ -49,7 +51,7 @@ func (ph *PaymentHandler) Pay(c echo.Context) error {
 		UserName:       UserName,
 		UserPassword:   Password,
 		OrderId:        10,
-		Amount:         amount,
+		Amount:         PAYMENT_AMOUNT,
 		LocalDate:      ld,
 		LocalTime:      lt,
 		AdditionalData: ad,
@@ -61,7 +63,7 @@ func (ph *PaymentHandler) Pay(c echo.Context) error {
 		return c.JSON(400, err)
 	}
 	data := strings.Split(resp.Return_, ",")
-	ph.ps.Pay(pReq.UserID, pReq.Amount, data[0])
+	ph.ps.Pay(UserIDint, int(PAYMENT_AMOUNT), data[0])
 	if data[0] != "0" {
 		return c.JSON(400, resp.Return_)
 	}
