@@ -44,6 +44,14 @@ func (cs *ChatService) GetMessagesByChatID(chatID int) ([]model.Message, error) 
 	return messages, nil
 }
 
-func (cs *ChatService) ChatExists(adID, userID int) (bool, error) {
+func (cs *ChatService) ChatExists(adID, userID int) (int, error) {
 	return cs.cr.ChatExists(adID, userID)
+}
+
+func (cs *ChatService) GetChatInfo(chatID int) (model.Chat, error) {
+	chat, err := cs.cr.GetChatInfo(chatID)
+	if err != nil {
+		return model.Chat{}, err
+	}
+	return chat, nil
 }
