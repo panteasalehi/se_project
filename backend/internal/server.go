@@ -46,14 +46,14 @@ func (es *EchoServer) Route() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
 			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
-	es.e.POST("api/v1/signup", signup.NewSignupHandler().Signup)
-	es.e.GET("api/v1/signup/payment/:user_id", payment.NewPaymentHandler().Pay)
-	es.e.POST("api/v1/login", auth.NewLoginHandler().Login)
+	es.e.POST("api/v1/signup/", signup.NewSignupHandler().Signup)
+	es.e.GET("api/v1/signup/payment/", payment.NewPaymentHandler().Pay)
+	es.e.POST("api/v1/login/", auth.NewLoginHandler().Login)
 	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
-	es.e.GET("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().GetMessage)
-	es.e.POST("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().SendMessage)
+	es.e.GET("api/v1/ads/:ad_id/chats", chat.NewChatHandler().GetMessage)
+	es.e.POST("api/v1/ads/:ad_id/chats", chat.NewChatHandler().SendMessage)
 	es.e.GET("api/v1/ads/mainpage/", mainpage.NewMainpageHandler().GetAds)
-	es.e.GET("api/v1/ads/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
+	es.e.GET("api/v1/ads/searchfiltering/", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
 	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
 }
