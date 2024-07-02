@@ -18,8 +18,20 @@ func NewGetPostHandler() *GetPostHandler {
 	}
 }
 
+// GetPost	 get post by id
+//
+//	@Summary		get post by id
+//	@Description	get post by id
+//	@Tags			getpost
+//	@Accept			json
+//	@Produce		json
+//	@Param			ad_id	path		int	true	"post id"
+//	@Success		200		{object}	core.AD
+//	@Failure		400		{string}	string
+//	@Failure		500		{string}	string
+//	@Router			/api/v1/ads/{ad_id} [get]
 func (gph *GetPostHandler) GetPost(c echo.Context) error {
-	id := c.Param("id")
+	id := c.Param("ad_id")
 	token, err := c.Cookie("session")
 	if err != nil {
 		return c.JSON(400, "session not found")

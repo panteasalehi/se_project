@@ -4,8 +4,6 @@ definitions:
     properties:
       area:
         type: string
-      avatarURL:
-        type: string
       category:
         type: string
       description:
@@ -13,6 +11,8 @@ definitions:
       elevator:
         type: string
       floor:
+        type: string
+      image:
         type: string
       long:
         type: number
@@ -33,6 +33,39 @@ definitions:
       yearOfConstruction:
         type: string
     type: object
+  core.AD:
+    properties:
+      YearOfConstruction:
+        type: integer
+      area:
+        type: number
+      category:
+        type: string
+      description:
+        type: string
+      elevator:
+        type: boolean
+      floor:
+        type: string
+      id:
+        type: integer
+      long:
+        type: number
+      lt:
+        type: number
+      numberOfRooms:
+        type: integer
+      parking:
+        type: boolean
+      price:
+        type: integer
+      store:
+        type: boolean
+      title:
+        type: string
+      userid:
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -40,7 +73,108 @@ info:
   title: MelkOnline API
   version: "1.0"
 paths:
-  /ADregister:
+  /api/v1/ads/{ad_id}:
+    get:
+      consumes:
+      - application/json
+      description: get post by id
+      parameters:
+      - description: post id
+        in: path
+        name: ad_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.AD'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get post by id
+      tags:
+      - getpost
+  /api/v1/ads/{ad_id}/chats:
+    get:
+      consumes:
+      - application/json
+      description: Get message from the user
+      parameters:
+      - description: Ad ID
+        in: path
+        name: ad_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message received
+          schema:
+            type: string
+        "400":
+          description: error in reading message
+          schema:
+            type: string
+      summary: Get message
+      tags:
+      - chat
+    post:
+      consumes:
+      - application/json
+      description: Send message to the user
+      parameters:
+      - description: Ad ID
+        in: path
+        name: ad_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message sent
+          schema:
+            type: string
+        "400":
+          description: error in sending message
+          schema:
+            type: string
+      summary: Send message
+      tags:
+      - chat
+  /api/v1/ads/mainpage/:
+    get:
+      consumes:
+      - application/json
+      description: get ads from database to view in mainpage
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get ads to view in mainpage
+      tags:
+      - mainpage
+  /api/v1/ads/register:
     post:
       consumes:
       - application/json
@@ -70,127 +204,7 @@ paths:
       summary: registration of ADs
       tags:
       - ADregister
-  /Chat/page:
-    get:
-      consumes:
-      - application/json
-      description: gets chat's ID and gets the messages in the chat
-      parameters:
-      - description: Chat's ID
-        in: body
-        name: chatid
-        required: true
-        schema:
-          type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: get messages in chat
-      tags:
-      - Chat
-  /Chat/send/:
-    post:
-      consumes:
-      - application/json
-      description: gets content of message and reciever and sender and chat's ID and
-        sending the message to reciever
-      parameters:
-      - description: Chat's ID
-        in: body
-        name: chatid
-        required: true
-        schema:
-          type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-      summary: send messages in chat
-      tags:
-      - Chat
-  /login/:
-    post:
-      consumes:
-      - application/json
-      description: get user's email and password and Login
-      parameters:
-      - description: user's Email
-        in: body
-        name: Email
-        required: true
-        schema:
-          type: string
-      - description: user's password
-        in: body
-        name: Password
-        required: true
-        schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "401":
-          description: Unauthorized
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: user Login
-      tags:
-      - login
-  /mainpage/:
-    get:
-      consumes:
-      - application/json
-      description: get ads from database to view in mainpage
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: get ads to view in mainpage
-      tags:
-      - mainpage
-  /searchfiltering/:
+  /api/v1/ads/searchfiltering/:
     get:
       consumes:
       - application/json
@@ -286,7 +300,47 @@ paths:
       summary: Searchfiltering
       tags:
       - searchfiltering
-  /signup/:
+  /api/v1/login/:
+    post:
+      consumes:
+      - application/json
+      description: get user's email and password and Login
+      parameters:
+      - description: user's Email
+        in: body
+        name: Email
+        required: true
+        schema:
+          type: string
+      - description: user's password
+        in: body
+        name: Password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: user Login
+      tags:
+      - login
+  /api/v1/signup/:
     post:
       consumes:
       - application/json

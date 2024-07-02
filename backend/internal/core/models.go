@@ -8,7 +8,7 @@ type User struct {
 	Password string  `json:"password"`
 	Salt     string  `json:"salt"`
 	Name     string  `json:"name"`
-	Type     string  `json:"type"`
+	Type     string  `json:"type" gorm:"default:'buyer'"` // buyer, owner
 	Score    float32 `json:"score"`
 }
 
@@ -32,7 +32,6 @@ type AD struct {
 	UserID             int     `json:"userid"`
 	Lt                 float64 `json:"lt"`
 	Long               float64 `json:"long"`
-	AvatarURL          string  `json:"avatarurl"`
 }
 
 type Message struct {
@@ -56,4 +55,12 @@ type UserNote struct {
 	UserID int       `json:"userid"`
 	Note   string    `json:"note"`
 	Time   time.Time `json:"time"`
+}
+
+type Payment struct {
+	ID       int       `json:"id"`
+	UserID   int       `json:"userid"`
+	Amount   int       `json:"amount"`
+	Status   string    `json:"status"`
+	DateTime time.Time `json:"datetime"`
 }

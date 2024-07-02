@@ -8,6 +8,7 @@ import (
 	"MelkOnline/internal/controller/mainpage"
 	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
+	"MelkOnline/internal/controller/signup/payment"
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure"
 	"net/http"
@@ -28,7 +29,7 @@ type EchoServer struct {
 func NewEchoServer() *EchoServer {
 	echo := echo.New()
 	es := &EchoServer{e: echo}
-	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
+	err := godotenv.Load("/app/.env")
 	if err != nil {
 		panic(err)
 	}
@@ -45,14 +46,15 @@ func (es *EchoServer) Route() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
 			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
-	es.e.POST("/signup", signup.NewSignupHandler().Signup)
-	es.e.POST("/login", auth.NewLoginHandler().Login)
-	es.e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
-	es.e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
-	es.e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
-	es.e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds)
-	es.e.GET("/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
-	es.e.GET("/getpost/:id", getpost.NewGetPostHandler().GetPost)
+	es.e.POST("api/v1/signup/", signup.NewSignupHandler().Signup)
+	es.e.GET("api/v1/signup/payment/", payment.NewPaymentHandler().Pay)
+	es.e.POST("api/v1/login/", auth.NewLoginHandler().Login)
+	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
+	es.e.GET("api/v1/ads/:ad_id/chats", chat.NewChatHandler().GetMessage)
+	es.e.POST("api/v1/ads/:ad_id/chats", chat.NewChatHandler().SendMessage)
+	es.e.GET("api/v1/ads/mainpage/", mainpage.NewMainpageHandler().GetAds)
+	es.e.GET("api/v1/ads/searchfiltering/", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
+	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
 }
 
@@ -88,6 +90,14 @@ func DB_init() error {
 		return err
 	}
 	err = db.AutoMigrate(&model.Message{})
+	if err != nil {
+		return err
+	}
+	err = db.AutoMigrate(&model.Payment{})
+	if err != nil {
+		return err
+	}
+	err = db.Exec("CREATE TABLE IF NOT EXISTS images (ID INT AUTO_INCREMENT PRIMARY KEY, AD_ID INT, path VARCHAR(255))").Error
 	if err != nil {
 		return err
 	}

@@ -24,10 +24,10 @@ func Test_ADreg_inf(t *testing.T) {
 		UserID:             1,
 		Lt:                 1.0,
 		Long:               1.0,
-		AvatarURL:          "test",
 	}
 	ADreg := ADregister.NewADregisterRepository()
-	ID, err := ADreg.StoreAD(AD)
+	image := CreateMultipartFileHeader("/home/runner/work/se_project/se_project/backend/test/infrastructure/test.jpg")
+	ID, err := ADreg.StoreAD(AD, image)
 	assert.Nil(t, err, "Error should be nil")
 	assert.NotEqual(t, 0, ID, "ID should not be 0")
 }

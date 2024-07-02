@@ -25,10 +25,10 @@ func Test_Getpost_inf(t *testing.T) {
 		UserID:             1,
 		Lt:                 1.0,
 		Long:               1.0,
-		AvatarURL:          "test",
 	}
 	adr := ADregister.NewADregisterRepository()
-	ID, err := adr.StoreAD(AD)
+	image := CreateMultipartFileHeader("/home/runner/work/se_project/se_project/backend/test/infrastructure/test.jpg")
+	ID, err := adr.StoreAD(AD, image)
 	if err != nil {
 		panic(err)
 	}
@@ -50,5 +50,4 @@ func Test_Getpost_inf(t *testing.T) {
 	assert.Equal(t, 1, ad.UserID)
 	assert.Equal(t, 1.0, ad.Lt)
 	assert.Equal(t, 1.0, ad.Long)
-	assert.Equal(t, "test", ad.AvatarURL)
 }

@@ -24,10 +24,10 @@ func NewMainpageHandler() *MainpageHandler {
 //	@Tags			mainpage
 //	@Accept			json
 //	@Produce		json
-//	@Success		200		{string}	string
-//	@Failure		400		{string}	string
-//	@Failure		500		{string}	string
-//	@Router			/mainpage/ [get]
+//	@Success		200						{string}	string
+//	@Failure		400						{string}	string
+//	@Failure		500						{string}	string
+//	@Router			/api/v1/ads/mainpage/	[get]
 func (m *MainpageHandler) GetAds(c echo.Context) error {
 	mres := &model.MainpageResponse{}
 	session, err := c.Request().Cookie("session")

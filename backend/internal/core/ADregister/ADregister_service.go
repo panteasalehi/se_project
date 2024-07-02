@@ -5,6 +5,7 @@ import (
 	"MelkOnline/internal/core/auth"
 	"MelkOnline/internal/infrastructure/ADregister"
 	authrep "MelkOnline/internal/infrastructure/auth"
+	"mime/multipart"
 	"strconv"
 )
 
@@ -22,17 +23,17 @@ func NewADregisterService() *ADregisterService {
 
 func (ss *ADregisterService) ADregister(token string, title string, category string, price string, area string, numberOfRooms string,
 	yearOfConstruction string, floor string, description string, elevator string, store string, parking string, OwnerID string, Lt float64,
-	Long float64, AvatarURL string) (int, error) {
+	Long float64, image *multipart.FileHeader) (int, error) {
 	uid, err := ss.sr.ValidateSession(token)
 	if err != nil {
 		return 0, err
 	}
-	AD, err := convertToAD(title, category, price, area, numberOfRooms, yearOfConstruction, floor, description, elevator, store, parking, Lt, Long, AvatarURL)
+	AD, err := convertToAD(title, category, price, area, numberOfRooms, yearOfConstruction, floor, description, elevator, store, parking, Lt, Long)
 	if err != nil {
 		return 0, err
 	}
 	AD.UserID = uid
-	ID, err := ss.arr.StoreAD(AD)
+	ID, err := ss.arr.StoreAD(AD, image)
 	if err != nil {
 		return 0, err
 	}
@@ -41,7 +42,7 @@ func (ss *ADregisterService) ADregister(token string, title string, category str
 
 func convertToAD(title string, category string, price string, area string, numberOfRooms string,
 	yearOfConstruction string, floor string, description string, elevator string, store string, parking string, Lt float64,
-	Long float64, AvatarURL string) (*core.AD, error) {
+	Long float64) (*core.AD, error) {
 	AD := &core.AD{}
 	var err error
 	AD.Title = title
@@ -81,6 +82,5 @@ func convertToAD(title string, category string, price string, area string, numbe
 	}
 	AD.Lt = Lt
 	AD.Long = Long
-	AD.AvatarURL = AvatarURL
 	return AD, nil
 }

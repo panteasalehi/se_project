@@ -15,7 +15,42 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/ADregister": {
+        "/api/v1/ads/mainpage/": {
+            "get": {
+                "description": "get ads from database to view in mainpage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mainpage"
+                ],
+                "summary": "get ads to view in mainpage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ads/register": {
             "post": {
                 "description": "registration of ADs and giving each an ID",
                 "consumes": [
@@ -61,189 +96,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/Chat/page": {
-            "get": {
-                "description": "gets chat's ID and gets the messages in the chat",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Chat"
-                ],
-                "summary": "get messages in chat",
-                "parameters": [
-                    {
-                        "description": "Chat's ID",
-                        "name": "chatid",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/Chat/send/": {
-            "post": {
-                "description": "gets content of message and reciever and sender and chat's ID and sending the message to reciever",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Chat"
-                ],
-                "summary": "send messages in chat",
-                "parameters": [
-                    {
-                        "description": "Chat's ID",
-                        "name": "chatid",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/login/": {
-            "post": {
-                "description": "get user's email and password and Login",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "login"
-                ],
-                "summary": "user Login",
-                "parameters": [
-                    {
-                        "description": "user's Email",
-                        "name": "Email",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "user's password",
-                        "name": "Password",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/mainpage/": {
-            "get": {
-                "description": "get ads from database to view in mainpage",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "mainpage"
-                ],
-                "summary": "get ads to view in mainpage",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/searchfiltering/": {
+        "/api/v1/ads/searchfiltering/": {
             "get": {
                 "description": "filter ads and get the desired ads from database",
                 "consumes": [
@@ -388,7 +241,186 @@ const docTemplate = `{
                 }
             }
         },
-        "/signup/": {
+        "/api/v1/ads/{ad_id}": {
+            "get": {
+                "description": "get post by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "getpost"
+                ],
+                "summary": "get post by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "post id",
+                        "name": "ad_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.AD"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ads/{ad_id}/chats": {
+            "get": {
+                "description": "Get message from the user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Get message",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ad ID",
+                        "name": "ad_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "message received",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "error in reading message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Send message to the user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Send message",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ad ID",
+                        "name": "ad_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "message sent",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "error in sending message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login/": {
+            "post": {
+                "description": "get user's email and password and Login",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "login"
+                ],
+                "summary": "user Login",
+                "parameters": [
+                    {
+                        "description": "user's Email",
+                        "name": "Email",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "user's password",
+                        "name": "Password",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/signup/": {
             "post": {
                 "description": "get user's email and password and name and signup",
                 "consumes": [
@@ -460,9 +492,6 @@ const docTemplate = `{
                 "area": {
                     "type": "string"
                 },
-                "avatarURL": {
-                    "type": "string"
-                },
                 "category": {
                     "type": "string"
                 },
@@ -473,6 +502,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "floor": {
+                    "type": "string"
+                },
+                "image": {
                     "type": "string"
                 },
                 "long": {
@@ -501,6 +533,56 @@ const docTemplate = `{
                 },
                 "yearOfConstruction": {
                     "type": "string"
+                }
+            }
+        },
+        "core.AD": {
+            "type": "object",
+            "properties": {
+                "YearOfConstruction": {
+                    "type": "integer"
+                },
+                "area": {
+                    "type": "number"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "elevator": {
+                    "type": "boolean"
+                },
+                "floor": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "long": {
+                    "type": "number"
+                },
+                "lt": {
+                    "type": "number"
+                },
+                "numberOfRooms": {
+                    "type": "integer"
+                },
+                "parking": {
+                    "type": "boolean"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "store": {
+                    "type": "boolean"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
                 }
             }
         }

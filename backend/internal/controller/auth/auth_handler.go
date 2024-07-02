@@ -31,7 +31,7 @@ func NewLoginHandler() *LoginHandler {
 //	@Failure		400			{string}	string
 //	@Failure		401			{string}	string
 //	@Failure		500			{string}	string
-//	@Router			/login/ [post]
+//	@Router			/api/v1/login/ [post]
 func (lh *LoginHandler) Login(c echo.Context) error {
 	lreq, lres := &controller.LoginRequest{}, &controller.LoginResponse{}
 	if err := c.Bind(lreq); err != nil {
