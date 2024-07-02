@@ -11,7 +11,7 @@ import (
 //	@version		1.0
 //	@description	SE Project MelkOnline backend API
 
-// @host		localhost:8080
+// @host		45.147.97.39:8080
 // @BasePath	/
 func main() {
 	fmt.Println("Starting the server...")

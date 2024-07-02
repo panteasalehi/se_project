@@ -27,7 +27,8 @@ services:
       dockerfile: dockerfile
     ports:
       - "3000:3000"
-
+    networks:
+      - melk-network
 
   backend:
     build:
@@ -47,7 +48,12 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - melk-network
 
+networks:
+  melk-network:
+    driver: bridge
   
 
 volumes:

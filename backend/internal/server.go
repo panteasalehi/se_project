@@ -41,8 +41,8 @@ func (es *EchoServer) Route() {
 	es.e.Use(middleware.Logger())
 	es.e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowCredentials: true,
-		AllowOrigins:     []string{"http://45.147.97.39:3000"},
-		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+		AllowOrigins:     []string{"http://45.147.97.39:3000","http://45.147.97.39:8080","45.59.118.164"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete,http.MethodOptions},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
 			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
 	}))
@@ -68,7 +68,7 @@ func (es *EchoServer) Start(port string) {
 			panic(err)
 		}
 	}
-	es.e.Logger.Fatal(es.e.Start(":" + port))
+	es.e.Logger.Fatal(es.e.Start("0.0.0.0:" + port))
 }
 
 func (es *EchoServer) Stop() {
