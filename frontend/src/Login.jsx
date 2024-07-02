@@ -18,7 +18,7 @@ export const Login = (props) => { //parent componenet send some thing to childre
             email: email,
             password: password
         }
-        fetch("http://45.147.97.39:8080/login", {
+        fetch("http://45.147.97.39:8080/api/v1/login/",{
             method: "POST",
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(regobj),

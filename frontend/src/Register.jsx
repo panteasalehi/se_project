@@ -17,7 +17,7 @@ export const Register = (props) => {
         let regobj = { email, password, name };
 
         console.log(JSON.stringify(regobj));
-        fetch("http://45.147.97.39:8080/signup", {
+        fetch("http://45.147.97.39:8080/api/v1/signup/", {
             method: "POST",
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(regobj),
