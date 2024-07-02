@@ -28,11 +28,11 @@ func NewADregisterHandler() *ADregisterHandler {
 //	@Tags			ADregister
 //	@Accept			json
 //	@Produce		json
-//	@Param			ad	body		controller.ADregisterRequest	true	"Advertisement data"
-//	@Success		200	{string}	string
-//	@Failure		400	{string}	string
-//	@Failure		500	{string}	string
-//	@Router			/ADregister [post]
+//	@Param			ad						body		controller.ADregisterRequest	true	"Advertisement data"
+//	@Success		200						{string}	string
+//	@Failure		400						{string}	string
+//	@Failure		500						{string}	string
+//	@Router			/api/v1/ads/register	[post]
 func (adh *ADregisterHandler) ADregister(c echo.Context) error {
 	adreq := &controller.ADregisterRequest{}
 	adres := &controller.ADregisterResponse{}

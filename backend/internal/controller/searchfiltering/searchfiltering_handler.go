@@ -40,22 +40,22 @@ func unique(arr []core.AD) []core.AD {
 //	@Tags			searchfiltering
 //	@Accept			json
 //	@Produce		json
-//	@Param			Category		body		string	true	"Category to filter"
-//	@Param			MaxPrice		body		int		true	"Max Price to filter"
-//	@Param			MinPrice		body		int		true	"Min Price to  filter"
-//	@Param			MaxArea			body		int		true	"Max Area to filter"
-//	@Param			MinArea			body		int		true	"Min Area to filter"
-//	@Param			NumberOfRooms	body		int		true	"Number of Rooms to filter"
-//	@Param			MaxAge			body		int		true	"Max age to filter"
-//	@Param			MaxFloor		body		int		true	"Max Floor to filter"
-//	@Param			MinFloor		body		int		true	"Min Floor to filter"
-//	@Param			Elevator		body		bool	true	"availability of Elevator"
-//	@Param			Store			body		bool	true	"availability of Store"
-//	@Param			Parking			body		bool	true	"availability of Parking"
-//	@Success		200				{string}	string
-//	@Failure		400				{string}	string
-//	@Failure		500				{string}	string
-//	@Router			/searchfiltering/ [get]
+//	@Param			Category						body		string	true	"Category to filter"
+//	@Param			MaxPrice						body		int		true	"Max Price to filter"
+//	@Param			MinPrice						body		int		true	"Min Price to  filter"
+//	@Param			MaxArea							body		int		true	"Max Area to filter"
+//	@Param			MinArea							body		int		true	"Min Area to filter"
+//	@Param			NumberOfRooms					body		int		true	"Number of Rooms to filter"
+//	@Param			MaxAge							body		int		true	"Max age to filter"
+//	@Param			MaxFloor						body		int		true	"Max Floor to filter"
+//	@Param			MinFloor						body		int		true	"Min Floor to filter"
+//	@Param			Elevator						body		bool	true	"availability of Elevator"
+//	@Param			Store							body		bool	true	"availability of Store"
+//	@Param			Parking							body		bool	true	"availability of Parking"
+//	@Success		200								{string}	string
+//	@Failure		400								{string}	string
+//	@Failure		500								{string}	string
+//	@Router			/api/v1/ads/searchfiltering/	[get]
 func (sfh *SearchFilteringHandler) Searchfiltering(c echo.Context) error {
 	sfreq := &model.SearchFilteringRequest{}
 	sfres := &model.SearchFilteringResponse{}

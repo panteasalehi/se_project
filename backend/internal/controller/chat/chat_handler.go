@@ -5,15 +5,23 @@ import (
 	"MelkOnline/internal/core/chat"
 	"MelkOnline/internal/core/getpost"
 	"MelkOnline/internal/infrastructure/auth"
-	"net/http"
 	"strconv"
+	"sync"
 
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 )
 
+type WebsocketData struct {
+	Connection *websocket.Conn
+	SenderID   int
+	ReceiverID int
+	ChatID     int
+}
+
 var upgrader = websocket.Upgrader{}
-var connections = make(map[int]map[int]*websocket.Conn)
+var connections = make(map[int]map[int]*WebsocketData)
+var connMutex = &sync.Mutex{}
 
 type ChatHandler struct {
 	cs chat.ChatContract
@@ -29,89 +37,104 @@ func NewChatHandler() *ChatHandler {
 	}
 }
 
-// SendMessage	 send messages in chat
+// SendMessage godoc
 //
-//	@Summary		send messages in chat
-//	@Description	gets content of message and reciever and sender and chat's ID and sending the message to reciever
-//	@Tags			Chat
+//	@Summary		Send message
+//	@Description	Send message to the user
+//	@Tags			chat
 //	@Accept			json
 //	@Produce		json
-//	@Param			chatid	body		int	true	"Chat's ID"
-//	@Success		200		{string}	string
-//	@Failure		400		{string}	string
-//	@Failure		400		{string}	string
-//	@Failure		400		{string}	string
-//	@Router			/Chat/send/ [post]
+//	@Param			ad_id	path		int		true	"Ad ID"
+//	@Success		200		{string}	string	"message sent"
+//	@Failure		400		{string}	string	"error in sending message"
+//	@Router			/api/v1/ads/{ad_id}/chats [post]
 func (ch *ChatHandler) SendMessage(c echo.Context) error {
 	token, err := c.Request().Cookie("session")
 	if err != nil {
 		return c.JSON(400, "session not found")
 	}
-	message := core.Message{}
-	if err := c.Bind(&message); err != nil {
-		return c.JSON(400, "error in binding message")
-	}
-	_, err = ch.sr.ValidateSession(token.Value)
+	userID, err := ch.sr.ValidateSession(token.Value)
 	if err != nil {
 		return c.JSON(400, "error in validating session")
 	}
-	conn := connections[message.ReceiverID][message.SenderID]
-	err = conn.WriteJSON(message)
+	var message core.Message
+	if err := c.Bind(&message); err != nil {
+		return c.JSON(400, "error in binding message")
+	}
+	adID := c.Param("ad_id")
+	adIDint, _ := strconv.Atoi(adID)
+	connMutex.Lock()
+	for _, conn := range connections[adIDint] {
+		if conn.SenderID == userID {
+			message.ReceiverID = conn.ReceiverID
+		} else if conn.ReceiverID == userID {
+			message.ReceiverID = conn.SenderID
+		}
+	}
+	conn := connections[adIDint][message.SenderID]
+	connMutex.Unlock()
+	conn.Connection.WriteJSON(message)
+	message.SenderID = userID
+	message.ChatID, _ = ch.cs.ChatExists(adIDint, userID)
+	message.ChatID = conn.ChatID
+	_, err = ch.cs.SendMessage(message)
 	if err != nil {
 		return c.JSON(400, "error in sending message")
 	}
 	return c.JSON(200, "message sent")
 }
 
-// GetMessagesByChatID	 get messages by chat's ID
+// GetMessage godoc
 //
-//	@Summary		get messages by chat's ID
-//	@Description	gets chat's ID and returns all messages in that chat
-//	@Tags			Chat
+//	@Summary		Get message
+//	@Description	Get message from the user
+//	@Tags			chat
 //	@Accept			json
 //	@Produce		json
-//	@Param			chatid	path		int	true	"Chat's ID"
-//	@Success		200		{string}	string
-//	@Failure		400		{string}	string
-//	@Failure		400		{string}	string
-//	@Failure		400		{string}	string
-//	@Router			/Chat/{chatid} [get]
-
+//	@Param			ad_id	path		int		true	"Ad ID"
+//	@Success		200		{string}	string	"message received"
+//	@Failure		400		{string}	string	"error in reading message"
+//	@Router			/api/v1/ads/{ad_id}/chats [get]
 func (ch *ChatHandler) GetMessage(c echo.Context) error {
 	token, err := c.Request().Cookie("session")
 	if err != nil {
 		return c.JSON(400, "session not found")
 	}
+	userID, err := ch.sr.ValidateSession(token.Value)
+	if err != nil {
+		return c.JSON(400, "error in validating session")
+	}
 	adID := c.Param("ad_id")
-	userID := c.Param("user_id")
 	adIDint, _ := strconv.Atoi(adID)
-	userIDint, _ := strconv.Atoi(userID)
-	ad, err := ch.gc.GetPost(adIDint, token.Value)
-	if err != nil {
-		return c.JSON(400, "ad not found")
+	ad, _ := ch.gc.GetPost(adIDint, token.Value)
+	chatid, _ := ch.cs.ChatExists(adIDint, userID)
+	if chatid == 0 {
+		chatid, err = ch.cs.CreateChat(ad.UserID, userID, adIDint)
+		if err != nil {
+			return c.JSON(400, "error in creating chat")
+		}
 	}
-	if exists, _ := ch.cs.ChatExists(adIDint, userIDint); !exists {
-		ch.cs.CreateChat(ad.UserID, userIDint, ad.ID)
+	connMutex.Lock()
+	if _, ok := connections[adIDint][userID]; !ok {
+		conn, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
+		if err != nil {
+			return c.JSON(400, "error in websocket connection")
+		}
+		connections[adIDint][userID] = &WebsocketData{
+			Connection: conn,
+			ReceiverID: ad.UserID,
+			SenderID:   userID,
+			ChatID:     chatid,
+		}
 	}
-	conn, err := upgrader.Upgrade(c.Response(), c.Request(), http.Header{
-		"Access-Control-Allow-Origin": []string{"*"},
-	})
-	connections[ad.UserID][userIDint] = conn
-	if err != nil {
-		return c.JSON(400, "error in websocket connection")
-	}
+	conn := connections[adIDint][userID]
+	connMutex.Unlock()
 	for {
-		message := core.Message{}
-		err := conn.ReadJSON(&message)
+		var message core.Message
+		err := conn.Connection.ReadJSON(&message)
 		if err != nil {
-			c.JSON(400, "error in reading message")
+			return c.JSON(400, "error in reading message")
 		}
-		message.SenderID = userIDint
-		message.ChatID = adIDint
-		_, err = ch.cs.SendMessage(message)
-		c.JSON(200, message)
-		if err != nil {
-			c.JSON(400, "error in sending message")
-		}
+		c.String(200, message.Content)
 	}
 }

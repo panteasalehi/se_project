@@ -2,6 +2,7 @@ package payment
 
 import (
 	"MelkOnline/internal/core/signup/payment"
+	"MelkOnline/internal/infrastructure/auth"
 	"os"
 	"strconv"
 	"strings"
@@ -14,13 +15,25 @@ const PAYMENT_AMOUNT = int64(200000)
 
 type PaymentHandler struct {
 	ps payment.PaymentServiceContract
+	sr *auth.SessionRepository
 }
 
 func NewPaymentHandler() *PaymentHandler {
 	return &PaymentHandler{
 		ps: payment.NewPaymentService(),
+		sr: auth.NewSessionRepository(),
 	}
 }
+
+// Pay	 pay
+//
+//	@Summary		pay
+//	@Description	pay
+//	@Tags			payment
+//	@Produce		json
+//	@Success		200	{string}	string
+//	@Failure		400	{string}	string
+//	@Router			api/v1/signup/payment/ [get]
 
 func (ph *PaymentHandler) Pay(c echo.Context) error {
 	var (
@@ -38,8 +51,11 @@ func (ph *PaymentHandler) Pay(c echo.Context) error {
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	UserID := c.Param("user_id")
-	UserIDint, err := strconv.Atoi(UserID)
+	token, err := c.Request().Cookie("session")
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	UserIDint, err := ph.sr.ValidateSession(token.Value)
 	if err != nil {
 		return c.JSON(400, err)
 	}
@@ -67,6 +83,6 @@ func (ph *PaymentHandler) Pay(c echo.Context) error {
 	if data[0] != "0" {
 		return c.JSON(400, resp.Return_)
 	}
-	token := data[1]
-	return c.Redirect(302, "https://sandbox.banktest.ir/mellat/bpm.shaparak.ir/pgwchannel/startpay.mellat?RefId="+token)
+	ref := data[1]
+	return c.Redirect(302, "https://sandbox.banktest.ir/mellat/bpm.shaparak.ir/pgwchannel/startpay.mellat?RefId="+ref)
 }
