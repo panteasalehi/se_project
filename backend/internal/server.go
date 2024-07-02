@@ -52,7 +52,7 @@ func (es *EchoServer) Route() {
 	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
 	es.e.GET("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().GetMessage)
 	es.e.POST("api/v1/ads/:ad_id/chats/:user_id", chat.NewChatHandler().SendMessage)
-	es.e.GET("api/v1/ads/mainpage/:user_id", mainpage.NewMainpageHandler().GetAds)
+	es.e.GET("api/v1/ads/mainpage/", mainpage.NewMainpageHandler().GetAds)
 	es.e.GET("api/v1/ads/searchfiltering", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
 	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)

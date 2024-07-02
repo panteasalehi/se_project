@@ -19,7 +19,7 @@ func NewGetPostHandler() *GetPostHandler {
 }
 
 func (gph *GetPostHandler) GetPost(c echo.Context) error {
-	id := c.Param("id")
+	id := c.Param("ad_id")
 	token, err := c.Cookie("session")
 	if err != nil {
 		return c.JSON(400, "session not found")
