@@ -8,17 +8,20 @@ import (
 	"MelkOnline/internal/controller/signup"
 	"net/http"
 	"os"
-
+	"github.com/swaggo/echo-swagger"
+	_ "github.com/swaggo/echo-swagger/example/docs"
 	model "MelkOnline/internal/core"
-
 	"github.com/joho/godotenv"
 	echo "github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	
 )
-
 func main() {
+	e := echo.New()
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.Logger.Fatal(e.Start(":1323"))
 	err := godotenv.Load()
 	if err != nil {
 		panic(err)
@@ -30,9 +33,6 @@ func main() {
 			panic(err)
 		}
 	}
-
-	e := echo.New()
-
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000"},
@@ -45,7 +45,6 @@ func main() {
 	e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
 	e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
 	e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds) //??
-
 	e.Start(":8080")
 }
 

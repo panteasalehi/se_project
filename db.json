@@ -1,51 +1,54 @@
 {
+  "favs": [
+    {
+      "id": "65a2",
+      "email": "adfa@gmail.com",
+      "postid": "2e0e",
+      "title": "vila"
+    }
+  ],
+  "notes": [
+    {
+      "id": "52d6",
+      "email": "adfa@gmail.com",
+      "postid": "2e0e",
+      "note": "first note"
+    }
+  ],
   "user": [
     {
-      "id": "p@gmail.com",
+      "id": "g1@gmail.com",
+      "pass": "123qwe",
+      "name": "a1",
+      "seller": "true",
+      "customer": "false"
+    },
+    {
+      "id": "adfa@gmail.com",
       "pass": "qweasd",
-      "name": "pantea"
+      "name": "a",
+      "seller": "true",
+      "customer": "false"
     }
   ],
   "posts": [
     {
-      "id": "311a",
+      "id": "2e0e",
       "category": "فروش مسکونی",
-      "title": "خانه اهورا",
-      "meterage": "400",
-      "price": "48000000000",
-      "room": "2",
-      "year": "1403",
-      "floor": "2",
-      "details": "خانه بسیار زیبایی است",
-      "lt": 35.70415686061834,
-      "long": 51.36808811686264,
-      "email": "p@gmail.com",
-      "avatarURL": "blob:http://localhost:3000/f0339dea-780c-4a95-afa1-a9038dd4e5d9"
-    },
-    {
-      "id": "569a",
-      "category": "اجاره مسکونی",
-      "title": "rqerq",
-      "meterage": "qreq",
-      "price": "4141",
-      "room": "dsfasd",
-      "year": "ads",
-      "floor": "111",
-      "details": "dfafadfadf",
-      "lt": 35.58139395680847,
-      "long": 51.38456760905014,
-      "email": "p@gmail.com",
-      "avatarURL": "blob:http://localhost:3000/4beb4090-84b1-485c-a8b7-d9655d05bbe0"
-    }
-  ],
-  "favs": [
-    {
-      "id": "311a",
-      "email": "p@gmail.com"
-    },
-    {
-      "id": "569a",
-      "email": "p@gmail.com"
+      "title": "vila",
+      "area": "1000",
+      "price": "10",
+      "numberOfRooms": "1",
+      "yearOfConstruction": "1",
+      "floor": "1",
+      "description": "gghggh",
+      "store": "ندارد",
+      "parking": "ندارد",
+      "elevator": "ندارد",
+      "lt": 35.70861741129729,
+      "long": 51.26591526320466,
+      "ownerid": "adfa@gmail.com",
+      "avatarURL": "/static/media/a.6ed338e4f81c892efdd5.jpg"
     }
   ]
 }
