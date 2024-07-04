@@ -2,7 +2,7 @@
 .auth-form-container  ,.login-form , .register-form{
   display: flex;
   flex-direction: column;
-
+  
 }
 
 label{
@@ -147,6 +147,7 @@ button{
 
 
 .App {
+  
   overflow:auto;
   text-align: center;
   display: flex;
@@ -154,6 +155,7 @@ button{
   align-items: center;
   justify-content: center;
   background-image: linear-gradient(79deg, #FFF2E1 , #D1BB9E 50%, #FFF2E1 );
+  overflow-y: scroll;
 }
 
 .map-container {

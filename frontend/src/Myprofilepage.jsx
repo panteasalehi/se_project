@@ -9,36 +9,13 @@ export const Myprofilepage = (props) => {
     const email = props.data;
     const [state, dispatch] = useReducer(inventoryReducer, initialState);
     const[name , setName] = useState('')
-    const [show, setShow] = useState(true);
-    const { items, loading, error} = state;
-    
-    
-    console.log(items, loading, error);
 
-  
-      useEffect(() => {
-        dispatch({type: FETCH_ACTIONS.PROGRESS});
-    
-        const getItems = async () => {
-          try{
-            
-            let response = await axios.get("http://45.147.97.39:8080/posts?email=" + email);
-            if (response.status === 200) {
-              dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
-            }
-          } catch(err){
-              console.error(err);
-              dispatch({type: FETCH_ACTIONS.ERROR, error: err.message})
-          }
-        }
-    
-        getItems();
-    
-      }, []);
     
     
 
-    fetch("http://localhost:8000/user/" + email).then((res) => {
+    
+
+    fetch("http://localhost:8080/api/v1/user" ).then((res) => {
       return res.json();
     }).then((resp) => {
       setName(resp.name);
@@ -47,56 +24,26 @@ export const Myprofilepage = (props) => {
 
     return (
         <div >  
-          <div className = "split left">
-        
-          <button className = "myprofile-button" onClick={() => props.onFormSwitch("mainpage",email)}>بازگشت</button>
-          {show === "post"? 
-          <ul className="flex flex-col">
-          <h2 className="text-3xl my-4">لیست اگهی های من </h2>
-          {
-          items.map((item) => (
-              <li style={{backgroundColor:"#E8DFCA"  , margin : "70px"}}
-              
-              key={item.id}>
-              <p className='my-2 text-xl'>
-                  <strong>{item.title}</strong> 
-              </p>
-              <p className='mb-2 text-lg'>
-                  توضیحات: <strong>{item.details}</strong>
-              </p>
-
-              </li>
-          ))
-          }
-          </ul>
-          :
-          show==="Favs"?
-        <h1>hi</h1>
-        :
-        null}
-          
-                
-          </div>
-          <div className = "split right" style = {{ padding : "4%" }} >
+          <div className = "split right" style = {{ padding : "1%" }} >
+          <button onClick = {() => props.onFormSwitch("mainpage",email)} style={{  backgroundColor : 'lightpink'}}>بازگشت</button>
+          <br/>
           <strong >welcome {name} :)</strong> 
           <br/>
-          <br/>
-          <text>انتخاب دسته بندی اگهی</text>
-          <hr className="hr"></hr>
+          
           <br></br>
        
 
-            <button style= {{width : "60%", marginBottom:"5%"}} onClick={() => setShow("post")}  >اگهی ها </button> 
+            <button style= {{width : "60%", marginBottom:"5%"}} onClick = {() => props.onFormSwitch("Myposts",email)}  >اگهی ها </button> 
             
-            <button style= {{width : "60%", marginBottom:"5%"}}>پرداخت ها </button> 
+            <button style= {{width : "60%", marginBottom:"5%"}} >پرداخت ها </button> 
             
-            <button  style= {{width : "60%", marginBottom:"5%"}} onClick={() => setShow("favs")}>علاقه مندی ها </button> 
+            <button  style= {{width : "60%", marginBottom:"5%"}}  onClick = {() => props.onFormSwitch("Myfavourites",email)} >علاقه مندی ها </button> 
              
-            <button  style= {{width : "60%", marginBottom:"5%"}}>یادداشت ها </button> 
+            <button onClick = {() => props.onFormSwitch("notes",email)} style= {{width : "60%", marginBottom:"5%"  }}>یادداشت ها </button> 
             
-            <button  style= {{width : "60%", marginBottom:"5%" }}>پشتیبانی </button> 
+            <button  style= {{width : "60%", marginBottom:"5%" }} onClick = {() => props.onFormSwitch("support",email)}>پشتیبانی </button> 
             
-            <button  style= {{width : "60%"}}>خروج </button> 
+            <button  style= {{width : "60%"}}  onClick = {() => props.onFormSwitch("login",email)}>خروج </button> 
         
             </div>
         </div> 

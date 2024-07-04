@@ -2,6 +2,7 @@ package internal
 
 import (
 	"MelkOnline/internal/controller/ADregister"
+	"MelkOnline/internal/controller/addnote"
 	"MelkOnline/internal/controller/auth"
 	"MelkOnline/internal/controller/chat"
 	"MelkOnline/internal/controller/getpost"
@@ -9,6 +10,7 @@ import (
 	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
 	"MelkOnline/internal/controller/signup/payment"
+	"MelkOnline/internal/controller/user"
 	model "MelkOnline/internal/core"
 	"MelkOnline/internal/infrastructure"
 	"net/http"
@@ -56,6 +58,10 @@ func (es *EchoServer) Route() {
 	es.e.GET("api/v1/ads/searchfiltering/", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
 	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
+	es.e.GET("api/v1/ads/:ad_id/notes", addnote.NewNoteHandler().GetNotes)
+	es.e.POST("api/v1/ads/:ad_id/notes", addnote.NewNoteHandler().StoreNote)
+	es.e.GET("api/v1/user", user.NewUserHandler().GetUserBySession)
+	es.e.GET("api/v1/user/ads", user.NewUserHandler().GetUserAds)
 }
 
 func (es *EchoServer) Start(port string) {

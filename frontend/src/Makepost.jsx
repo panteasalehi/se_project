@@ -27,9 +27,9 @@ export const Makepost = (props) => {
   const[long , setlong] = useState('')
   const[lt , setlt] = useState('')
   const [avatarURL, setAvatarURL] = useState(DefaultImage);
-  const [store,setstore]= useState('')
-  const [elevator,setelevator]= useState('')
-  const [parking,setparking]= useState('')
+  const [store,setstore]= useState("ندارد")
+  const [elevator,setelevator]= useState("ندارد")
+  const [parking,setparking]= useState("ندارد")
   const fileUploadRef = useRef();
 
   const handleImageUpload = (event) => {
@@ -73,10 +73,10 @@ export const Makepost = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-        let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid, avatarURL};
+        let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid,avatarURL};
             
             //console.log(regobj);
-            fetch("http://45.147.97.39:8080/ADregister", {
+            fetch("http://45.147.97.39:8080/api/v1/ads/register", {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(regobj)
@@ -180,13 +180,14 @@ export const Makepost = (props) => {
             <br></br>
             <input onClick={(e)=>setcategory(e.target.value) } type="radio" value="پروژه های ساخت و ساز"    />پروژه های ساخت و ساز
             <br/>
-            <input onChange={(e)=>setstore(e.target.value) } type="radio" value="store"  />انباری
+            <hr className="hr"></hr>
+            <input onClick={(e)=>setstore("دارد") } type="radio" value="store"  />انباری
             <br></br>
             <br/>
-            <input onChange={(e)=>setelevator(e.target.value) } type="radio" value="elevator"  />اسانسور
+            <input onClick={(e)=>setelevator("دارد") } type="radio" value="elevator"  />اسانسور
             <br></br>
             <br/>
-            <input onChange={(e)=>setparking(e.target.value) } type="radio" value="parking"  />پارکینگ
+            <input onClick={(e)=>setparking("دارد") } type="radio" value="parking"  />پارکینگ
             <br></br>
           
         </div>

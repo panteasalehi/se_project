@@ -1,8 +1,8 @@
-package main
+package internal
 
 import (
 	_ "MelkOnline/docs"
-	server "MelkOnline/internal"
+	"MelkOnline/internal"
 	"fmt"
 	"time"
 )
@@ -16,7 +16,7 @@ import (
 func main() {
 	fmt.Println("Starting the server...")
 	time.Sleep(20 * time.Second)
-	es := server.NewEchoServer()
+	es := internal.NewEchoServer()
 	defer es.Stop()
 	es.Start("8080")
 }

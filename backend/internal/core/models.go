@@ -53,6 +53,7 @@ type Chat struct {
 type UserNote struct {
 	ID     int       `json:"id"`
 	UserID int       `json:"userid"`
+	ADID   int       `json:"adid"`
 	Note   string    `json:"note"`
 	Time   time.Time `json:"time"`
 }
