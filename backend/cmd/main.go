@@ -1,96 +1,83 @@
-package main
+package internal
 
 import (
-<<<<<<< HEAD
-	_ "MelkOnline/docs"
-	server "MelkOnline/internal"
-	"fmt"
-	"time"
-)
-
-//	@title			MelkOnline API
-//	@version		1.0
-//	@description	SE Project MelkOnline backend API
-
-// @host		localhost:8080
-// @BasePath	/
-func main() {
-	fmt.Println("Starting the server...")
-	time.Sleep(20 * time.Second)
-	es := server.NewEchoServer()
-	defer es.Stop()
-	es.Start("8080")
-=======
 	"MelkOnline/internal/controller/ADregister"
 	"MelkOnline/internal/controller/auth"
 	"MelkOnline/internal/controller/chat"
+	"MelkOnline/internal/controller/getpost"
 	"MelkOnline/internal/controller/mainpage"
+	"MelkOnline/internal/controller/searchfiltering"
 	"MelkOnline/internal/controller/signup"
+	"MelkOnline/internal/controller/signup/payment"
+	model "MelkOnline/internal/core"
+	"MelkOnline/internal/infrastructure"
 	"net/http"
 	"os"
-	"github.com/swaggo/echo-swagger"
-	_ "github.com/swaggo/echo-swagger/example/docs"
-	model "MelkOnline/internal/core"
+
+	_ "MelkOnline/docs"
+
 	"github.com/joho/godotenv"
-	echo "github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4"
 	middleware "github.com/labstack/echo/v4/middleware"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
-func main() {
-	e := echo.New()
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
-	e.Logger.Fatal(e.Start(":1323"))
-	err := godotenv.Load()
+
+type EchoServer struct {
+	e *echo.Echo
+}
+
+func NewEchoServer() *EchoServer {
+	echo := echo.New()
+	es := &EchoServer{e: echo}
+	err := godotenv.Load("/home/ssaeidifarzad/ssfdata/ssaeidifarzad/Classes/S8/SE/Project/SE_project/backend/.env")
 	if err != nil {
 		panic(err)
 	}
-	isDBinitiated := os.Getenv("DB_INITIATED")
-	if isDBinitiated == "false" {
-		err = DB_init()
+	es.Route()
+	return es
+}
+
+func (es *EchoServer) Route() {
+	es.e.Use(middleware.Logger())
+	es.e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowCredentials: true,
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization,
+			echo.HeaderAccessControlAllowOrigin, echo.HeaderAccessControlAllowHeaders, echo.HeaderAccessControlAllowMethods, echo.HeaderAccessControlAllowCredentials},
+	}))
+	es.e.POST("api/v1/signup/", signup.NewSignupHandler().Signup)
+	es.e.GET("api/v1/signup/payment/", payment.NewPaymentHandler().Pay)
+	es.e.POST("api/v1/login/", auth.NewLoginHandler().Login)
+	es.e.POST("api/v1/ads/register", ADregister.NewADregisterHandler().ADregister)
+	es.e.GET("api/v1/ads/:ad_id/chats", chat.NewChatHandler().GetMessage)
+	es.e.POST("api/v1/ads/:ad_id/chats", chat.NewChatHandler().SendMessage)
+	es.e.GET("api/v1/ads/mainpage/", mainpage.NewMainpageHandler().GetAds)
+	es.e.GET("api/v1/ads/searchfiltering/", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
+	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
+	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
+}
+
+func (es *EchoServer) Start(port string) {
+	isDBinitiated := os.Getenv("DB_INIT")
+	if isDBinitiated == "" {
+		panic("DB_INIT is not set")
+	} else if isDBinitiated == "false" {
+		err := DB_init()
 		if err != nil {
 			panic(err)
 		}
 	}
-	e.Use(middleware.Logger())
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:3000"},
-		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
-	}))
-	e.POST("/signup", signup.NewSignupHandler().Signup)
-	e.POST("/login", auth.NewLoginHandler().Login)
-	e.POST("/ADregister", ADregister.NewADregisterHandler().ADregister)
-	e.GET("/Chat/page/?chatid=", chat.NewChatHandler().GetMessagesByChatID)
-	e.POST("/Chat/send/?chatid=", chat.NewChatHandler().SendMessage)
-	e.GET("/mainpage", mainpage.NewMainpageHandler().GetAds) //??
-	e.Start(":8080")
+	es.e.Logger.Fatal(es.e.Start(":" + port))
+}
+
+func (es *EchoServer) Stop() {
+	es.e.Close()
 }
 
 func DB_init() error {
-	// This function is used to initialize the database connection
-	// and create the tables if they do not exist.
-	// It is called in the main function of the application.
-	// The database connection is created using the GORM library.
-	// The connection string is read from the environment variable DB_CONNECTION.
-	// The tables are created using the AutoMigrate function of the GORM library.
-	// The tables are created using the models
-	// defined in the internal/core package.
-
-	dbstr := os.Getenv("DB_CONNECTION")
-	db, err := gorm.Open(
-		mysql.Open(dbstr),
-		&gorm.Config{})
-	if err != nil {
-		return err
-	}
-	DB, err := db.DB()
-	if err != nil {
-		return err
-	}
-	defer DB.Close()
-	err = db.AutoMigrate(&model.User{})
+	db := infrastructure.GetDB()
+	err := db.AutoMigrate(&model.User{})
 	if err != nil {
 		return err
 	}
@@ -106,7 +93,14 @@ func DB_init() error {
 	if err != nil {
 		return err
 	}
-	os.Setenv("DB_INITIATED", "true")
+	err = db.AutoMigrate(&model.Payment{})
+	if err != nil {
+		return err
+	}
+	err = db.Exec("CREATE TABLE IF NOT EXISTS images (ID INT AUTO_INCREMENT PRIMARY KEY, AD_ID INT, path VARCHAR(255))").Error
+	if err != nil {
+		return err
+	}
+	os.Setenv("DB_INIT", "true")
 	return nil
->>>>>>> 15506f7e1e17e45108bdb91099d4d7f789b1a664
 }
