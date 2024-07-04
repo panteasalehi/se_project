@@ -16,33 +16,10 @@ export const Register = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-<<<<<<< HEAD:frontend/src/Register.jsx
-        let regobj = { email, password, name };
-
-        console.log(JSON.stringify(regobj));
-        fetch("http://localhost:8080/signup", {
-            method: "POST",
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(regobj),
-            credentials: 'include'
-        }).then((res) => {
-            if (res.ok) {
-                toast.success('Registered successfully.');
-                props.onFormSwitch("mainpage", email);
-            } else {
-                return res.json().then(err => {
-                    throw new Error(err.message);
-                });
-            }
-        }).catch((err) => {
-            toast.error('Failed: ' + err.message);
-        });
-
-=======
         let regobj = { id , pass ,name , seller , customer};
             
             //console.log(regobj);
-            fetch("http://localhost:8000/user", {
+            fetch("http://localhost:8080/api/v1/signup", {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(regobj)
@@ -58,7 +35,6 @@ export const Register = (props) => {
                 toast.error('Failed :' + err.message);
             });
         
->>>>>>> 15506f7e1e17e45108bdb91099d4d7f789b1a664:src/Register.jsx
     }
     return (
 

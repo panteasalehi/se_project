@@ -15,7 +15,7 @@ export const Myprofilepage = (props) => {
 
     
 
-    fetch("http://localhost:8000/user/" + email).then((res) => {
+    fetch("http://localhost:8080/api/v1/user" ).then((res) => {
       return res.json();
     }).then((resp) => {
       setName(resp.name);

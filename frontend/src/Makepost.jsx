@@ -73,14 +73,10 @@ export const Makepost = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault(); // if we dont call page will be reloded and data will be lost
-<<<<<<< HEAD:frontend/src/Makepost.jsx
-        let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid,avatarUrl};
-=======
         let regobj = { category, title ,area  , price,numberOfRooms ,yearOfConstruction ,floor ,description ,store , parking , elevator, lt , long ,ownerid,avatarURL};
->>>>>>> 15506f7e1e17e45108bdb91099d4d7f789b1a664:src/Makepost.jsx
             
             //console.log(regobj);
-            fetch("http://localhost:8000/posts", {
+            fetch("http://localhost:8080/api/v1/ads/register", {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(regobj)

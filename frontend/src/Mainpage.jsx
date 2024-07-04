@@ -15,7 +15,7 @@ export const Mainpage = (props) => {
     dispatch({ type: FETCH_ACTIONS.PROGRESS });
     const getItems = async () => {
       try {
-        let response = await axios.get("http://localhost:8080/mainpage", { withCredentials: true });
+        let response = await axios.get("http://localhost:8080/api/v1/ads/mainpage/", { withCredentials: true });
         if (response.status === 200) {
           dispatch({ type: FETCH_ACTIONS.SUCCESS, data: response.data });
         }

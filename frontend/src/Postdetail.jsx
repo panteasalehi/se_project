@@ -39,7 +39,7 @@ export const Postdetail = (props) => {
     let regobj = { email , postid ,note};
           
           //console.log(regobj);
-          fetch("http://localhost:8000/notes", {
+          fetch("http://localhost:8080/api/v1/notes", {
               method: "POST",
               headers: { 'content-type': 'application/json' },
               body: JSON.stringify(regobj)
@@ -60,7 +60,7 @@ export const Postdetail = (props) => {
         const getItems = async () => {
           try{
             
-            let response = await axios.get("http://45.147.97.39:8080/getpost/" + id,{ withCredentials: true });
+            let response = await axios.get("http://localhost:8080/api/v1/ads/" + postid, {withCredentials: true});
             if (response.status === 200) {
               dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
             }
@@ -89,13 +89,8 @@ export const Postdetail = (props) => {
                 
                 
                 <img 
-<<<<<<< HEAD:frontend/src/Postdetail.jsx
-                style = {{width : "35%"}}
-                src={item.avatarurl}
-=======
                 style = {{width : "30%" , height : "50%"}}
                 src={item.avatarURL}
->>>>>>> 15506f7e1e17e45108bdb91099d4d7f789b1a664:src/Postdetail.jsx
                 alt ="Avatar"
                 className="h-96 w-96 rounded-full" />
                 <br/>
@@ -123,11 +118,7 @@ export const Postdetail = (props) => {
                 <strong> {item.floor}:طبقه</strong>
                 <br/>
                 <br/>
-<<<<<<< HEAD:frontend/src/Postdetail.jsx
-                <strong> {item.numberOfRooms}:تعداد اتاق</strong>
-=======
                 <strong> {item.numberOfRooms}:تعداد اتاق </strong>
->>>>>>> 15506f7e1e17e45108bdb91099d4d7f789b1a664:src/Postdetail.jsx
                 <br/>
                 <br/>
                 <strong>اسانسور: {item.elevator}</strong>
@@ -139,11 +130,7 @@ export const Postdetail = (props) => {
                 <strong>انباری:{item.store}</strong>
                 <br/>
                 <br/>
-<<<<<<< HEAD:frontend/src/Postdetail.jsx
-                <strong>{item.description}:توضیحات </strong>
-=======
                 <strong> توضیحات:{item.description} </strong>
->>>>>>> 15506f7e1e17e45108bdb91099d4d7f789b1a664:src/Postdetail.jsx
                         </div>
         
                </div>
