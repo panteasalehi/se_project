@@ -18,3 +18,7 @@ func NewUserService() *UserService {
 func (us *UserService) GetUserBySession(session string) (*core.User, error) {
 	return us.ur.GetUserBySession(session)
 }
+
+func (us *UserService) GetUserAds(session string) ([]core.AD, error) {
+	return us.ur.GetUserAds(session)
+}

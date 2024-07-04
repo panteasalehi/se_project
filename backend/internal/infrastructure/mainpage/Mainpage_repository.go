@@ -17,7 +17,7 @@ func NewMainpageRepository() *MainpageRepository {
 
 func (ar *MainpageRepository) FindADs() ([]model.AD, error) {
 	ads := []model.AD{}
-	err := ar.DBConn.Model(&model.AD{}).Find(&ads).Error
+	err := ar.DBConn.Exec("SELECT * FROM ads").Scan(&ads).Error
 	if err != nil {
 		return nil, err
 	}

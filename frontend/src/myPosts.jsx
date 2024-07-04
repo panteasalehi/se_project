@@ -24,7 +24,7 @@ export const Myposts = (props) => {
         const getItems = async () => {
           try{
             
-            let response = await axios.get("http://localhost:8000/posts?ownerid=" + email);
+            let response = await axios.get("http://localhost:8080/api/v1/user/ads" , {withCredentials: true});
             if (response.status === 200) {
               dispatch({type: FETCH_ACTIONS.SUCCESS, data: response.data});
             }

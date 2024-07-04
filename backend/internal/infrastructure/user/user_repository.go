@@ -29,3 +29,13 @@ func (ur *UserRepositry) GetUserBySession(session string) (*core.User, error) {
 	ur.dbconn.First(user, ID)
 	return user, nil
 }
+
+func (ur *UserRepositry) GetUserAds(session string) ([]core.AD, error) {
+	ID, err := ur.sr.ValidateSession(session)
+	if err != nil {
+		return nil, err
+	}
+	ads := []core.AD{}
+	ur.dbconn.Find(&ads, "user_id = ?", ID)
+	return ads, nil
+}
