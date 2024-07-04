@@ -2,6 +2,7 @@ package internal
 
 import (
 	"MelkOnline/internal/controller/ADregister"
+	"MelkOnline/internal/controller/addnote"
 	"MelkOnline/internal/controller/auth"
 	"MelkOnline/internal/controller/chat"
 	"MelkOnline/internal/controller/getpost"
@@ -56,6 +57,8 @@ func (es *EchoServer) Route() {
 	es.e.GET("api/v1/ads/searchfiltering/", searchfiltering.NewSearchFilteringHandler().Searchfiltering)
 	es.e.GET("api/v1/ads/:ad_id", getpost.NewGetPostHandler().GetPost)
 	es.e.GET("/swagger/*", echoSwagger.WrapHandler)
+	es.e.GET("api/v1/ads/:ad_id/notes", addnote.NewNoteHandler().GetNotes)
+	es.e.POST("api/v1/ads/:ad_id/notes", addnote.NewNoteHandler().StoreNote)
 }
 
 func (es *EchoServer) Start(port string) {

@@ -94,3 +94,23 @@ type SearchFilteringRequest struct {
 	//the ones that he didn't choose will be nil
 	//find the matches using the functions and put them all in a list without repetitions
 }
+
+type NoteStoreRequest struct {
+	Note   string `json:"note"`
+	UserID int    `json:"userid"`
+	ADID   int    `json:"adid"`
+}
+
+type NoteStoreResponse struct {
+	Message string `json:"message"`
+	NoteID  int    `json:"messageid"`
+}
+
+type NoteGetNotesRequest struct {
+	UserID int `json:"userid"`
+}
+
+type NoteGetNotesResponse struct {
+	Message string           `json:"message"`
+	Notes   []model.UserNote `json:"notees"`
+}
