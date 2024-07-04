@@ -1,0 +1,54 @@
+{
+  "favs": [
+    {
+      "id": "65a2",
+      "email": "adfa@gmail.com",
+      "postid": "2e0e",
+      "title": "vila"
+    }
+  ],
+  "notes": [
+    {
+      "id": "52d6",
+      "email": "adfa@gmail.com",
+      "postid": "2e0e",
+      "note": "first note"
+    }
+  ],
+  "user": [
+    {
+      "id": "g1@gmail.com",
+      "pass": "123qwe",
+      "name": "a1",
+      "seller": "true",
+      "customer": "false"
+    },
+    {
+      "id": "adfa@gmail.com",
+      "pass": "qweasd",
+      "name": "a",
+      "seller": "true",
+      "customer": "false"
+    }
+  ],
+  "posts": [
+    {
+      "id": "2e0e",
+      "category": "فروش مسکونی",
+      "title": "vila",
+      "area": "1000",
+      "price": "10",
+      "numberOfRooms": "1",
+      "yearOfConstruction": "1",
+      "floor": "1",
+      "description": "gghggh",
+      "store": "ندارد",
+      "parking": "ندارد",
+      "elevator": "ندارد",
+      "lt": 35.70861741129729,
+      "long": 51.26591526320466,
+      "ownerid": "adfa@gmail.com",
+      "avatarURL": "/static/media/a.6ed338e4f81c892efdd5.jpg"
+    }
+  ]
+}
